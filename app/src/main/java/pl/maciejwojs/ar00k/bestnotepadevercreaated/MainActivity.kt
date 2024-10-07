@@ -1,6 +1,8 @@
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
+import android.health.connect.datatypes.units.Length
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -31,6 +33,27 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        Toast.makeText(applicationContext, "onStart()", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Toast.makeText(applicationContext, "onDestroy()", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Toast.makeText(applicationContext, "onPause()", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Toast.makeText(applicationContext, "onRestart()", Toast.LENGTH_LONG).show()
+    }
+
 }
 
 @Composable
