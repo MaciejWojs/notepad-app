@@ -15,6 +15,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreat
 
 class MainActivity : ComponentActivity() {
     //Komentarz w kodzie
+    //Komentarz w kodzie 2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
