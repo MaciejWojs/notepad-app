@@ -1,0 +1,24 @@
+name: Create documentation
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Create_documentation:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+      - name: install packages
+        run: sudo apt update && sudo apt upgrade -y && sudo apt install -y graphviz
+      - name: Doxygen Action
+        uses: mattnotmitt/doxygen-action@1.9.8
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/html
+
