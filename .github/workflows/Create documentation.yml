@@ -16,9 +16,16 @@ jobs:
         run: sudo apt update && sudo apt upgrade -y && sudo apt install -y graphviz
       - name: Doxygen Action
         uses: mattnotmitt/doxygen-action@1.9.8
+        with:
+          enable-latex: true
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/html
-
+      - name: Rename PDF file
+        run: mv ./docs/latex/refman.pdf ./docs/latex/main.pdf
+      - name: release the pdf
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "release.tar.gz,foo/*.txt"
