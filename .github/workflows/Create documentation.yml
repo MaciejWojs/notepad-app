@@ -13,7 +13,7 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v4
       - name: install packages
-        run: sudo apt update && sudo apt upgrade -y && sudo apt install -y graphviz
+        run: sudo apt update && sudo apt install -y graphviz
       - name: Doxygen Action
         uses: mattnotmitt/doxygen-action@1.9.8
         with:
