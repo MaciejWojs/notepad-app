@@ -24,8 +24,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/html
       - name: Rename PDF file
-        run: mv ./docs/latex/refman.pdf ./docs/latex/main.pdf
+        run: cp ./docs/latex/refman.pdf ./main.pdf
       - name: release the pdf
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "release.tar.gz,foo/*.txt"
+          artifacts: "main.pdf"
