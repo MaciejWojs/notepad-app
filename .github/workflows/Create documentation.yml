@@ -24,8 +24,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/html
       - name: Rename PDF file
-        run: cp ./docs/latex/refman.pdf ./main.pdf
-        run: sudo chmod 777 ./docs/latex/refman.pdf 
+        run: |
+          cp ./docs/latex/refman.pdf ./main.pdf
+          sudo chmod 777 ./docs/latex/refman.pdf 
       - name: release the pdf
         needs: test
         if: startsWith(github.ref, 'refs/tags/')
