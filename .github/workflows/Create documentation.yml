@@ -16,6 +16,7 @@ jobs:
         uses: actions/checkout@v4
       - name: install packages
         run: sudo apt update && sudo apt install -y graphviz
+
       - name: Preatify doxygen
         run: |
           latest_version=$(curl -s https://api.github.com/repos/jothepro/doxygen-awesome-css/releases/latest | jq -r '.tag_name')
@@ -24,7 +25,6 @@ jobs:
 
           tar -xzf doxygen-awesome-css.tar.gz
           rm -rf doxygen-awesome-css.tar.gz
-          ls -la
           mv doxygen-awesome-css*/ doxygen-awesome-css/
           cp doxygen-awesome-css/doxygen-awesome.css . 
           cp doxygen-awesome-css/doxygen-awesome-sidebar-only.css .
@@ -32,20 +32,30 @@ jobs:
           echo "DISABLE_INDEX          = NO" >> Doxyfile
           echo "FULL_SIDEBAR           = NO" >> Doxyfile
           echo "HTML_EXTRA_STYLESHEET  = doxygen-awesome.css doxygen-awesome-sidebar-only.css" >> Doxyfile
-          tail -n 6 Doxyfile
-      - name: Doxygen Action
+
+      - name: Generate Doxygen Documentation with LaTeX
+        if: startsWith(github.ref, 'refs/tags/')
         uses: mattnotmitt/doxygen-action@edge
         with:
           enable-latex: true
+
+      - name: Generate Doxygen Documentation without LaTeX
+        if: !startsWith(github.ref, 'refs/tags/')
+        uses: mattnotmitt/doxygen-action@edge
+        with:
+          enable-latex: false
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/html
+
       - name: Rename PDF file
         run: |
           cp ./docs/latex/refman.pdf ./main.pdf
           sudo chmod 777 ./docs/latex/refman.pdf 
+
       - name: release the pdf
         if: startsWith(github.ref, 'refs/tags/')
         uses: ncipollo/release-action@v1
