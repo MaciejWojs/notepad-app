@@ -28,12 +28,10 @@ jobs:
           mv doxygen-awesome-css*/ doxygen-awesome-css/
           cp doxygen-awesome-css/doxygen-awesome.css . 
           cp doxygen-awesome-css/doxygen-awesome-sidebar-only.css .
-          cat <<END >> Doxyfile
-          GENERATE_TREEVIEW      = YES            
-          DISABLE_INDEX          = NO
-          FULL_SIDEBAR           = NO
-          HTML_EXTRA_STYLESHEET  = doxygen-awesome.css doxygen-awesome-sidebar-only.css
-          END
+          echo "GENERATE_TREEVIEW      = YES" >> Doxyfile
+          echo "DISABLE_INDEX          = NO" >> Doxyfile
+          echo "FULL_SIDEBAR           = NO" >> Doxyfile
+          echo "HTML_EXTRA_STYLESHEET  = doxygen-awesome.css doxygen-awesome-sidebar-only.css" >> Doxyfile
           tail -n 6 Doxyfile
       - name: Doxygen Action
         uses: mattnotmitt/doxygen-action@edge
