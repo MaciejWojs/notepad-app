@@ -33,15 +33,15 @@ jobs:
           echo "FULL_SIDEBAR           = NO" >> Doxyfile
           echo "HTML_EXTRA_STYLESHEET  = doxygen-awesome.css doxygen-awesome-sidebar-only.css" >> Doxyfile
 
+      - name: Generate Doxygen Documentation without LaTeX
+        if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
+        uses: mattnotmitt/doxygen-action@edge
+
       - name: Generate Doxygen Documentation with LaTeX
         if: startsWith(github.ref, 'refs/tags/')
         uses: mattnotmitt/doxygen-action@edge
         with:
           enable-latex: true
-
-      - name: Generate Doxygen Documentation without LaTeX
-        if: !startsWith(github.ref, 'refs/tags/')
-        uses: mattnotmitt/doxygen-action@edge
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
