@@ -16,8 +16,24 @@ jobs:
         uses: actions/checkout@v4
       - name: install packages
         run: sudo apt update && sudo apt install -y graphviz
+      - name: Preatify doxygen
+        run: |
+          latest_version=$(curl -s https://api.github.com/repos/jothepro/doxygen-awesome-css/releases/latest | jq -r '.tag_name')
+          download_url="https://github.com/jothepro/doxygen-awesome-css/archive/refs/tags/${latest_version}.tar.gz"
+          wget -O doxygen-awesome-css.tar.gz "$download_url"
+
+          tar -xzf doxygen-awesome-css.tar.gz
+          cp doxygen-awesome-css/doxygen-awesome.css . 
+          cp doxygen-awesome-css/doxygen-awesome-sidebar-only.css .
+          rm -rf doxygen-awesome-css.tar.gz doxygen-awesome-css
+          echo <<END
+          GENERATE_TREEVIEW      = YES            
+          DISABLE_INDEX          = NO
+          FULL_SIDEBAR           = NO
+          HTML_EXTRA_STYLESHEET  = doxygen-awesome.css doxygen-awesome-sidebar-only.css
+          END >> Doxyfile
       - name: Doxygen Action
-        uses: mattnotmitt/doxygen-action@1.9.8
+        uses: mattnotmitt/doxygen-action@edge
         with:
           enable-latex: true
       - name: Deploy
