@@ -25,7 +25,7 @@
 var menudata={children:[
 {text:"Strona główna",url:"index.html"},
 {text:"Pakiety",url:"namespaces.html",children:[
-{text:"Package List",url:"namespaces.html"},
+{text:"Lista pakietów",url:"namespaces.html"},
 {text:"Składowe pakietu",url:"namespacemembers.html",children:[
 {text:"Wszystko",url:"namespacemembers.html"},
 {text:"Funkcje",url:"namespacemembers_func.html"}]}]},
