@@ -38,12 +38,9 @@ jobs:
         uses: mattnotmitt/doxygen-action@edge
         with:
           enable-latex: true
-
       - name: Generate Doxygen Documentation without LaTeX
         if: !startsWith(github.ref, 'refs/tags/')
         uses: mattnotmitt/doxygen-action@edge
-        with:
-          enable-latex: false
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
