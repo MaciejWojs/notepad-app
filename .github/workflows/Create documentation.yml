@@ -23,10 +23,11 @@ jobs:
           wget -O doxygen-awesome-css.tar.gz "$download_url"
 
           tar -xzf doxygen-awesome-css.tar.gz
+          rm -rf doxygen-awesome-css.tar.gz
           ls -la
+          mv doxygen-awesome-css*/ doxygen-awesome-css/
           cp doxygen-awesome-css/doxygen-awesome.css . 
           cp doxygen-awesome-css/doxygen-awesome-sidebar-only.css .
-          rm -rf doxygen-awesome-css.tar.gz
           echo <<END
           GENERATE_TREEVIEW      = YES            
           DISABLE_INDEX          = NO
