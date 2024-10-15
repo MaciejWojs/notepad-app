@@ -25,7 +25,8 @@ jobs:
           tar -xzf doxygen-awesome-css.tar.gz
           cp doxygen-awesome-css/doxygen-awesome.css . 
           cp doxygen-awesome-css/doxygen-awesome-sidebar-only.css .
-          rm -rf doxygen-awesome-css.tar.gz doxygen-awesome-css
+          rm -rf doxygen-awesome-css.tar.gz
+          ls -la
           echo <<END
           GENERATE_TREEVIEW      = YES            
           DISABLE_INDEX          = NO
