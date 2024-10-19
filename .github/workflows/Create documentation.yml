@@ -18,12 +18,12 @@ jobs:
         uses: awalsh128/cache-apt-pkgs-action@latest
         id: cache-packages
         with:
-          packages: graphviz texlive-full texlive-latex-extra
+          packages: graphviz texlive-full ttf-freefont perl build-base texlive-full biblatex ghostscript
           version: 1.0
           execute_install_scripts: true
       - name: install packages
         if: steps.cache-packages.outputs.cache-hit != 'true'
-        run: sudo apt update && sudo apt install -y graphviz texlive-full texlive-latex-extra
+        run: sudo apt update && sudo apt install -y graphviz texlive-full ttf-freefont perl build-base texlive-full biblatex ghostscript
 
       - name: Preatify doxygen
         run: |
