@@ -18,12 +18,12 @@ jobs:
         uses: awalsh128/cache-apt-pkgs-action@latest
         id: cache-packages
         with:
-          packages: graphviz texlive-full perl texlive-full ghostscript
+          packages: graphviz ghostscript
           version: 1.0
           execute_install_scripts: true
       - name: install packages
         if: steps.cache-packages.outputs.cache-hit != 'true'
-        run: sudo apt update && sudo apt install -y graphviz texlive-full perl texlive-full ghostscript
+        run: sudo apt update && sudo apt install -y graphviz ghostscript
 
       - name: Prettify doxygen
         run: |
@@ -41,7 +41,7 @@ jobs:
           echo "FULL_SIDEBAR           = NO" >> Doxyfile
           echo "HTML_EXTRA_STYLESHEET  = doxygen-awesome.css doxygen-awesome-sidebar-only.css" >> Doxyfile
 
-      - name: Generate Doxygen Documentation without LaTeX
+      - name: Generate Doxygen Documentation
         uses: mattnotmitt/doxygen-action@edge
 
       - name: Deploy
@@ -50,13 +50,18 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/html
 
+      - name: compile doxygen latex documentation
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: xu-cheng/latex-action@latest
+        with:
+          extra_system_packages: "inkscape"
+          working_directory: ./docs/latex/
+          pre_compile: "tlmgr update --self && tlmgr update --all"
+          root_file: refman.tex
+
       - name: Rename PDF file
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          cd ./docs/latex/
-          pdflatex refman.tex
-          cat refman.log
-          sudo make -B 
           sudo chmod 777 refman.pdf 
           cd -
           cp ./docs/latex/refman.pdf ./main.pdf
