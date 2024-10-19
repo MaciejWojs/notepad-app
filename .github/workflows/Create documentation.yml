@@ -40,6 +40,8 @@ jobs:
           echo "DISABLE_INDEX          = NO" >> Doxyfile
           echo "FULL_SIDEBAR           = NO" >> Doxyfile
           echo "HTML_EXTRA_STYLESHEET  = doxygen-awesome.css doxygen-awesome-sidebar-only.css" >> Doxyfile
+          newest_build=$(curl -s https://api.github.com/repos/MaciejWojs/notepad-app/releases/latest | jq -r '.tag_name')
+          echo PROJECT_NUMBER         = ${newest_build} >> Doxyfile
 
       - name: Generate Doxygen Documentation
         uses: mattnotmitt/doxygen-action@edge
