@@ -18,14 +18,14 @@ jobs:
         uses: awalsh128/cache-apt-pkgs-action@latest
         id: cache-packages
         with:
-          packages: graphviz texlive-full ttf-freefont perl build-base texlive-full biblatex ghostscript
+          packages: graphviz texlive-full perl texlive-full ghostscript
           version: 1.0
           execute_install_scripts: true
       - name: install packages
         if: steps.cache-packages.outputs.cache-hit != 'true'
-        run: sudo apt update && sudo apt install -y graphviz texlive-full ttf-freefont perl build-base texlive-full biblatex ghostscript
+        run: sudo apt update && sudo apt install -y graphviz texlive-full perl texlive-full ghostscript
 
-      - name: Preatify doxygen
+      - name: Prettify doxygen
         run: |
           latest_version=$(curl -s https://api.github.com/repos/jothepro/doxygen-awesome-css/releases/latest | jq -r '.tag_name')
           download_url="https://github.com/jothepro/doxygen-awesome-css/archive/refs/tags/${latest_version}.tar.gz"
