@@ -52,7 +52,7 @@ jobs:
 
       - name: compile doxygen latex documentation
         if: startsWith(github.ref, 'refs/tags/')
-        uses: xu-cheng/latex-action@latest
+        uses: xu-cheng/latex-action@3.2.0
         with:
           extra_system_packages: "inkscape"
           working_directory: ./docs/latex/
