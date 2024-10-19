@@ -55,6 +55,7 @@ jobs:
         uses: xu-cheng/latex-action@3.2.0
         with:
           extra_system_packages: "inkscape"
+          latexmk_shell_escape: true
           working_directory: ./docs/latex/
           root_file: refman.tex
 
