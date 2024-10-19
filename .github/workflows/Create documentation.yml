@@ -56,15 +56,13 @@ jobs:
         with:
           extra_system_packages: "inkscape"
           working_directory: ./docs/latex/
-          pre_compile: "tlmgr update --self && tlmgr update --all"
           root_file: refman.tex
 
       - name: Rename PDF file
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          sudo chmod 777 refman.pdf 
-          cd -
           cp ./docs/latex/refman.pdf ./main.pdf
+          sudo chmod 777 ./docs/latex/refman.pdf
 
       - name: release the pdf
         if: startsWith(github.ref, 'refs/tags/')
