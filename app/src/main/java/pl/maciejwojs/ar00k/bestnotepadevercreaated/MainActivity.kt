@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
@@ -51,11 +52,14 @@ class MainActivity : ComponentActivity() {
 //                    )
 //                }
                 Column(Modifier.verticalScroll(rememberScrollState(1))) {
-//                    var i = 0
                     for (i in 0..7) {
                         val rnd: Random = Random()
                         val color: Color =
                             Color(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+                        var weight: FontWeight? = null
+                        if (i % 2 == 0) {
+                            weight = FontWeight(900)
+                        }
                         Box(
                             Modifier
                                 .background(color)
@@ -65,13 +69,14 @@ class MainActivity : ComponentActivity() {
                                 .height(250.dp)
                         )
                         {
-                            Greeting(name = "Witaj swiecie")
+                            Greeting(name = "Witaj android",  weight=weight)
                         }
                     }
                 }
             }
         }
     }
+
 
     /**
      * Wywoływana, gdy aktywność staje się widoczna dla użytkownika.
@@ -131,10 +136,11 @@ class MainActivity : ComponentActivity() {
  * @param modifier [Modifier] stosowany do układu kompozytowego. Domyślnie jest to pusty modifier.
  */
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(name: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(400)) {
     Text(
         text = "Hello $name!",
-        modifier = modifier
+        modifier = modifier,
+        fontWeight = weight
     )
 }
 
