@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
@@ -54,6 +55,7 @@ class MainActivity : ComponentActivity() {
 //                    )
 //                }
 
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
@@ -66,10 +68,15 @@ class MainActivity : ComponentActivity() {
                 ) {
 //                    var i = 0
 
+
                     for (i in 0..7) {
                         val rnd: Random = Random()
                         val color: Color =
                             Color(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+                        var weight: FontWeight? = null
+                        if (i % 2 == 0) {
+                            weight = FontWeight(900)
+                        }
                         Box(
                             Modifier
 
@@ -82,7 +89,9 @@ class MainActivity : ComponentActivity() {
                         )
 
                         {
-                            Greeting(name = "Witaj swiecie")
+
+
+                            Greeting(name = "Witaj android", weight = weight)
 
                         }
                         Spacer(modifier = Modifier.height(50.dp))
@@ -91,6 +100,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 
     /**
      * Wywoływana, gdy aktywność staje się widoczna dla użytkownika.
@@ -150,11 +160,13 @@ class MainActivity : ComponentActivity() {
  * @param modifier [Modifier] stosowany do układu kompozytowego. Domyślnie jest to pusty modifier.
  */
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(name: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(400)) {
     Text(
         text = "Hello $name!",
 
-        modifier = modifier
+
+        modifier = modifier,
+        fontWeight = weight
 
     )
 
@@ -172,5 +184,3 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
-
-//test workflow
