@@ -1,5 +1,6 @@
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
+import android.content.res.Resources.Theme
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,6 +26,8 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -67,109 +71,113 @@ class MainActivity : ComponentActivity() {
 //                        modifier = Modifier.padding(innerPadding)
 //                    )
 //                }
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
-                Column {
-                    Row(
-                        Modifier
-                            .height(50.dp)
-                            .fillMaxWidth()
-                            .background(Color.DarkGray)
-                    ) {
+                    Column(modifier = Modifier.padding(innerPadding)) {
                         Row(
                             Modifier
+                                .height(50.dp)
                                 .fillMaxWidth()
-                                .padding(horizontal = 8.dp), // Add some padding to the row
-                            horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                                .background(MaterialTheme.colorScheme.onSecondary)
                         ) {
-                            generateIconButton {}
-                            var searchCounter: Int = 0;
-                            generateIconButton(Icons.Default.Search, "Search menu") {
-                                Toast.makeText(
-                                    applicationContext,
-                                    "Clicked ${++searchCounter} ${if (searchCounter < 2) "time" else "times"}",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                            Row(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 8.dp), // Add some padding to the row
+                                horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                            ) {
+                                generateIconButton {}
+                                var searchCounter: Int = 0;
+                                generateIconButton(Icons.Default.Search, "Search menu") {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Clicked ${++searchCounter} ${if (searchCounter < 2) "time" else "times"}",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
                             }
                         }
-                    }
 
-                    val currentDate = LocalDate.now()
-                    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-                    val formattedDate = currentDate.format(formatter)
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .verticalScroll(
-                                rememberScrollState(1)
+                        val currentDate = LocalDate.now()
+                        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                        val formattedDate = currentDate.format(formatter)
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .verticalScroll(
+                                    rememberScrollState(1)
 
-                            )
+                                )
 
-                    ) {
+                        ) {
 //                    var i = 0
 
 
-                        for (i in 0..7) {
-                            val rnd: Random = Random()
-                            val color: Color =
-                                Color(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-                            var weight: FontWeight? = null
-                            if (i % 2 == 0) {
-                                weight = FontWeight(900)
-                            }
-                            val roundness = 10; // zaokraglenie musi być zsynchronizowane
-                            Box(
-
-                                Modifier
-
-                                    .clip(RoundedCornerShape(roundness.dp))
-                                    .background(color)
-                                    .border(
-                                        width = 2.dp,
-                                        color = Color.Black,
-                                        shape = RoundedCornerShape(roundness.dp)
-                                    )
-
-                                    .padding(7.dp)
-                                    .scale(0.9f)
-                                    .height(250.dp)
-                                    .fillMaxWidth(0.8f)
-
-                            )
-
-                            {
-                                Column {
-                                    Greeting(
-                                        name = "Witaj android",
-                                        weight = weight,
-                                        modifier = Modifier.padding(bottom = 20.dp)
-                                    )
-                                    Text(
-                                        text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nisl eget.",
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                    )
+                            for (i in 0..7) {
+                                val rnd: Random = Random()
+//                                val color: Color =
+//                                    Color(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+                                var weight: FontWeight? = null
+                                var color: Color
+                                if (i % 2 == 0) {
+                                    color = MaterialTheme.colorScheme.primaryContainer
+                                    weight = FontWeight(900)
+                                } else {
+                                    color = MaterialTheme.colorScheme.secondaryContainer
                                 }
+                                val roundness = 10; // zaokraglenie musi być zsynchronizowane
+                                Box(
+                                    Modifier
+                                        .clip(RoundedCornerShape(roundness.dp))
+                                        .background(color)
+                                        .border(
+                                            width = 2.dp,
+                                            color = MaterialTheme.colorScheme.outline,
+                                            shape = RoundedCornerShape(roundness.dp)
+                                        )
 
-                                Column(
-                                    modifier = Modifier
-                                        .align(Alignment.BottomEnd)
-                                ) {
+                                        .padding(7.dp)
+                                        .scale(0.9f)
+                                        .height(250.dp)
+                                        .fillMaxWidth(0.8f)
 
-                                    Text(
-                                        text = "20-10-2024", //przyszłe pociagniecie z bazy
+                                )
+
+                                {
+                                    Column {
+                                        Greeting(
+                                            name = "Witaj android",
+                                            weight = weight,
+                                            modifier = Modifier.padding(bottom = 20.dp)
+                                        )
+                                        Text(
+                                            text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nisl eget.",
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                        )
+                                    }
+
+                                    Column(
                                         modifier = Modifier
+                                            .align(Alignment.BottomEnd)
+                                    ) {
+
+                                        Text(
+                                            text = "20-10-2024", //przyszłe pociagniecie z bazy
+                                            modifier = Modifier
 //                                        .align(Alignment.BottomEnd)
-                                    )
-                                    Text(
-                                        text = "$formattedDate", //przyszłe pociagniecie z bazy
-                                        modifier = Modifier
+                                        )
+                                        Text(
+                                            text = "$formattedDate", //przyszłe pociagniecie z bazy
+                                            modifier = Modifier
 //                                        .align(Alignment.BottomEnd)
 
-                                    )
+                                        )
+                                    }
                                 }
+                                Spacer(modifier = Modifier.height(50.dp))
                             }
-                            Spacer(modifier = Modifier.height(50.dp))
                         }
                     }
                 }
