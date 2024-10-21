@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,10 +31,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -62,88 +68,109 @@ class MainActivity : ComponentActivity() {
 //                    )
 //                }
 
+                Column {
+                    Row(
+                        Modifier
+                            .height(50.dp)
+                            .fillMaxWidth()
+                            .background(Color.DarkGray)
+                    ) {
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 8.dp), // Add some padding to the row
+                            horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                        ) {
+                            generateIconButton {}
+                            var searchCounter: Int = 0;
+                            generateIconButton(Icons.Default.Search, "Search menu") {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Clicked ${++searchCounter} ${if (searchCounter < 2) "time" else "times"}",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                    }
 
-                val currentDate = LocalDate.now()
-                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-                val formattedDate = currentDate.format(formatter)
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(
-                            rememberScrollState(1)
+                    val currentDate = LocalDate.now()
+                    val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                    val formattedDate = currentDate.format(formatter)
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .verticalScroll(
+                                rememberScrollState(1)
 
-                        )
+                            )
 
-                ) {
+                    ) {
 //                    var i = 0
 
 
-                    for (i in 0..7) {
-                        val rnd: Random = Random()
-                        val color: Color =
-                            Color(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-                        var weight: FontWeight? = null
-                        if (i % 2 == 0) {
-                            weight = FontWeight(900)
-                        }
-                        val roundness = 10; // zaokraglenie musi być zsynchronizowane
-                        Box(
-
-                            Modifier
-
-                                .clip(RoundedCornerShape(roundness.dp))
-                                .background(color)
-                                .border(
-                                    width = 2.dp,
-                                    color = Color.Black,
-                                    shape = RoundedCornerShape(roundness.dp)
-                                )
-
-                                .padding(7.dp)
-                                .scale(0.9f)
-                                .height(250.dp)
-                                .fillMaxWidth(0.8f)
-
-                        )
-
-                        {
-                            Column {
-                                Greeting(
-                                    name = "Witaj android", weight = weight, modifier = Modifier.padding(bottom=20.dp)
-                                )
-                                Text(
-                                    text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nisl eget.",
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-
-                                )
+                        for (i in 0..7) {
+                            val rnd: Random = Random()
+                            val color: Color =
+                                Color(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+                            var weight: FontWeight? = null
+                            if (i % 2 == 0) {
+                                weight = FontWeight(900)
                             }
+                            val roundness = 10; // zaokraglenie musi być zsynchronizowane
+                            Box(
 
-                            Column(
+                                Modifier
 
-                                modifier = Modifier
+                                    .clip(RoundedCornerShape(roundness.dp))
+                                    .background(color)
+                                    .border(
+                                        width = 2.dp,
+                                        color = Color.Black,
+                                        shape = RoundedCornerShape(roundness.dp)
+                                    )
 
-                                    .align(Alignment.BottomEnd)
-                            ) {
+                                    .padding(7.dp)
+                                    .scale(0.9f)
+                                    .height(250.dp)
+                                    .fillMaxWidth(0.8f)
 
-                                Text(
-                                    text = "20-10-2024", //przyszłe pociagniecie z bazy
+                            )
+
+                            {
+                                Column {
+                                    Greeting(
+                                        name = "Witaj android",
+                                        weight = weight,
+                                        modifier = Modifier.padding(bottom = 20.dp)
+                                    )
+                                    Text(
+                                        text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nisl eget.",
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                    )
+                                }
+
+                                Column(
                                     modifier = Modifier
+                                        .align(Alignment.BottomEnd)
+                                ) {
+
+                                    Text(
+                                        text = "20-10-2024", //przyszłe pociagniecie z bazy
+                                        modifier = Modifier
+//                                        .align(Alignment.BottomEnd)
+                                    )
+                                    Text(
+                                        text = "$formattedDate", //przyszłe pociagniecie z bazy
+                                        modifier = Modifier
 //                                        .align(Alignment.BottomEnd)
 
-                                )
-                                Text(
-                                    text = "$formattedDate", //przyszłe pociagniecie z bazy
-                                    modifier = Modifier
-//                                        .align(Alignment.BottomEnd)
-
-                                )
-
-
+                                    )
+                                }
                             }
+                            Spacer(modifier = Modifier.height(50.dp))
                         }
-                        Spacer(modifier = Modifier.height(50.dp))
                     }
                 }
             }
@@ -218,7 +245,18 @@ fun Greeting(name: String, modifier: Modifier = Modifier, weight: FontWeight? = 
         fontWeight = weight
 
     )
+}
 
+@Composable
+fun generateIconButton(
+    icon: ImageVector = Icons.Default.Menu,
+    message: String = "Menu",
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    IconButton(onClick, modifier) {
+        Icon(icon, contentDescription = message)
+    }
 }
 
 /**
