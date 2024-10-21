@@ -8,13 +8,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
@@ -50,23 +53,39 @@ class MainActivity : ComponentActivity() {
 //                        modifier = Modifier.padding(innerPadding)
 //                    )
 //                }
-                Column(Modifier.verticalScroll(rememberScrollState(1))) {
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(
+                            rememberScrollState(1)
+
+                        )
+
+                ) {
 //                    var i = 0
+
                     for (i in 0..7) {
                         val rnd: Random = Random()
                         val color: Color =
                             Color(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
                         Box(
                             Modifier
+
                                 .background(color)
-                                .padding(5.dp)
+                                .padding(7.dp)
                                 .scale(0.9f)
-                                .fillMaxWidth()
                                 .height(250.dp)
+                                .fillMaxWidth(0.8f)
+
                         )
+
                         {
                             Greeting(name = "Witaj swiecie")
+
                         }
+                        Spacer(modifier = Modifier.height(50.dp))
                     }
                 }
             }
@@ -134,8 +153,11 @@ class MainActivity : ComponentActivity() {
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
         text = "Hello $name!",
+
         modifier = modifier
+
     )
+
 }
 
 /**
