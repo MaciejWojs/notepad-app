@@ -6,21 +6,30 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -55,46 +64,64 @@ class MainActivity : ComponentActivity() {
 //                    )
 //                }
 
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(
-                            rememberScrollState(1)
-
-                        )
-
-                ) {
-//                    var i = 0
-
-
-                    for (i in 0..7) {
-                        val rnd: Random = Random()
-                        val color: Color =
-                            Color(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-                        var weight: FontWeight? = null
-                        if (i % 2 == 0) {
-                            weight = FontWeight(900)
-                        }
-                        Box(
+                Column {
+                    Row(
+                        Modifier
+                            .height(50.dp)
+                            .fillMaxWidth()
+                            .background(Color.DarkGray)
+                    ) {
+                        Row(
                             Modifier
-
-                                .background(color)
-                                .padding(7.dp)
-                                .scale(0.9f)
-                                .height(250.dp)
-                                .fillMaxWidth(0.8f)
-
-                        )
-
-                        {
-
-
-                            Greeting(name = "Witaj android", weight = weight)
-
+                                .fillMaxWidth()
+                                .padding(horizontal = 8.dp), // Add some padding to the row
+                            horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                        ) {
+                            generateIconButton {}
+                            var searchCounter: Int = 0;
+                            generateIconButton(Icons.Default.Search, "Search menu") {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Clicked ${++searchCounter} ${if (searchCounter < 2) "time" else "times"}",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
                         }
-                        Spacer(modifier = Modifier.height(50.dp))
+                    }
+
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .verticalScroll(
+                                rememberScrollState(1)
+
+                            )
+
+                    ) {
+                        for (i in 0..7) {
+                            val rnd: Random = Random()
+                            val color: Color =
+                                Color(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+                            var weight: FontWeight? = null
+                            if (i % 2 == 0) {
+                                weight = FontWeight(900)
+                            }
+                            Box(
+                                Modifier
+
+                                    .background(color)
+                                    .padding(7.dp)
+                                    .scale(0.9f)
+                                    .height(250.dp)
+                                    .fillMaxWidth(0.8f)
+                            )
+                            {
+                                Greeting(name = "Witaj android", weight = weight)
+
+                            }
+                            Spacer(modifier = Modifier.height(50.dp))
+                        }
                     }
                 }
             }
@@ -163,13 +190,21 @@ class MainActivity : ComponentActivity() {
 fun Greeting(name: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(400)) {
     Text(
         text = "Hello $name!",
-
-
         modifier = modifier,
         fontWeight = weight
-
     )
+}
 
+@Composable
+fun generateIconButton(
+    icon: ImageVector = Icons.Default.Menu,
+    message: String = "Menu",
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    IconButton(onClick, modifier) {
+        Icon(icon, contentDescription = message)
+    }
 }
 
 /**
