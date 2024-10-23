@@ -1,0 +1,31 @@
+name: Compile app
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  Comipile_APP:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+            
+      - name: gradlew
+        run: |
+          chmod 777 ./gradlew 
+          ./gradlew build
+
+      - name: release the apk
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifacts: "./app/build/outputs/apk/debug/app-debug.apk"
