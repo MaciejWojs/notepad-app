@@ -3,7 +3,7 @@ var indexSectionsWithContent =
   0: "cegmotu",
   1: "ceu",
   2: "cemt",
-  3: "gou"
+  3: "cgou"
 };
 
 var indexSectionNames =
