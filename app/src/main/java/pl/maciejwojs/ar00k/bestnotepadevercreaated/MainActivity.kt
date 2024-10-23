@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -71,13 +72,17 @@ class MainActivity : ComponentActivity() {
 //                    )
 //                }
                 Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
-                    FloatingActionButton(onClick = {
-                        Toast.makeText(
-                            applicationContext,
-                            "Tu będzie możliwość dodania notatki",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }, containerColor = MaterialTheme.colorScheme.onSecondary) {
+                    FloatingActionButton(
+                        onClick = {
+                            Toast.makeText(
+                                applicationContext,
+                                "Tu będzie możliwość dodania notatki",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        containerColor = MaterialTheme.colorScheme.onSecondary,
+                        shape = CircleShape
+                    ) {
                         Icon(Icons.Default.Add, contentDescription = "Add")
                     }
                 }) { innerPadding ->
