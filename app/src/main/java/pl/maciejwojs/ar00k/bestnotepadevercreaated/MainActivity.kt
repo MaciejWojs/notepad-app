@@ -40,7 +40,6 @@ import androidx.compose.ui.unit.dp
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Random
 
 /**
  * Główna aktywność aplikacji BestNotepadEverCreated.
@@ -106,9 +105,6 @@ class MainActivity : ComponentActivity() {
 
                         ) {
                             for (i in 0..7) {
-                                val rnd: Random = Random()
-//                                val color: Color =
-//                                    Color(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
                                 var weight: FontWeight? = null
                                 var color: Color
                                 if (i % 2 == 0) {
