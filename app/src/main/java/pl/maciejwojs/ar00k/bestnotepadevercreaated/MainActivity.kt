@@ -63,12 +63,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BestNotepadEverCreatedTheme {
-//                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//                    Greeting(
-//                        name = "Android",
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
-//                }
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
                     Column(modifier = Modifier.padding(innerPadding)) {
@@ -111,9 +105,6 @@ class MainActivity : ComponentActivity() {
                                 )
 
                         ) {
-//                    var i = 0
-
-
                             for (i in 0..7) {
                                 val rnd: Random = Random()
 //                                val color: Color =
@@ -166,12 +157,10 @@ class MainActivity : ComponentActivity() {
                                         Text(
                                             text = "20-10-2024", //przyszłe pociagniecie z bazy
                                             modifier = Modifier
-//                                        .align(Alignment.BottomEnd)
                                         )
                                         Text(
                                             text = "$formattedDate", //przyszłe pociagniecie z bazy
                                             modifier = Modifier
-//                                        .align(Alignment.BottomEnd)
 
                                         )
                                     }
@@ -247,8 +236,6 @@ class MainActivity : ComponentActivity() {
 fun Greeting(name: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(400)) {
     Text(
         text = "Hello $name!",
-
-
         modifier = modifier,
         fontWeight = weight
 
