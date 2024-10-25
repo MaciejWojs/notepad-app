@@ -24,6 +24,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -141,7 +143,7 @@ class MainActivity : ComponentActivity() {
                                 GenerateNote(
                                     Modifier
                                         .clip(RoundedCornerShape(roundness.dp))
-                                        .background(color)
+//                                        .background(color)
                                         .border(
                                             width = 2.dp,
                                             color = MaterialTheme.colorScheme.outline,
@@ -265,39 +267,45 @@ fun GenerateNote(
     creationDate: String,
     modificationDate: String = ""
 ) {
-    Box(
-        modifier = modifier
-    )
+    Card(
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 20.dp
+        )
+    ) {
+        Box(
+            modifier = modifier
+        )
 
-    {
-        //Note title and Content
-        Column {
-            CreateNoteTitle(
-                noteTitle = "Witaj android",
-                weight = weight,
-                modifier = Modifier.padding(bottom = 20.dp)
-            )
-            Text(
-                text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nisl eget.",
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-        }
+        {
+            //Note title and Content
+            Column {
+                CreateNoteTitle(
+                    noteTitle = "Witaj android",
+                    weight = weight,
+                    modifier = Modifier.padding(bottom = 20.dp)
+                )
+                Text(
+                    text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nisl eget.",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+            }
 
-        //Note creation and modification date
-        Column(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-        ) {
+            //Note creation and modification date
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+            ) {
 
-            Text(
-                text = modificationDate, //przyszłe pociagniecie z bazy
-                modifier = Modifier
-            )
-            Text(
-                text = creationDate, //przyszłe pociagniecie z bazy
-                modifier = Modifier
-            )
+                Text(
+                    text = modificationDate, //przyszłe pociagniecie z bazy
+                    modifier = Modifier
+                )
+                Text(
+                    text = creationDate, //przyszłe pociagniecie z bazy
+                    modifier = Modifier
+                )
+            }
         }
     }
 }
