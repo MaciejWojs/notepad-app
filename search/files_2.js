@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mainactivity_2ekt_0',['MainActivity.kt',['../MainActivity_8kt.html',1,'']]]
+  ['globalvalues_2ekt_0',['globalValues.kt',['../globalValues_8kt.html',1,'']]]
 ];

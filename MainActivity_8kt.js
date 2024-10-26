@@ -2,7 +2,6 @@ var MainActivity_8kt =
 [
     [ "CreateNoteTitle", "MainActivity_8kt.html#a3f7b658a3de4acdc1e91008cdc1baf4c", null ],
     [ "generateIconButton", "MainActivity_8kt.html#a186d1ad4869b405bd4f715846367a54b", null ],
-    [ "GenerateNote", "MainActivity_8kt.html#af28613e30a7a098cc7ffa439a2a44aaf", null ],
     [ "Greeting", "MainActivity_8kt.html#a8e17281e1e36713c40997779a8720e20", null ],
     [ "GreetingPreview", "MainActivity_8kt.html#aed63c3eaaa4cb69bb08cba4720b457bd", null ],
     [ "onCreate", "MainActivity_8kt.html#ac93e02521caa7c6608824507a471b057", null ],

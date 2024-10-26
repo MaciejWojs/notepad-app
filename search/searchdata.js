@@ -1,8 +1,8 @@
 var indexSectionsWithContent =
 {
-  0: "cegmotu",
-  1: "ceu",
-  2: "cemt",
+  0: "cegmnopstu",
+  1: "cesu",
+  2: "cegmnpt",
   3: "cgou"
 };
 
