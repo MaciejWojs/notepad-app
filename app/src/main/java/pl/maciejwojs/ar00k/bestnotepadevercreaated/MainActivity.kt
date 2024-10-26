@@ -195,7 +195,12 @@ fun GenerateNote(
                     modifier = Modifier.fillMaxWidth()
                 )
             }
-
+            Column(modifier = Modifier.align(Alignment.BottomStart))
+            {
+               Text(
+                   text="#" // future database tag
+               )
+            }
             //Note creation and modification date
             Column(
                 modifier = Modifier.align(Alignment.BottomEnd)
