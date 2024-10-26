@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.1.1</span>
+   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.1.2</span>
    </div>
   </td>
  </tr>
@@ -130,13 +130,51 @@ Funkcje</h2></td></tr>
 <tr class="memitem:a8e17281e1e36713c40997779a8720e20" id="r_a8e17281e1e36713c40997779a8720e20"><td class="memItemLeft" align="right" valign="top">fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e17281e1e36713c40997779a8720e20">Greeting</a> (name:String, modifier:Modifier=Modifier, weight:FontWeight?=FontWeight(400))</td></tr>
 <tr class="memdesc:a8e17281e1e36713c40997779a8720e20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja kompozytowa, która wyświetla wiadomość powitalną.  <br /></td></tr>
 <tr class="separator:a8e17281e1e36713c40997779a8720e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f7b658a3de4acdc1e91008cdc1baf4c" id="r_a3f7b658a3de4acdc1e91008cdc1baf4c"><td class="memItemLeft" align="right" valign="top">fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f7b658a3de4acdc1e91008cdc1baf4c">CreateNoteTitle</a> (noteTitle:String, modifier:Modifier=Modifier, weight:FontWeight?=FontWeight(900))</td></tr>
+<tr class="separator:a3f7b658a3de4acdc1e91008cdc1baf4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a186d1ad4869b405bd4f715846367a54b" id="r_a186d1ad4869b405bd4f715846367a54b"><td class="memItemLeft" align="right" valign="top">fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a186d1ad4869b405bd4f715846367a54b">generateIconButton</a> (icon:ImageVector=Icons.Default.Menu, message:String=&quot;Menu&quot;, modifier:Modifier=Modifier, onClick:() -&gt; Unit)</td></tr>
 <tr class="separator:a186d1ad4869b405bd4f715846367a54b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af28613e30a7a098cc7ffa439a2a44aaf" id="r_af28613e30a7a098cc7ffa439a2a44aaf"><td class="memItemLeft" align="right" valign="top">fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af28613e30a7a098cc7ffa439a2a44aaf">GenerateNote</a> (modifier:Modifier=Modifier, weight:FontWeight?, creationDate:String, modificationDate:String=&quot;&quot;)</td></tr>
+<tr class="separator:af28613e30a7a098cc7ffa439a2a44aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed63c3eaaa4cb69bb08cba4720b457bd" id="r_aed63c3eaaa4cb69bb08cba4720b457bd"><td class="memItemLeft" align="right" valign="top">fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed63c3eaaa4cb69bb08cba4720b457bd">GreetingPreview</a> ()</td></tr>
 <tr class="memdesc:aed63c3eaaa4cb69bb08cba4720b457bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja podglądu dla kompozytu [Greeting].  <br /></td></tr>
 <tr class="separator:aed63c3eaaa4cb69bb08cba4720b457bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Dokumentacja funkcji</h2>
+<a id="a3f7b658a3de4acdc1e91008cdc1baf4c" name="a3f7b658a3de4acdc1e91008cdc1baf4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f7b658a3de4acdc1e91008cdc1baf4c">&#9670;&#160;</a></span>CreateNoteTitle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">fun CreateNoteTitle </td>
+          <td>(</td>
+          <td class="paramtype">noteTitle:String</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">modifier:Modifier</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">Modifier</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">weight:FontWeight?</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">FontWeight(900)</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">package</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a186d1ad4869b405bd4f715846367a54b" name="a186d1ad4869b405bd4f715846367a54b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a186d1ad4869b405bd4f715846367a54b">&#9670;&#160;</a></span>generateIconButton()</h2>
 
@@ -165,6 +203,45 @@ Funkcje</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">onClick:() -&gt;</td>          <td class="paramname"><span class="paramname"><em>Unit</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">package</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af28613e30a7a098cc7ffa439a2a44aaf" name="af28613e30a7a098cc7ffa439a2a44aaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af28613e30a7a098cc7ffa439a2a44aaf">&#9670;&#160;</a></span>GenerateNote()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">fun GenerateNote </td>
+          <td>(</td>
+          <td class="paramtype">modifier:Modifier</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">Modifier</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">weight:FontWeight?</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">creationDate:String</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">modificationDate:String</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;&quot;</span>&#160;)</td>
         </tr>
       </table>
   </td>
