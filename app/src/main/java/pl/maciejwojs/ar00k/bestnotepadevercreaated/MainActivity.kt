@@ -9,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,7 +27,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -41,7 +39,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,8 +47,11 @@ import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.generated.destinations.CreateNotePageDestination
+import com.ramcosta.composedestinations.generated.destinations.SettingsTabDestination
 import com.ramcosta.composedestinations.generated.navgraphs.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation.GenerateNote
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -168,56 +168,8 @@ fun generateIconButton(
     }
 }
 
-@Composable
-fun GenerateNote(
-    modifier: Modifier = Modifier,
-    weight: FontWeight?,
-    creationDate: String,
-    modificationDate: String = ""
-) {
-    Card(
-        Modifier.shadow(elevation = 20.dp, spotColor = MaterialTheme.colorScheme.onSurface),
-    ) {
-        Box(
-            modifier = modifier
-        )
 
-        {
-            //Note title and Content
-            Column {
-                CreateNoteTitle(
-                    noteTitle = "Witaj android",
-                    weight = weight,
-                    modifier = Modifier.padding(bottom = 20.dp)
-                )
-                Text(
-                    text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nisl eget.",
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            Column(modifier = Modifier.align(Alignment.BottomStart))
-            {
-               Text(
-                   text="#" // future database tag
-               )
-            }
-            //Note creation and modification date
-            Column(
-                modifier = Modifier.align(Alignment.BottomEnd)
-            ) {
 
-                Text(
-                    text = modificationDate, //przyszłe pociagniecie z bazy
-                    modifier = Modifier
-                )
-                Text(
-                    text = creationDate, //przyszłe pociagniecie z bazy
-                    modifier = Modifier
-                )
-            }
-        }
-    }
-}
 
 /**
  * Funkcja podglądu dla kompozytu [Greeting].
@@ -302,7 +254,11 @@ fun MainPage(navigator: DestinationsNavigator) {
 
                         generateIconButton(Icons.Default.Search, "Search menu") {}
                     }
-                    generateIconButton(icon = Icons.Default.Settings, "Settings") {}
+                    generateIconButton(icon = Icons.Default.Settings, "Settings") {
+
+                        navigator.navigate(direction = SettingsTabDestination)
+
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -327,7 +283,7 @@ fun MainPage(navigator: DestinationsNavigator) {
 //                        } else {
 //                            color = MaterialTheme.colorScheme.secondaryContainer
 //                        }
-                        val roundness = 10 // zaokraglenie musi być zsynchronizowane
+                         // zaokraglenie musi być zsynchronizowane
                         GenerateNote(
                             Modifier
                                 .clip(RoundedCornerShape(roundness.dp))
@@ -431,7 +387,7 @@ fun CreateNotePage(navigator: DestinationsNavigator) {
                 ) {
                     for (i in 0..1) {
 
-                        val roundness = 10 // zaokraglenie musi być zsynchronizowane
+
                         GenerateNote(
                             Modifier
                                 .clip(RoundedCornerShape(roundness.dp))
@@ -448,6 +404,90 @@ fun CreateNotePage(navigator: DestinationsNavigator) {
                             weight = null,
                             creationDate = formattedDate
                         )
+
+                        Spacer(modifier = Modifier.height(50.dp))
+                    }
+                }
+            }
+        }
+    }
+}
+@Destination<RootGraph>
+@Composable
+fun SettingsTab(navigator: DestinationsNavigator) {
+    BestNotepadEverCreatedTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
+            Column(modifier = Modifier.padding(innerPadding)) {
+                Row(
+                    Modifier
+                        .height(50.dp)
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.onSecondary)
+                        .padding(horizontal = 8.dp), //1 Add some padding to the row
+                    horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                ) {
+//                            Row(
+//                                Modifier
+//                                    .fillMaxWidth()
+//                            ) {
+                    generateIconButton(icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen") {
+                        navigator.popBackStack()
+                    }
+                    var searchCounter: Int = 0
+                    Row(
+                        Modifier
+                            .clip(RoundedCornerShape(25.dp))
+                            .align(Alignment.CenterVertically)
+                            .fillMaxHeight(0.55f)
+                            .fillMaxWidth(0.75f)
+//                                    .background(Color.Red)
+                            .border(
+                                width = 2.dp,
+                                color = MaterialTheme.colorScheme.outline,
+                                shape = RoundedCornerShape(25.dp)
+                            )
+                            .clickable {
+//                                Toast
+//                                    .makeText(
+//                                        applicationContext,
+//                                        "Clicked ${++searchCounter} ${if (searchCounter < 2) "time" else "times"}",
+//                                        Toast.LENGTH_LONG
+//                                    )
+//                                    .show()
+                            },
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Text(
+                            text = "Search",
+                            Modifier.padding(start = 5.dp)
+//                                            .align(alignment = Alignment.CenterVertically)
+                        )
+
+                        generateIconButton(Icons.Default.Search, "Search menu") {}
+                    }
+//                    generateIconButton(icon = Icons.Default.Settings, "Settings") {}
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                val currentDate = LocalDate.now()
+                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                val formattedDate = currentDate.format(formatter)
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(
+                            rememberScrollState(1)
+
+                        )
+
+                ) {
+                    for (i in 0..3) {
+
 
                         Spacer(modifier = Modifier.height(50.dp))
                     }
