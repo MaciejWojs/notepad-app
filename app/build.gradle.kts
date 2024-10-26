@@ -58,6 +58,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("io.github.raamcosta.compose-destinations:core:1.11.7")
-    ksp("io.github.raamcosta.compose-destinations:ksp:1.11.7")
+    implementation("io.github.raamcosta.compose-destinations:core:2.1.0-beta14")
+    ksp("io.github.raamcosta.compose-destinations:ksp:2.1.0-beta14")
 }

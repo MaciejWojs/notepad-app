@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
@@ -41,11 +42,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootGraph
+import com.ramcosta.composedestinations.generated.destinations.CreateNotePageDestination
+import com.ramcosta.composedestinations.generated.navgraphs.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -70,122 +76,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            BestNotepadEverCreatedTheme {
-                Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
-                    FloatingActionButton(
-                        onClick = {
-                            Toast.makeText(
-                                applicationContext,
-                                "Tu będzie możliwość dodania notatki",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        },
-                        containerColor = MaterialTheme.colorScheme.onSecondary,
-                        shape = CircleShape,
-                        elevation = FloatingActionButtonDefaults.elevation(20.dp)
-                    ) {
-                        Icon(Icons.Default.Add, contentDescription = "Add")
-                    }
-                }) { innerPadding ->
-
-                    Column(modifier = Modifier.padding(innerPadding)) {
-                        Row(
-                            Modifier
-                                .height(50.dp)
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.onSecondary)
-                                .padding(horizontal = 8.dp), //1 Add some padding to the row
-                            horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
-                        ) {
-//                            Row(
-//                                Modifier
-//                                    .fillMaxWidth()
-//                            ) {
-                            generateIconButton {}
-                            var searchCounter: Int = 0
-                            Row(
-                                Modifier
-                                    .clip(RoundedCornerShape(25.dp))
-                                    .align(Alignment.CenterVertically)
-                                    .fillMaxHeight(0.55f)
-                                    .fillMaxWidth(0.75f)
-//                                    .background(Color.Red)
-                                    .border(
-                                        width = 2.dp,
-                                        color = MaterialTheme.colorScheme.outline,
-                                        shape = RoundedCornerShape(25.dp)
-                                    )
-                                    .clickable {
-                                        Toast
-                                            .makeText(
-                                                applicationContext,
-                                                "Clicked ${++searchCounter} ${if (searchCounter < 2) "time" else "times"}",
-                                                Toast.LENGTH_LONG
-                                            )
-                                            .show()
-                                    },
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-
-                                    Text(
-                                        text = "Search",
-                                        Modifier.padding(start = 5.dp)
-//                                            .align(alignment = Alignment.CenterVertically)
-                                    )
-
-                                    generateIconButton(Icons.Default.Search, "Search menu") {}
-                            }
-                            generateIconButton(icon = Icons.Default.Settings, "Settings") {}
-                        }
-
-                        Spacer(modifier = Modifier.height(20.dp))
-
-                        val currentDate = LocalDate.now()
-                        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-                        val formattedDate = currentDate.format(formatter)
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .verticalScroll(
-                                    rememberScrollState(1)
-
-                                )
-
-                        ) {
-                            for (i in 0..20) {
-                                var color: Color
-                                if (i % 2 == 0) {
-                                    color = MaterialTheme.colorScheme.primaryContainer
-                                } else {
-                                    color = MaterialTheme.colorScheme.secondaryContainer
-                                }
-                                val roundness = 10 // zaokraglenie musi być zsynchronizowane
-                                GenerateNote(
-                                    Modifier
-                                        .clip(RoundedCornerShape(roundness.dp))
-//                                        .background(color)
-                                        .border(
-                                            width = 2.dp,
-                                            color = MaterialTheme.colorScheme.outline,
-                                            shape = RoundedCornerShape(roundness.dp)
-                                        )
-
-                                        .padding(7.dp)
-                                        .scale(0.9f)
-                                        .height(250.dp)
-                                        .fillMaxWidth(0.8f),
-                                    weight = null,
-                                    creationDate = formattedDate
-                                )
-
-                                Spacer(modifier = Modifier.height(50.dp))
-                            }
-                        }
-                    }
-                }
-            }
+            DestinationsNavHost(navGraph = RootNavGraph)
         }
     }
 
@@ -335,3 +226,230 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
+@Composable
+@Destination<RootGraph>(start = true)
+fun MainPage(navigator: DestinationsNavigator) {
+    BestNotepadEverCreatedTheme {
+        Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+//                    Toast.makeText(
+//                        ,
+//                        "Tu będzie możliwość dodania notatki",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+                    navigator.navigate(direction = CreateNotePageDestination)
+                },
+                containerColor = MaterialTheme.colorScheme.onSecondary,
+                shape = CircleShape,
+                elevation = FloatingActionButtonDefaults.elevation(20.dp)
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "Add")
+            }
+        }) { innerPadding ->
+
+            Column(modifier = Modifier.padding(innerPadding)) {
+                Row(
+                    Modifier
+                        .height(50.dp)
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.onSecondary)
+                        .padding(horizontal = 8.dp), //1 Add some padding to the row
+                    horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                ) {
+//                            Row(
+//                                Modifier
+//                                    .fillMaxWidth()
+//                            ) {
+                    generateIconButton {}
+                    var searchCounter: Int = 0
+                    Row(
+                        Modifier
+                            .clip(RoundedCornerShape(25.dp))
+                            .align(Alignment.CenterVertically)
+                            .fillMaxHeight(0.55f)
+                            .fillMaxWidth(0.75f)
+//                                    .background(Color.Red)
+                            .border(
+                                width = 2.dp,
+                                color = MaterialTheme.colorScheme.outline,
+                                shape = RoundedCornerShape(25.dp)
+                            )
+                            .clickable {
+//                                Toast
+//                                    .makeText(
+//                                        applicationContext,
+//                                        "Clicked ${++searchCounter} ${if (searchCounter < 2) "time" else "times"}",
+//                                        Toast.LENGTH_LONG
+//                                    )
+//                                    .show()
+                            },
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Text(
+                            text = "Search",
+                            Modifier.padding(start = 5.dp)
+//                                            .align(alignment = Alignment.CenterVertically)
+                        )
+
+                        generateIconButton(Icons.Default.Search, "Search menu") {}
+                    }
+                    generateIconButton(icon = Icons.Default.Settings, "Settings") {}
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                val currentDate = LocalDate.now()
+                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                val formattedDate = currentDate.format(formatter)
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(
+                            rememberScrollState(1)
+
+                        )
+
+                ) {
+                    for (i in 0..20) {
+//                        var color: Color
+//                        if (i % 2 == 0) {
+//                            color = MaterialTheme.colorScheme.primaryContainer
+//                        } else {
+//                            color = MaterialTheme.colorScheme.secondaryContainer
+//                        }
+                        val roundness = 10 // zaokraglenie musi być zsynchronizowane
+                        GenerateNote(
+                            Modifier
+                                .clip(RoundedCornerShape(roundness.dp))
+//                                        .background(color)
+                                .border(
+                                    width = 2.dp,
+                                    color = MaterialTheme.colorScheme.outline,
+                                    shape = RoundedCornerShape(roundness.dp)
+                                )
+
+                                .padding(7.dp)
+                                .scale(0.9f)
+                                .height(250.dp)
+                                .fillMaxWidth(0.8f),
+                            weight = null,
+                            creationDate = formattedDate
+                        )
+
+                        Spacer(modifier = Modifier.height(50.dp))
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@Destination<RootGraph>
+@Composable
+fun CreateNotePage(navigator: DestinationsNavigator) {
+    BestNotepadEverCreatedTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
+            Column(modifier = Modifier.padding(innerPadding)) {
+                Row(
+                    Modifier
+                        .height(50.dp)
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.onSecondary)
+                        .padding(horizontal = 8.dp), //1 Add some padding to the row
+                    horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                ) {
+//                            Row(
+//                                Modifier
+//                                    .fillMaxWidth()
+//                            ) {
+                    generateIconButton(icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen") {
+                        navigator.popBackStack()
+                    }
+                    var searchCounter: Int = 0
+                    Row(
+                        Modifier
+                            .clip(RoundedCornerShape(25.dp))
+                            .align(Alignment.CenterVertically)
+                            .fillMaxHeight(0.55f)
+                            .fillMaxWidth(0.75f)
+//                                    .background(Color.Red)
+                            .border(
+                                width = 2.dp,
+                                color = MaterialTheme.colorScheme.outline,
+                                shape = RoundedCornerShape(25.dp)
+                            )
+                            .clickable {
+//                                Toast
+//                                    .makeText(
+//                                        applicationContext,
+//                                        "Clicked ${++searchCounter} ${if (searchCounter < 2) "time" else "times"}",
+//                                        Toast.LENGTH_LONG
+//                                    )
+//                                    .show()
+                            },
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Text(
+                            text = "Search",
+                            Modifier.padding(start = 5.dp)
+//                                            .align(alignment = Alignment.CenterVertically)
+                        )
+
+                        generateIconButton(Icons.Default.Search, "Search menu") {}
+                    }
+                    generateIconButton(icon = Icons.Default.Settings, "Settings") {}
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                val currentDate = LocalDate.now()
+                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                val formattedDate = currentDate.format(formatter)
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(
+                            rememberScrollState(1)
+
+                        )
+
+                ) {
+                    for (i in 0..1) {
+
+                        val roundness = 10 // zaokraglenie musi być zsynchronizowane
+                        GenerateNote(
+                            Modifier
+                                .clip(RoundedCornerShape(roundness.dp))
+                                .border(
+                                    width = 2.dp,
+                                    color = MaterialTheme.colorScheme.outline,
+                                    shape = RoundedCornerShape(roundness.dp)
+                                )
+
+                                .padding(7.dp)
+                                .scale(0.9f)
+                                .height(250.dp)
+                                .fillMaxWidth(0.8f),
+                            weight = null,
+                            creationDate = formattedDate
+                        )
+
+                        Spacer(modifier = Modifier.height(50.dp))
+                    }
+                }
+            }
+        }
+    }
+}
+
+
