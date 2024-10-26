@@ -39,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -469,7 +470,13 @@ fun SettingsTab(navigator: DestinationsNavigator) {
 
                         generateIconButton(Icons.Default.Search, "Search menu") {}
                     }
-                   generateIconButton(icon = Icons.Default.Settings, "kotlinx") {}
+
+                    generateIconButton(
+                        icon = Icons.Filled.Settings,
+                        "Settings",
+                        transparent = true,
+                        isEnabled = false,
+                    ) {}
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -486,7 +493,6 @@ fun SettingsTab(navigator: DestinationsNavigator) {
 
                 ) {
                     for (i in 0..3) {
-                       Row {  }
                         GenerateOption()
 
                         Spacer(modifier = Modifier.height(50.dp))
