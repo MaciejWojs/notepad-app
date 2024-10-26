@@ -7,11 +7,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,9 +26,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -77,7 +81,8 @@ class MainActivity : ComponentActivity() {
                             ).show()
                         },
                         containerColor = MaterialTheme.colorScheme.onSecondary,
-                        shape = CircleShape
+                        shape = CircleShape,
+                        elevation = FloatingActionButtonDefaults.elevation(20.dp)
                     ) {
                         Icon(Icons.Default.Add, contentDescription = "Add")
                     }
@@ -89,23 +94,49 @@ class MainActivity : ComponentActivity() {
                                 .height(50.dp)
                                 .fillMaxWidth()
                                 .background(MaterialTheme.colorScheme.onSecondary)
+                                .padding(horizontal = 8.dp), //1 Add some padding to the row
+                            horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
                         ) {
+//                            Row(
+//                                Modifier
+//                                    .fillMaxWidth()
+//                            ) {
+                            generateIconButton {}
+                            var searchCounter: Int = 0
                             Row(
                                 Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 8.dp), // Add some padding to the row
-                                horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                                    .clip(RoundedCornerShape(25.dp))
+                                    .align(Alignment.CenterVertically)
+                                    .fillMaxHeight(0.55f)
+                                    .fillMaxWidth(0.75f)
+//                                    .background(Color.Red)
+                                    .border(
+                                        width = 2.dp,
+                                        color = MaterialTheme.colorScheme.outline,
+                                        shape = RoundedCornerShape(25.dp)
+                                    )
+                                    .clickable {
+                                        Toast
+                                            .makeText(
+                                                applicationContext,
+                                                "Clicked ${++searchCounter} ${if (searchCounter < 2) "time" else "times"}",
+                                                Toast.LENGTH_LONG
+                                            )
+                                            .show()
+                                    },
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                generateIconButton {}
-                                var searchCounter: Int = 0
-                                generateIconButton(Icons.Default.Search, "Search menu") {
-                                    Toast.makeText(
-                                        applicationContext,
-                                        "Clicked ${++searchCounter} ${if (searchCounter < 2) "time" else "times"}",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
+
+                                    Text(
+                                        text = "Search",
+                                        Modifier.padding(start = 5.dp)
+//                                            .align(alignment = Alignment.CenterVertically)
+                                    )
+
+                                    generateIconButton(Icons.Default.Search, "Search menu") {}
                             }
+                            generateIconButton(icon = Icons.Default.Settings, "Settings") {}
                         }
 
                         Spacer(modifier = Modifier.height(20.dp))
@@ -180,7 +211,7 @@ class MainActivity : ComponentActivity() {
      */
     override fun onDestroy() {
         super.onDestroy()
-        Toast.makeText(applicationContext, "onDestroy()", Toast.LENGTH_LONG).show()
+//        Toast.makeText(applicationContext, "onDestroy()", Toast.LENGTH_LONG).show()
     }
 
     /**
@@ -192,7 +223,7 @@ class MainActivity : ComponentActivity() {
      */
     override fun onPause() {
         super.onPause()
-        Toast.makeText(applicationContext, "onPause()", Toast.LENGTH_LONG).show()
+//        Toast.makeText(applicationContext, "onPause()", Toast.LENGTH_LONG).show()
     }
 
     /**
@@ -204,7 +235,7 @@ class MainActivity : ComponentActivity() {
      */
     override fun onRestart() {
         super.onRestart()
-        Toast.makeText(applicationContext, "onRestart()", Toast.LENGTH_LONG).show()
+//        Toast.makeText(applicationContext, "onRestart()", Toast.LENGTH_LONG).show()
     }
 }
 
@@ -219,23 +250,17 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(400)) {
     Text(
-        text = "$name!",
-        modifier = modifier,
-        fontWeight = weight
+        text = "$name!", modifier = modifier, fontWeight = weight
 
     )
 }
 
 @Composable
 fun CreateNoteTitle(
-    noteTitle: String,
-    modifier: Modifier = Modifier,
-    weight: FontWeight? = FontWeight(900)
+    noteTitle: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(900)
 ) {
     Text(
-        text = noteTitle,
-        modifier = modifier,
-        fontWeight = weight
+        text = noteTitle, modifier = modifier, fontWeight = weight
 
     )
 }
@@ -278,15 +303,13 @@ fun GenerateNote(
                 )
                 Text(
                     text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nisl eget.",
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
 
             //Note creation and modification date
             Column(
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
+                modifier = Modifier.align(Alignment.BottomEnd)
             ) {
 
                 Text(
