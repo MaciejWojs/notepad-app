@@ -17,11 +17,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -62,7 +67,21 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BestNotepadEverCreatedTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = {
+                            Toast.makeText(
+                                applicationContext,
+                                "Tu będzie możliwość dodania notatki",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
+                        containerColor = MaterialTheme.colorScheme.onSecondary,
+                        shape = CircleShape
+                    ) {
+                        Icon(Icons.Default.Add, contentDescription = "Add")
+                    }
+                }) { innerPadding ->
 
                     Column(modifier = Modifier.padding(innerPadding)) {
                         Row(
@@ -78,7 +97,7 @@ class MainActivity : ComponentActivity() {
                                 horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
                             ) {
                                 generateIconButton {}
-                                var searchCounter: Int = 0;
+                                var searchCounter: Int = 0
                                 generateIconButton(Icons.Default.Search, "Search menu") {
                                     Toast.makeText(
                                         applicationContext,
@@ -104,20 +123,18 @@ class MainActivity : ComponentActivity() {
                                 )
 
                         ) {
-                            for (i in 0..7) {
-                                var weight: FontWeight? = null
+                            for (i in 0..20) {
                                 var color: Color
                                 if (i % 2 == 0) {
                                     color = MaterialTheme.colorScheme.primaryContainer
-                                    weight = FontWeight(900)
                                 } else {
                                     color = MaterialTheme.colorScheme.secondaryContainer
                                 }
-                                val roundness = 10; // zaokraglenie musi być zsynchronizowane
-                                Box(
+                                val roundness = 10 // zaokraglenie musi być zsynchronizowane
+                                GenerateNote(
                                     Modifier
                                         .clip(RoundedCornerShape(roundness.dp))
-                                        .background(color)
+//                                        .background(color)
                                         .border(
                                             width = 2.dp,
                                             color = MaterialTheme.colorScheme.outline,
@@ -127,40 +144,11 @@ class MainActivity : ComponentActivity() {
                                         .padding(7.dp)
                                         .scale(0.9f)
                                         .height(250.dp)
-                                        .fillMaxWidth(0.8f)
-
+                                        .fillMaxWidth(0.8f),
+                                    weight = null,
+                                    creationDate = formattedDate
                                 )
 
-                                {
-                                    Column {
-                                        Greeting(
-                                            name = "Witaj android",
-                                            weight = weight,
-                                            modifier = Modifier.padding(bottom = 20.dp)
-                                        )
-                                        Text(
-                                            text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nisl eget.",
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                        )
-                                    }
-
-                                    Column(
-                                        modifier = Modifier
-                                            .align(Alignment.BottomEnd)
-                                    ) {
-
-                                        Text(
-                                            text = "20-10-2024", //przyszłe pociagniecie z bazy
-                                            modifier = Modifier
-                                        )
-                                        Text(
-                                            text = "$formattedDate", //przyszłe pociagniecie z bazy
-                                            modifier = Modifier
-
-                                        )
-                                    }
-                                }
                                 Spacer(modifier = Modifier.height(50.dp))
                             }
                         }
@@ -231,7 +219,21 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(400)) {
     Text(
-        text = "Hello $name!",
+        text = "$name!",
+        modifier = modifier,
+        fontWeight = weight
+
+    )
+}
+
+@Composable
+fun CreateNoteTitle(
+    noteTitle: String,
+    modifier: Modifier = Modifier,
+    weight: FontWeight? = FontWeight(900)
+) {
+    Text(
+        text = noteTitle,
         modifier = modifier,
         fontWeight = weight
 
@@ -247,6 +249,56 @@ fun generateIconButton(
 ) {
     IconButton(onClick, modifier) {
         Icon(icon, contentDescription = message)
+    }
+}
+
+@Composable
+fun GenerateNote(
+    modifier: Modifier = Modifier,
+    weight: FontWeight?,
+    creationDate: String,
+    modificationDate: String = ""
+) {
+    Card(
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 20.dp
+        )
+    ) {
+        Box(
+            modifier = modifier
+        )
+
+        {
+            //Note title and Content
+            Column {
+                CreateNoteTitle(
+                    noteTitle = "Witaj android",
+                    weight = weight,
+                    modifier = Modifier.padding(bottom = 20.dp)
+                )
+                Text(
+                    text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla id nisl eget.",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+            }
+
+            //Note creation and modification date
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+            ) {
+
+                Text(
+                    text = modificationDate, //przyszłe pociagniecie z bazy
+                    modifier = Modifier
+                )
+                Text(
+                    text = creationDate, //przyszłe pociagniecie z bazy
+                    modifier = Modifier
+                )
+            }
+        }
     }
 }
 

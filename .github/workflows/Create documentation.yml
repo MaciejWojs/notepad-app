@@ -71,4 +71,10 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: ncipollo/release-action@v1
         with:
+          allowUpdates: true
           artifacts: "main.pdf"
+
+      - name: Webhook DC notification
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          curl -s -H "Content-Type: application/json" -d '{"content": "Stworzono dokumentację @everyone"}' ${{ secrets.DISCORD_WEBHOOK_URL }} &> /dev/null
