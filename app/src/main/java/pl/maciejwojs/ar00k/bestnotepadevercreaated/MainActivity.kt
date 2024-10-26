@@ -25,7 +25,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -37,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -268,9 +268,7 @@ fun GenerateNote(
     modificationDate: String = ""
 ) {
     Card(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 20.dp
-        )
+        Modifier.shadow(elevation = 20.dp, spotColor = MaterialTheme.colorScheme.onSurface),
     ) {
         Box(
             modifier = modifier
