@@ -503,9 +503,6 @@ fun SettingsTab(navigator: DestinationsNavigator) {
                 ) {
                     for (i in 0..3) {
                         GenerateOption()
-
-                        GenerateOption()
-
                         Spacer(modifier = Modifier.height(50.dp))
                     }
                 }
