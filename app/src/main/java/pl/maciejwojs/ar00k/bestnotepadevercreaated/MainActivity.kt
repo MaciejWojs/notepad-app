@@ -2,9 +2,7 @@ package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.BackEventCompat
 import androidx.activity.ComponentActivity
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
@@ -54,6 +52,7 @@ import com.ramcosta.composedestinations.generated.destinations.SettingsTabDestin
 import com.ramcosta.composedestinations.generated.navgraphs.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation.GenerateNote
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation.GenerateOption
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.time.LocalDate
@@ -178,6 +177,8 @@ fun generateIconButton(
         }
     }
 }
+
+
 
 
 /**
@@ -490,9 +491,7 @@ fun SettingsTab(navigator: DestinationsNavigator) {
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                val currentDate = LocalDate.now()
-                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-                val formattedDate = currentDate.format(formatter)
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
@@ -504,7 +503,7 @@ fun SettingsTab(navigator: DestinationsNavigator) {
 
                 ) {
                     for (i in 0..3) {
-
+                        GenerateOption()
                         Spacer(modifier = Modifier.height(50.dp))
                     }
                 }
