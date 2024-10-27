@@ -51,6 +51,7 @@ import com.ramcosta.composedestinations.generated.destinations.SettingsTabDestin
 import com.ramcosta.composedestinations.generated.navgraphs.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation.GenerateNote
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation.GenerateOption
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.time.LocalDate
@@ -468,14 +469,12 @@ fun SettingsTab(navigator: DestinationsNavigator) {
 
                         generateIconButton(Icons.Default.Search, "Search menu") {}
                     }
-//                    generateIconButton(icon = Icons.Default.Settings, "Settings") {}
+                   generateIconButton(icon = Icons.Default.Settings, "kotlinx") {}
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                val currentDate = LocalDate.now()
-                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-                val formattedDate = currentDate.format(formatter)
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
@@ -487,7 +486,8 @@ fun SettingsTab(navigator: DestinationsNavigator) {
 
                 ) {
                     for (i in 0..3) {
-
+                       Row {  }
+                        GenerateOption()
 
                         Spacer(modifier = Modifier.height(50.dp))
                     }
