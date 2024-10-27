@@ -52,7 +52,6 @@ import com.ramcosta.composedestinations.generated.destinations.SettingsTabDestin
 import com.ramcosta.composedestinations.generated.navgraphs.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation.GenerateNote
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation.GenerateOption
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.time.LocalDate
@@ -177,8 +176,6 @@ fun generateIconButton(
         }
     }
 }
-
-
 
 
 /**
