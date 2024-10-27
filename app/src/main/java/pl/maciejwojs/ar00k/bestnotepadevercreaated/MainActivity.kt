@@ -52,6 +52,7 @@ import com.ramcosta.composedestinations.generated.destinations.SettingsTabDestin
 import com.ramcosta.composedestinations.generated.navgraphs.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation.GenerateNote
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation.GenerateOption
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.time.LocalDate
@@ -471,7 +472,8 @@ fun SettingsTab(navigator: DestinationsNavigator) {
                     ) {
 
                         Text(
-                            text = "Search", Modifier.padding(start = 5.dp)
+                            text = "Search",
+                            Modifier.padding(start = 5.dp)
 //                                            .align(alignment = Alignment.CenterVertically)
                         )
 
@@ -500,6 +502,8 @@ fun SettingsTab(navigator: DestinationsNavigator) {
 
                 ) {
                     for (i in 0..3) {
+                        GenerateOption()
+
                         GenerateOption()
 
                         Spacer(modifier = Modifier.height(50.dp))
