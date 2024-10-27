@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-
+    val PageNavLibVersion = "2.1.0-beta14"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -58,6 +58,17 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("io.github.raamcosta.compose-destinations:core:2.1.0-beta14")
-    ksp("io.github.raamcosta.compose-destinations:ksp:2.1.0-beta14")
+    implementation("io.github.raamcosta.compose-destinations:core:$PageNavLibVersion")
+    ksp("io.github.raamcosta.compose-destinations:ksp:$PageNavLibVersion")
+
+    val activity_version = "1.9.3"
+
+    // Java language implementation
+    implementation("androidx.activity:activity:$activity_version")
+    // Kotlin
+    implementation("androidx.activity:activity-ktx:$activity_version")
+
+//    val nav_version = "2.8.3"
+//
+//    implementation("androidx.navigation:navigation-compose:$nav_version")
 }

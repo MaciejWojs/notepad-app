@@ -52,7 +52,6 @@ import com.ramcosta.composedestinations.generated.destinations.SettingsTabDestin
 import com.ramcosta.composedestinations.generated.navgraphs.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation.GenerateNote
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation.GenerateOption
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.time.LocalDate
@@ -163,14 +162,20 @@ fun generateIconButton(
     icon: ImageVector = Icons.Default.Menu,
     message: String = "Menu",
     modifier: Modifier = Modifier,
+    transparent: Boolean = false,
+    isEnabled: Boolean = true,
     onClick: () -> Unit
 ) {
-    IconButton(onClick, modifier) {
-        Icon(icon, contentDescription = message)
+    if (transparent) {
+        IconButton(onClick, modifier, enabled = isEnabled) {
+            Icon(icon, contentDescription = message, tint = Color.Transparent)
+        }
+    } else {
+        IconButton(onClick, modifier, enabled = isEnabled) {
+            Icon(icon, contentDescription = message)
+        }
     }
 }
-
-
 
 
 /**
@@ -249,8 +254,7 @@ fun MainPage(navigator: DestinationsNavigator) {
                     ) {
 
                         Text(
-                            text = "Search",
-                            Modifier.padding(start = 5.dp)
+                            text = "Search", Modifier.padding(start = 5.dp)
 //                                            .align(alignment = Alignment.CenterVertically)
                         )
 
@@ -285,7 +289,7 @@ fun MainPage(navigator: DestinationsNavigator) {
 //                        } else {
 //                            color = MaterialTheme.colorScheme.secondaryContainer
 //                        }
-                         // zaokraglenie musi być zsynchronizowane
+                        // zaokraglenie musi być zsynchronizowane
                         GenerateNote(
                             Modifier
                                 .clip(RoundedCornerShape(roundness.dp))
@@ -362,14 +366,15 @@ fun CreateNotePage(navigator: DestinationsNavigator) {
                     ) {
 
                         Text(
-                            text = "Search",
-                            Modifier.padding(start = 5.dp)
+                            text = "Search", Modifier.padding(start = 5.dp)
 //                                            .align(alignment = Alignment.CenterVertically)
                         )
 
                         generateIconButton(Icons.Default.Search, "Search menu") {}
                     }
-                    generateIconButton(icon = Icons.Default.Settings, "Settings") {}
+                    generateIconButton(
+                        icon = Icons.Default.Settings, "Settings", transparent = true
+                    ) {}
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -414,6 +419,7 @@ fun CreateNotePage(navigator: DestinationsNavigator) {
         }
     }
 }
+
 @Destination<RootGraph>
 @Composable
 fun SettingsTab(navigator: DestinationsNavigator) {
@@ -433,7 +439,9 @@ fun SettingsTab(navigator: DestinationsNavigator) {
 //                                Modifier
 //                                    .fillMaxWidth()
 //                            ) {
-                    generateIconButton(icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen") {
+                    generateIconButton(
+                        icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen"
+                    ) {
                         navigator.popBackStack()
                     }
                     var searchCounter: Int = 0
@@ -463,8 +471,7 @@ fun SettingsTab(navigator: DestinationsNavigator) {
                     ) {
 
                         Text(
-                            text = "Search",
-                            Modifier.padding(start = 5.dp)
+                            text = "Search", Modifier.padding(start = 5.dp)
 //                                            .align(alignment = Alignment.CenterVertically)
                         )
 
