@@ -48,11 +48,13 @@ var NAVTREEINDEX0 =
 "namespaceExampleInstrumentedTest.html":[0,0,1],
 "namespaceExampleInstrumentedTest.html#a7e9ae581c604e09e50c70e7ed7e1f1c0":[0,0,1,0],
 "namespaceString.html":[0,0,2],
-"namespaceUnit.html":[0,0,3],
+"namespaceUnit.html":[0,0,4],
 "namespacemembers.html":[0,1,0],
 "namespacemembers_func.html":[0,1,1],
 "namespaces.html":[0,0],
+"namespacetitle.html":[0,0,3],
 "noteGeneration_8kt.html":[1,0,0,0,1,0,0,0,0,0,0,0,0],
-"pageGeneration_8kt.html":[1,0,0,0,1,0,0,0,0,0,0,0,1],
+"optionGeneration_8kt.html":[1,0,0,0,1,0,0,0,0,0,0,0,1],
+"pageGeneration_8kt.html":[1,0,0,0,1,0,0,0,0,0,0,0,2],
 "pages.html":[]
 };
