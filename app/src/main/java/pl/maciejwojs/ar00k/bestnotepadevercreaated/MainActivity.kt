@@ -2,7 +2,9 @@ package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.BackEventCompat
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
@@ -502,7 +504,6 @@ fun SettingsTab(navigator: DestinationsNavigator) {
 
                 ) {
                     for (i in 0..3) {
-
 
                         Spacer(modifier = Modifier.height(50.dp))
                     }
