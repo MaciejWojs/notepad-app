@@ -346,7 +346,9 @@ fun CreateNotePage(navigator: NavController) {
                         icon = Icons.AutoMirrored.Filled.ArrowBack,
                         "Back to main screen"
                     ) {
-                        navigator.popBackStack()
+                        if (!navigator.popBackStack()) {
+                            navigator.navigate("MainPage")
+                        }
                     }
                     var searchCounter: Int = 0
                     Row(
@@ -450,7 +452,11 @@ fun SettingsPage(navigator: NavController) {
                     generateIconButton(
                         icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen"
                     ) {
-                        navigator.popBackStack()
+                        if (!navigator.popBackStack()) {
+                            // Przejdź do głównego ekranu lub innego widoku początkowego
+                            navigator.navigate("MainPage")
+                        }
+
                     }
                     var searchCounter: Int = 0
                     Row(
@@ -538,7 +544,11 @@ fun HamburgerPage(navigator: NavController) {
                     generateIconButton(
                         icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen"
                     ) {
-                        navigator.popBackStack()
+                        if (!navigator.popBackStack()) {
+                            // Przejdź do głównego ekranu lub innego widoku początkowego
+                            navigator.navigate("MainPage")
+                        }
+
                     }
                     var searchCounter: Int = 0
                     Row(
