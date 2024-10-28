@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['useappcontext_0',['useAppContext',['../namespaceExampleInstrumentedTest.html#a7e9ae581c604e09e50c70e7ed7e1f1c0',1,'ExampleInstrumentedTest']]]
+  ['mainpage_0',['MainPage',['../MainActivity_8kt.html#a9e6e5a56ef95021ffb2d811a0a3ae5f6',1,'MainActivity.kt']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['theme_2ekt_0',['Theme.kt',['../Theme_8kt.html',1,'']]],
-  ['title_1',['title',['../namespacetitle.html',1,'']]],
-  ['type_2ekt_2',['Type.kt',['../Type_8kt.html',1,'']]]
+  ['settingspage_0',['SettingsPage',['../MainActivity_8kt.html#a576d41abb7d21c5a4f463557b23664de',1,'MainActivity.kt']]],
+  ['string_1',['String',['../namespaceString.html',1,'']]]
 ];
