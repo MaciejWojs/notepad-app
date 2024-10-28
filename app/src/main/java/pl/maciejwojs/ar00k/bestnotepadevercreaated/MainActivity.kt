@@ -44,14 +44,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.generated.destinations.CreateNotePageDestination
-import com.ramcosta.composedestinations.generated.destinations.SettingsTabDestination
-import com.ramcosta.composedestinations.generated.navgraphs.RootNavGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation.GenerateNote
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation.GenerateOption
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.time.LocalDate
@@ -77,7 +75,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            DestinationsNavHost(navGraph = RootNavGraph)
+            val navController = rememberNavController()
+            NavHost(navController = navController, startDestination = "MainPage") {
+                composable("MainPage") {
+                    MainPage(navController)
+                }
+                composable("SettingsPage") {
+                    SettingsPage(navController)
+                }
+                composable("HamburgerPage") {
+                    HamburgerPage(navController)
+                }
+                composable("CreateNotePage") {
+                    CreateNotePage(navController)
+                }
+            }
+//            DestinationsNavHost(navGraph = RootNavGraph)
         }
     }
 
@@ -192,18 +205,12 @@ fun GreetingPreview() {
 }
 
 @Composable
-@Destination<RootGraph>(start = true)
-fun MainPage(navigator: DestinationsNavigator) {
+fun MainPage(navigator: NavController) {
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-//                    Toast.makeText(
-//                        ,
-//                        "Tu będzie możliwość dodania notatki",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-                    navigator.navigate(direction = CreateNotePageDestination)
+                    navigator.navigate("CreateNotePage")
                 },
                 containerColor = MaterialTheme.colorScheme.onSecondary,
                 shape = CircleShape,
@@ -226,7 +233,7 @@ fun MainPage(navigator: DestinationsNavigator) {
 //                                Modifier
 //                                    .fillMaxWidth()
 //                            ) {
-                    generateIconButton {}
+                    generateIconButton { navigator.navigate("HamburgerPage") }
                     var searchCounter: Int = 0
                     Row(
                         Modifier
@@ -262,7 +269,7 @@ fun MainPage(navigator: DestinationsNavigator) {
                     }
                     generateIconButton(icon = Icons.Default.Settings, "Settings") {
 
-                        navigator.navigate(direction = SettingsTabDestination)
+                        navigator.navigate("SettingsPage")
 
                     }
                 }
@@ -317,9 +324,8 @@ fun MainPage(navigator: DestinationsNavigator) {
 }
 
 
-@Destination<RootGraph>
 @Composable
-fun CreateNotePage(navigator: DestinationsNavigator) {
+fun CreateNotePage(navigator: NavController) {
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
@@ -336,7 +342,10 @@ fun CreateNotePage(navigator: DestinationsNavigator) {
 //                                Modifier
 //                                    .fillMaxWidth()
 //                            ) {
-                    generateIconButton(icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen") {
+                    generateIconButton(
+                        icon = Icons.AutoMirrored.Filled.ArrowBack,
+                        "Back to main screen"
+                    ) {
                         navigator.popBackStack()
                     }
                     var searchCounter: Int = 0
@@ -420,9 +429,8 @@ fun CreateNotePage(navigator: DestinationsNavigator) {
     }
 }
 
-@Destination<RootGraph>
 @Composable
-fun SettingsTab(navigator: DestinationsNavigator) {
+fun SettingsPage(navigator: NavController) {
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
@@ -501,6 +509,93 @@ fun SettingsTab(navigator: DestinationsNavigator) {
                 ) {
                     for (i in 0..3) {
                         GenerateOption()
+                        Spacer(modifier = Modifier.height(50.dp))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun HamburgerPage(navigator: NavController) {
+    BestNotepadEverCreatedTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
+            Column(modifier = Modifier.padding(innerPadding)) {
+                Row(
+                    Modifier
+                        .height(50.dp)
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.onSecondary)
+                        .padding(horizontal = 8.dp), //1 Add some padding to the row
+                    horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                ) {
+//                            Row(
+//                                Modifier
+//                                    .fillMaxWidth()
+//                            ) {
+                    generateIconButton(
+                        icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen"
+                    ) {
+                        navigator.popBackStack()
+                    }
+                    var searchCounter: Int = 0
+                    Row(
+                        Modifier
+                            .clip(RoundedCornerShape(25.dp))
+                            .align(Alignment.CenterVertically)
+                            .fillMaxHeight(0.55f)
+                            .fillMaxWidth(0.75f)
+//                                    .background(Color.Red)
+                            .border(
+                                width = 2.dp,
+                                color = MaterialTheme.colorScheme.outline,
+                                shape = RoundedCornerShape(25.dp)
+                            )
+                            .clickable {
+//                                Toast
+//                                    .makeText(
+//                                        applicationContext,
+//                                        "Clicked ${++searchCounter} ${if (searchCounter < 2) "time" else "times"}",
+//                                        Toast.LENGTH_LONG
+//                                    )
+//                                    .show()
+                            },
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Text(
+                            text = "Search", Modifier.padding(start = 5.dp)
+//                                            .align(alignment = Alignment.CenterVertically)
+                        )
+
+                        generateIconButton(Icons.Default.Search, "Search menu") {}
+                    }
+
+                    generateIconButton(
+                        icon = Icons.Filled.Settings,
+                        "Settings",
+                        transparent = true,
+                        isEnabled = false,
+                    ) {}
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(
+                            rememberScrollState(1)
+
+                        )
+
+                ) {
+                    for (i in 0..3) {
                         Spacer(modifier = Modifier.height(50.dp))
                     }
                 }

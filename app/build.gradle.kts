@@ -41,7 +41,6 @@ android {
 }
 
 dependencies {
-    val PageNavLibVersion = "2.1.0-beta14"
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -58,8 +57,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("io.github.raamcosta.compose-destinations:core:$PageNavLibVersion")
-    ksp("io.github.raamcosta.compose-destinations:ksp:$PageNavLibVersion")
+//    val PageNavLibVersion = "2.1.0-beta14"
+//    implementation("io.github.raamcosta.compose-destinations:core:$PageNavLibVersion")
+//    ksp("io.github.raamcosta.compose-destinations:ksp:$PageNavLibVersion")
 
     val activity_version = "1.9.3"
 
@@ -68,7 +68,18 @@ dependencies {
     // Kotlin
     implementation("androidx.activity:activity-ktx:$activity_version")
 
-//    val nav_version = "2.8.3"
-//
-//    implementation("androidx.navigation:navigation-compose:$nav_version")
+    val nav_version = "2.8.3"
+    // Jetpack Compose integration
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    // Views/Fragments integration
+    implementation("androidx.navigation:navigation-fragment:$nav_version")
+    implementation("androidx.navigation:navigation-ui:$nav_version")
+
+    // Feature module support for Fragments
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+
+    // Testing Navigation
+    androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
+
 }
