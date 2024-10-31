@@ -1,1 +1,1 @@
-package pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation
+package pl.maciejwojs.ar00k.bestnotepadevercreaated.content

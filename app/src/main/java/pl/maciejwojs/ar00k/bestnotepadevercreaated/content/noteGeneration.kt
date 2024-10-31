@@ -1,4 +1,4 @@
-package pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation
+package pl.maciejwojs.ar00k.bestnotepadevercreaated.content
 
 import android.widget.Toast
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -18,6 +18,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.CreateNoteTitle
+
+sealed class doxygenFix
 
 @Composable
 fun GenerateNote(

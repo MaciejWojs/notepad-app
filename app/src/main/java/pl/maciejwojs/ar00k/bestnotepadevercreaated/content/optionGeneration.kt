@@ -1,4 +1,4 @@
-package pl.maciejwojs.ar00k.bestnotepadevercreaated.content.generation
+package pl.maciejwojs.ar00k.bestnotepadevercreaated.content
 
 
 import androidx.compose.foundation.clickable
@@ -32,7 +32,7 @@ fun GenerateOption(optionText: String = "sample text", optionTitle: String = "sa
 
         )
     {
-        Column() {
+        Column {
             Text(
                 text = optionTitle,
                 modifier = Modifier,
