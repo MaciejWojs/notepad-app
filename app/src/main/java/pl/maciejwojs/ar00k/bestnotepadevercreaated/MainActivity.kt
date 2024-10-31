@@ -10,9 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.launch
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.CreateNotePage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.HamburgerPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.MainPage
@@ -38,6 +42,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val dao: NotesDao = ContactDatabase.getInstance(this).dao
+        lifecycleScope.launch {
+            dao.insertNote(note = Note("Pierwsza notatka", "lorem ipsum abc"))
+            dao.insertNote(note = Note("Druga notatka", "lorem ipsum abc"))
+            dao.insertNote(note = Note("trzecia notatka", "lorem ipsum abc"))
+            dao.insertNote(note = Note("Pierwsza notatka", "lorem ipsum abc"))
+            dao.insertNote(note = Note("Pierwsza notatka", "lorem ipsum abc"))
+            dao.insertTag(tag = Tag("Zakupy"))
+        }
         setContent {
             val navController = rememberNavController()
             NavHost(navController = navController, startDestination = "MainPage") {
