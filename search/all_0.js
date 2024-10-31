@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['color_2ekt_0',['Color.kt',['../Color_8kt.html',1,'']]],
-  ['componentactivity_1',['ComponentActivity',['../namespaceComponentActivity.html',1,'']]],
-  ['createnotepage_2',['CreateNotePage',['../MainActivity_8kt.html#adfff13ee8d5c63e07c2fb1b910780122',1,'MainActivity.kt']]],
-  ['createnotetitle_3',['CreateNoteTitle',['../MainActivity_8kt.html#a3f7b658a3de4acdc1e91008cdc1baf4c',1,'MainActivity.kt']]]
+  ['build_0',['build',['../namespaceRoomDatabase.html#aaeaac0d0291e7b25908f362c77a328e5',1,'RoomDatabase']]]
 ];

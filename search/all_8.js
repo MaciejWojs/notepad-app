@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['settingspage_0',['SettingsPage',['../MainActivity_8kt.html#a576d41abb7d21c5a4f463557b23664de',1,'MainActivity.kt']]],
-  ['string_1',['String',['../namespaceString.html',1,'']]]
+  ['mainactivity_2ekt_0',['MainActivity.kt',['../MainActivity_8kt.html',1,'']]],
+  ['mainpage_2ekt_1',['MainPage.kt',['../MainPage_8kt.html',1,'']]]
 ];

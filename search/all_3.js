@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['hamburgerpage_0',['HamburgerPage',['../MainActivity_8kt.html#a50ef60298add0b9e93275028c4956f6b',1,'MainActivity.kt']]]
+  ['exampleinstrumentedtest_0',['ExampleInstrumentedTest',['../namespaceExampleInstrumentedTest.html',1,'']]],
+  ['exampleinstrumentedtest_2ekt_1',['ExampleInstrumentedTest.kt',['../ExampleInstrumentedTest_8kt.html',1,'']]]
 ];

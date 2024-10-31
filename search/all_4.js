@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['mainactivity_2ekt_0',['MainActivity.kt',['../MainActivity_8kt.html',1,'']]],
-  ['mainpage_1',['MainPage',['../MainActivity_8kt.html#a9e6e5a56ef95021ffb2d811a0a3ae5f6',1,'MainActivity.kt']]]
+  ['globalvalues_2ekt_0',['globalValues.kt',['../globalValues_8kt.html',1,'']]],
+  ['greeting_1',['Greeting',['../MainActivity_8kt.html#a8e17281e1e36713c40997779a8720e20',1,'MainActivity.kt']]],
+  ['greetingpreview_2',['GreetingPreview',['../MainActivity_8kt.html#aed63c3eaaa4cb69bb08cba4720b457bd',1,'MainActivity.kt']]]
 ];

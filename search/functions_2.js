@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['hamburgerpage_0',['HamburgerPage',['../MainActivity_8kt.html#a50ef60298add0b9e93275028c4956f6b',1,'MainActivity.kt']]]
+  ['greeting_0',['Greeting',['../MainActivity_8kt.html#a8e17281e1e36713c40997779a8720e20',1,'MainActivity.kt']]],
+  ['greetingpreview_1',['GreetingPreview',['../MainActivity_8kt.html#aed63c3eaaa4cb69bb08cba4720b457bd',1,'MainActivity.kt']]]
 ];

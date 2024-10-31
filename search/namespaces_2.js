@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['string_0',['String',['../namespaceString.html',1,'']]]
+  ['navcontroller_0',['NavController',['../namespaceNavController.html',1,'']]],
+  ['notesdao_1',['NotesDao',['../namespaceNotesDao.html',1,'']]],
+  ['notesevent_2',['NotesEvent',['../namespaceNotesEvent.html',1,'']]]
 ];

@@ -1,4 +1,9 @@
 var searchData=
 [
-  ['pagegeneration_2ekt_0',['pageGeneration.kt',['../pageGeneration_8kt.html',1,'']]]
+  ['note_2ekt_0',['Note.kt',['../Note_8kt.html',1,'']]],
+  ['notegeneration_2ekt_1',['noteGeneration.kt',['../noteGeneration_8kt.html',1,'']]],
+  ['notesdao_2ekt_2',['NotesDao.kt',['../NotesDao_8kt.html',1,'']]],
+  ['notesevent_2ekt_3',['NotesEvent.kt',['../NotesEvent_8kt.html',1,'']]],
+  ['notestagscrossref_2ekt_4',['NotesTagsCrossRef.kt',['../NotesTagsCrossRef_8kt.html',1,'']]],
+  ['noteswithtags_2ekt_5',['NotesWithTags.kt',['../NotesWithTags_8kt.html',1,'']]]
 ];

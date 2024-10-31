@@ -29,7 +29,8 @@ var NAVTREE =
       [ "Lista pakietów", "namespaces.html", "namespaces_dup" ],
       [ "Składowe pakietu", "namespacemembers.html", [
         [ "Wszystko", "namespacemembers.html", null ],
-        [ "Funkcje", "namespacemembers_func.html", null ]
+        [ "Funkcje", "namespacemembers_func.html", null ],
+        [ "Zmienne", "namespacemembers_vars.html", null ]
       ] ]
     ] ],
     [ "Pliki", "files.html", [
