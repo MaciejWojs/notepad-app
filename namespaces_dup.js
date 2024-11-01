@@ -11,9 +11,9 @@ var namespaces_dup =
     [ "NotesDao", "namespaceNotesDao.html", null ],
     [ "NotesEvent", "namespaceNotesEvent.html", null ],
     [ "RoomDatabase", "namespaceRoomDatabase.html", [
-      [ "build", "namespaceRoomDatabase.html#aaeaac0d0291e7b25908f362c77a328e5", null ],
+      [ "build", "namespaceRoomDatabase.html#a6d994b3f7ea496ccb8b361fa0527db9d", null ],
       [ "dao", "namespaceRoomDatabase.html#a67427c6156a488ac25367a603b639f1f", null ],
-      [ "java", "namespaceRoomDatabase.html#a69ff089bfad89786370489679eb61180", null ]
+      [ "java", "namespaceRoomDatabase.html#ad83bb6c8d401055e78394af92b14653e", null ]
     ] ],
     [ "String", "namespaceString.html", null ],
     [ "title", "namespacetitle.html", null ],
