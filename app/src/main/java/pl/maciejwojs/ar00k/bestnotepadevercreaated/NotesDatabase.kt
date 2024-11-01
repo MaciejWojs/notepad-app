@@ -13,18 +13,18 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.NotesTagsCrossRe
     version = 1
 )
 
-abstract class ContactDatabase : RoomDatabase() {
+abstract class NotesDatabase : RoomDatabase() {
     abstract val dao: NotesDao
 
     companion object {
         @Volatile
-        private var INSTANCE: ContactDatabase? = null
+        private var INSTANCE: NotesDatabase? = null
 
-        fun getInstance(context: Context): ContactDatabase {
+        fun getInstance(context: Context): NotesDatabase {
             synchronized(this) {
                 return INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
-                    ContactDatabase::class.java,
+                    NotesDatabase::class.java,
                     "note_db"
                 ).build().also { INSTANCE = it }
             }

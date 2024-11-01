@@ -42,7 +42,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val dao: NotesDao = ContactDatabase.getInstance(this).dao
+        val dao: NotesDao = NotesDatabase.getInstance(this).dao
         lifecycleScope.launch {
             dao.insertNote(note = Note("Pierwsza notatka", "lorem ipsum abc"))
             dao.insertNote(note = Note("Druga notatka", "lorem ipsum abc"))
