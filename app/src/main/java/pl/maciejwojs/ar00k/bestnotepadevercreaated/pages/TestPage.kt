@@ -1,5 +1,6 @@
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,13 +33,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesDao
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote2
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 @Composable
-fun TestPage(navigator: NavController,  viewModel: NotesViewModel, dao: NotesDao) {
+fun TestPage(navigator: NavController, viewModel: NotesViewModel, dao: NotesDao) {
     val context = LocalContext.current
     val state = viewModel.state.collectAsState().value
 //    val noteList = state.notes
@@ -69,7 +71,6 @@ fun TestPage(navigator: NavController,  viewModel: NotesViewModel, dao: NotesDao
                         }
 
                     }
-                    var searchCounter: Int = 0
                     Row(
                         Modifier
                             .clip(RoundedCornerShape(25.dp))
@@ -112,59 +113,28 @@ fun TestPage(navigator: NavController,  viewModel: NotesViewModel, dao: NotesDao
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
-
-                Toast.makeText(context, "Liczba notatek: ${state.notes.size}", Toast.LENGTH_SHORT).show()
-
                 // List of Notes
                 LazyColumn(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth()
-//                    .verticalScroll(rememberScrollState())
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-//                item {
-//                    Row(
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .wrapContentHeight()
-//                            .padding(vertical = 25.dp),
-//                        horizontalArrangement = Arrangement.Center,
-//                        verticalAlignment = Alignment.CenterVertically
-//                    ) {
-//                        Text(
-//                            "\uD83C\uDF3F  Plants in Cosmetics",
-//                        )
-//                    }
-//                }
-//                        log()
-                    items(state.notes) { singleNote ->
-                        GenerateNote2(
-                            dao = dao,
-                            viewModel = viewModel,
-                            note = singleNote
-                        )
+                    items(state.notes, key = { it.noteID }) { singleNote ->
+                        GenerateNote2(note = singleNote, onDelete = {
+                            Log.d("TestPage", "Deleting note: ${singleNote.title}")
+                            viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
+                            Toast.makeText(
+                                context,
+                                "${singleNote.title} deleted",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            // Log the current state after deletion
+                            Log.d(
+                                "TestPage",
+                                "Current notes after deletion: ${state.notes.map { it.title }}"
+                            )
+                        })
                     }
-//                for (note in notes) {
-//                    GenerateNote2(
-//                        Modifier
-//                            .clip(RoundedCornerShape(roundness.dp))
-////                                        .background(color)
-//                            .border(
-//                                width = 2.dp,
-//                                color = MaterialTheme.colorScheme.outline,
-//                                shape = RoundedCornerShape(roundness.dp)
-//                            )
-//
-//                            .padding(7.dp)
-//                            .scale(0.9f)
-//                            .height(250.dp)
-//                            .fillMaxWidth(0.8f),
-//                        title = note.title ?: "", // Default to empty if null
-//                        content = note.content ?: "", // Default to empty if null
-//                        creationDate = note.creationTime
-//                    )
-//                    Spacer(modifier = Modifier.height(50.dp))
-//                }
                 }
             }
         }

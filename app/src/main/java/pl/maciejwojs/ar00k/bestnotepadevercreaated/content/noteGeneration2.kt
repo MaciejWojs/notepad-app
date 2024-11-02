@@ -14,7 +14,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,24 +24,28 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.CreateNoteTitle
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesDao
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 
+//@Composable
+//fun GenerateNote2(
+//    modifier: Modifier = Modifier,
+//    viewModel: NotesViewModel,
+//    dao: NotesDao,
+//    note: Note,
+//    weight: FontWeight? = null,
+//) {
 @Composable
 fun GenerateNote2(
     modifier: Modifier = Modifier,
-    viewModel: NotesViewModel,
-    dao: NotesDao,
     note: Note,
+    onDelete: () -> Unit, // Pass a lambda function to handle deletion
     weight: FontWeight? = null,
 ) {
     val context = LocalContext.current
-    val state = viewModel.state.collectAsState().value
+//    val state = viewModel.state.collectAsState().value
+    val coroutineScope = rememberCoroutineScope()
     Card(
         Modifier
             .shadow(elevation = 20.dp, spotColor = MaterialTheme.colorScheme.onSurface)
@@ -51,12 +55,10 @@ fun GenerateNote2(
                         .makeText(context, "Tap", Toast.LENGTH_SHORT)
                         .show()
                 }, onLongPress = {
+                    onDelete()
                     Toast
                         .makeText(context, "Long Press", Toast.LENGTH_SHORT)
                         .show()
-                    viewModel.viewModelScope.launch {
-                        dao.deleteNote(note = note)
-                    }
                 })
             },
     ) {

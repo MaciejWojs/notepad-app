@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -29,12 +28,7 @@ class NotesViewModel(
         when (event) {
             is NotesEvent.DeleteNote -> {
                 viewModelScope.launch {
-                    dao.deleteNote(event.note)
-                    val notes = dao.getNotes().first()
-                    _state.update {
-                        it.copy(notes = notes)
-                    }
-                    Log.i("BAZA", "Liczba notatek po usunieciu: ${notes.size}")
+                        dao.deleteNote(event.note)
                 }
             }
 

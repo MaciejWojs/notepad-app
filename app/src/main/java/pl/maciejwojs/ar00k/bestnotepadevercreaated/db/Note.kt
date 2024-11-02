@@ -29,3 +29,5 @@ data class Note(
     @PrimaryKey(autoGenerate = true)
     val noteID: Int = 0
 )
+//TODO zrobić pole na zablokowanie notatki i dostosować resztę kodu
+//TODO zmienić pola na Timestamp i dostosować resztę kodu
