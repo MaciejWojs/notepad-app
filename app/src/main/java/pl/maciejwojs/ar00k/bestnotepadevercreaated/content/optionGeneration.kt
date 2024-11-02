@@ -24,38 +24,25 @@ fun GenerateOption(optionText: String = "sample text", optionTitle: String = "sa
 
     Row(
         modifier = Modifier
-//            .background(Color.Red)
             .clickable { }
             .fillMaxWidth(0.8f),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
-
-        )
-    {
+    ) {
         Column {
             Text(
                 text = optionTitle,
                 modifier = Modifier,
-//                .padding(10.dp),
-
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 20.sp,
-
-
-                )
+            )
             Text(
-                text = optionText,
-                modifier = Modifier
-//                .padding(10.dp)
+                text = optionText, modifier = Modifier
             )
         }
 
-        Switch(
-
-            checked = checked,
-            onCheckedChange = {
-                checked = it
-            }
-        )
+        Switch(checked = checked, onCheckedChange = {
+            checked = it
+        })
     }
 }

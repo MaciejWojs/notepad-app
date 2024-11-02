@@ -45,10 +45,6 @@ fun HamburgerPage(navigator: NavController) {
                         .padding(horizontal = 8.dp), //1 Add some padding to the row
                     horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
                 ) {
-//                            Row(
-//                                Modifier
-//                                    .fillMaxWidth()
-//                            ) {
                     GenerateIconButton(
                         icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen"
                     ) {
@@ -58,7 +54,6 @@ fun HamburgerPage(navigator: NavController) {
                         }
 
                     }
-                    var searchCounter: Int = 0
                     Row(
                         Modifier
                             .clip(RoundedCornerShape(25.dp))
@@ -72,13 +67,7 @@ fun HamburgerPage(navigator: NavController) {
                                 shape = RoundedCornerShape(25.dp)
                             )
                             .clickable {
-//                                Toast
-//                                    .makeText(
-//                                        applicationContext,
-//                                        "Clicked ${++searchCounter} ${if (searchCounter < 2) "time" else "times"}",
-//                                        Toast.LENGTH_LONG
-//                                    )
-//                                    .show()
+                            //TODO search Implementation
                             },
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically

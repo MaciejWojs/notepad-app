@@ -30,12 +30,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -65,12 +63,7 @@ fun MainPage(navigator: NavController) {
                         .padding(horizontal = 8.dp), //1 Add some padding to the row
                     horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
                 ) {
-//                            Row(
-//                                Modifier
-//                                    .fillMaxWidth()
-//                            ) {
-                    GenerateIconButton { navigator.navigate("HamburgerPage") }
-                    var searchCounter: Int = 0
+                    GenerateIconButton { navigator.navigate("TestPage") }
                     Row(
                         Modifier
                             .clip(RoundedCornerShape(25.dp))
@@ -84,23 +77,15 @@ fun MainPage(navigator: NavController) {
                                 shape = RoundedCornerShape(25.dp)
                             )
                             .clickable {
-//                                Toast
-//                                    .makeText(
-//                                        applicationContext,
-//                                        "Clicked ${++searchCounter} ${if (searchCounter < 2) "time" else "times"}",
-//                                        Toast.LENGTH_LONG
-//                                    )
-//                                    .show()
+                            //TODO search implementation
                             },
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-
                         Text(
                             text = "Search", Modifier.padding(start = 5.dp)
 //                                            .align(alignment = Alignment.CenterVertically)
                         )
-
                         GenerateIconButton(Icons.Default.Search, "Search menu") {}
                     }
                     GenerateIconButton(icon = Icons.Default.Settings, "Settings") {
@@ -126,27 +111,7 @@ fun MainPage(navigator: NavController) {
 
                 ) {
                     for (i in 0..20) {
-//                        var color: Color
-//                        if (i % 2 == 0) {
-//                            color = MaterialTheme.colorScheme.primaryContainer
-//                        } else {
-//                            color = MaterialTheme.colorScheme.secondaryContainer
-//                        }
-                        // zaokraglenie musi być zsynchronizowane
                         GenerateNote(
-                            Modifier
-                                .clip(RoundedCornerShape(roundness.dp))
-//                                        .background(color)
-                                .border(
-                                    width = 2.dp,
-                                    color = MaterialTheme.colorScheme.outline,
-                                    shape = RoundedCornerShape(roundness.dp)
-                                )
-
-                                .padding(7.dp)
-                                .scale(0.9f)
-                                .height(250.dp)
-                                .fillMaxWidth(0.8f),
                             weight = null,
                             creationDate = formattedDate
                         )

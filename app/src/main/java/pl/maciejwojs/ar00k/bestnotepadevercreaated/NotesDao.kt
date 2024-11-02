@@ -23,6 +23,7 @@ interface NotesDao {
     @Query("SELECT * FROM notes")
     fun getNotes(): Flow<List<Note>>
 
+    @Transaction
     @Query("SELECT * FROM notes WHERE noteID=:id")
     fun getNoteFromID(id: Int): Flow<List<Note>>
 
@@ -34,8 +35,11 @@ interface NotesDao {
     @Delete
     suspend fun delete(tag: Tag)
 
+    @Transaction
     @Query("Select * FROM tags")
     fun getTags(): Flow<List<Tag>>
+
+    @Transaction
     @Query("SELECT name FROM tags WHERE tagID=:id")
     fun getTagFromID(id: Int): Flow<List<String>>
 
