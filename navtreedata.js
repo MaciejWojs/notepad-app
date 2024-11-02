@@ -33,6 +33,10 @@ var NAVTREE =
         [ "Zmienne", "namespacemembers_vars.html", null ]
       ] ]
     ] ],
+    [ "Klasy", "annotated.html", [
+      [ "Lista klas", "annotated.html", "annotated_dup" ],
+      [ "Indeks klas", "classes.html", null ]
+    ] ],
     [ "Pliki", "files.html", [
       [ "Lista plików", "files.html", "files_dup" ],
       [ "Składowe plików", "globals.html", [

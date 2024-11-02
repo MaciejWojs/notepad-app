@@ -10,6 +10,8 @@ var namespaces_dup =
     [ "NavController", "namespaceNavController.html", null ],
     [ "NotesDao", "namespaceNotesDao.html", null ],
     [ "NotesEvent", "namespaceNotesEvent.html", null ],
+    [ "NotesViewModel", "namespaceNotesViewModel.html", null ],
+    [ "null", "namespacenull.html", null ],
     [ "RoomDatabase", "namespaceRoomDatabase.html", [
       [ "build", "namespaceRoomDatabase.html#a6d994b3f7ea496ccb8b361fa0527db9d", null ],
       [ "dao", "namespaceRoomDatabase.html#a67427c6156a488ac25367a603b639f1f", null ],
@@ -19,5 +21,6 @@ var namespaces_dup =
     [ "title", "namespacetitle.html", null ],
     [ "Unit", "namespaceUnit.html", [
       [ "if", "namespaceUnit.html#a11b555fd0085da840f1263526351f140", null ]
-    ] ]
+    ] ],
+    [ "ViewModel", "namespaceViewModel.html", null ]
 ];

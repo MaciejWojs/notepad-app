@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['useappcontext_0',['useAppContext',['../namespaceExampleInstrumentedTest.html#a7e9ae581c604e09e50c70e7ed7e1f1c0',1,'ExampleInstrumentedTest']]]
+  ['oncreate_0',['onCreate',['../namespaceComponentActivity.html#ac93e02521caa7c6608824507a471b057',1,'ComponentActivity']]],
+  ['onstart_1',['onStart',['../namespaceComponentActivity.html#a8b5f15eaf13cf16988ed3a266d92720a',1,'ComponentActivity']]]
 ];

@@ -8,5 +8,8 @@ var dir_9e3d75b18884beb5d40f55e16b5e7788 =
     [ "MainActivity.kt", "MainActivity_8kt.html", "MainActivity_8kt" ],
     [ "NotesDao.kt", "NotesDao_8kt.html", null ],
     [ "NotesDatabase.kt", "NotesDatabase_8kt.html", "NotesDatabase_8kt" ],
-    [ "NotesEvent.kt", "NotesEvent_8kt.html", null ]
+    [ "NotesEvent.kt", "NotesEvent_8kt.html", "NotesEvent_8kt" ],
+    [ "NotesState.kt", "NotesState_8kt.html", null ],
+    [ "NotesViewModel.kt", "NotesViewModel_8kt.html", null ],
+    [ "TagsState.kt", "TagsState_8kt.html", null ]
 ];
