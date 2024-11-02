@@ -18,11 +18,10 @@ class NotesViewModel(
     init {
         // Load notes initially when the ViewModel is created
         viewModelScope.launch {
-            val notes = dao.getNotes().first() // Ensure this returns a List<Note>
-            val notes2 =
-            _state.update { it.copy(notes = notes) }
-            Log.i("BAZA", "Liczba notatek przy uruchomieniu: ${notes2}")
-            Log.i("BAZA", "Liczba notatek przy uruchomieniu: ${notes.size}")
+            dao.getNotes().collect { notes ->
+                _state.update { it.copy(notes = notes) }
+                Log.i("BAZA", "Liczba notatek przy uruchomieniu: ${notes.size}")
+            }
         }
     }
 
