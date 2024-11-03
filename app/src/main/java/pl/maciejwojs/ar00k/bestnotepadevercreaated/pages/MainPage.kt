@@ -1,5 +1,6 @@
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -12,10 +13,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
@@ -27,20 +28,22 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote2
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 
 @Composable
-fun MainPage(navigator: NavController) {
+fun MainPage(navigator: NavController, viewModel: NotesViewModel) {
+    val state = viewModel.state.collectAsState().value
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
             FloatingActionButton(
@@ -63,7 +66,7 @@ fun MainPage(navigator: NavController) {
                         .padding(horizontal = 8.dp), //1 Add some padding to the row
                     horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
                 ) {
-                    GenerateIconButton { navigator.navigate("TestPage") }
+                    GenerateIconButton { navigator.navigate("HamburgerPage") }
                     Row(
                         Modifier
                             .clip(RoundedCornerShape(25.dp))
@@ -77,7 +80,7 @@ fun MainPage(navigator: NavController) {
                                 shape = RoundedCornerShape(25.dp)
                             )
                             .clickable {
-                            //TODO search implementation
+                                //TODO search implementation
                             },
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
@@ -97,26 +100,20 @@ fun MainPage(navigator: NavController) {
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                val currentDate = LocalDate.now()
-                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-                val formattedDate = currentDate.format(formatter)
-                Column(
+                LazyColumn(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(
-                            rememberScrollState(1)
-
-                        )
-
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    for (i in 0..20) {
-                        GenerateNote(
-                            weight = null,
-                            creationDate = formattedDate
-                        )
-
-                        Spacer(modifier = Modifier.height(50.dp))
+                    items(state.notes, key = { it.noteID }) { singleNote ->
+                        GenerateNote2(note = singleNote, onDelete = {
+                            Log.d("TestPage", "Deleting note: ${singleNote.title}")
+                            viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
+                            // Log the current state after deletion
+                            Log.d(
+                                "TestPage",
+                                "Current notes after deletion: ${state.notes.map { it.title }}"
+                            )
+                        })
                     }
                 }
             }

@@ -33,7 +33,7 @@ interface NotesDao {
     suspend fun insertTag(tag: Tag)
 
     @Delete
-    suspend fun delete(tag: Tag)
+    suspend fun deleteTag(tag: Tag)
 
     @Transaction
     @Query("Select * FROM tags")

@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
             dao.insertNote(note = Note("trzecia notatka", "lorem ipsum abc"))
             dao.insertTag(tag = Tag("Zakupy"))
         }
-        val viewModel by viewModels<NotesViewModel>(
+        val notesViewModel by viewModels<NotesViewModel>(
             factoryProducer = {
                 object : ViewModelProvider.Factory {
                     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -66,26 +66,35 @@ class MainActivity : ComponentActivity() {
                 }
             }
         )
+        val tagsViewModel by viewModels<TagsViewModel>(
+            factoryProducer = {
+                object : ViewModelProvider.Factory {
+                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                        return TagsViewModel(dao) as T
+                    }
+                }
+            }
+        )
 
 
         setContent {
-            val state by viewModel.state.collectAsState()
+            val state by notesViewModel.state.collectAsState()
             val navController = rememberNavController()
             NavHost(navController = navController, startDestination = "MainPage") {
                 composable("MainPage") {
-                    MainPage(navController)
+                    MainPage(navController, viewModel = notesViewModel)
                 }
                 composable("SettingsPage") {
                     SettingsPage(navController)
                 }
                 composable("NotesListPage") {
-                    NotesListPage(navController, viewModel=viewModel)
+                    NotesListPage(navController, viewModel=notesViewModel)
                 }
                 composable("TestPage") {
-                    TestPage(navController, viewModel = viewModel, dao = dao )
+                    TestPage(navController, viewModel = notesViewModel, dao = dao )
                 }
                 composable("HamburgerPage") {
-                    HamburgerPage(navController)
+                    HamburgerPage(navController, tagsViewModel)
                 }
                 composable("CreateNotePage") {
                     CreateNotePage(navController)

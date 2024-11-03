@@ -123,9 +123,7 @@ fun TestPage(navigator: NavController, viewModel: NotesViewModel, dao: NotesDao)
                             Log.d("TestPage", "Deleting note: ${singleNote.title}")
                             viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
                             Toast.makeText(
-                                context,
-                                "${singleNote.title} deleted",
-                                Toast.LENGTH_SHORT
+                                context, "${singleNote.title} deleted", Toast.LENGTH_SHORT
                             ).show()
 
                             // Log the current state after deletion
