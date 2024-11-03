@@ -7,11 +7,11 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 
 data class TagsWithNotes(
-    @Embedded val tag: Tag,
+    @Embedded val note: Note,
     @Relation(
-        parentColumn = "tagID",
-        entityColumn = "noteID",
+        parentColumn = "noteID",
+        entityColumn = "tagID",
         associateBy = Junction(NotesTagsCrossRef::class)
     )
-    val notes: List<Note>
+    val tags: List<Tag> // Changed `notes` to `tags`
 )

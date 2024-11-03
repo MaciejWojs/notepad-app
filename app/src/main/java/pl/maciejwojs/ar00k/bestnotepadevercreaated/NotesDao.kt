@@ -44,14 +44,13 @@ interface NotesDao {
     fun getTagFromID(id: Int): Flow<List<String>>
 
 
-    //Kwerenda do notatek z tagami
     @Transaction
-    @Query("SELECT * FROM Notes WHERE noteID = :noteId")
-    fun getNotesWithTags(noteId: Int): List<NotesWithTags>
+    @Query("SELECT * FROM tags WHERE tagID = :tagId")
+    suspend fun getNotesWithTags(tagId: Int): List<NotesWithTags>
 
     @Transaction
-    @Query("SELECT * FROM Tags WHERE tagID = :tagId")
-    fun getTagsWithNotes(tagId: Int): List<TagsWithNotes>
+    @Query("SELECT * FROM notes WHERE noteID = :noteId")
+    suspend fun getTagsWithNotes(noteId: Int): List<TagsWithNotes>
 
 
     //Kwerendy Mieszane
