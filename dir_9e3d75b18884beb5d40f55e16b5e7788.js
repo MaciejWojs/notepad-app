@@ -10,6 +10,9 @@ var dir_9e3d75b18884beb5d40f55e16b5e7788 =
     [ "NotesDatabase.kt", "NotesDatabase_8kt.html", "NotesDatabase_8kt" ],
     [ "NotesEvent.kt", "NotesEvent_8kt.html", "NotesEvent_8kt" ],
     [ "NotesState.kt", "NotesState_8kt.html", null ],
+    [ "NotesTagsCrossRefState.kt", "NotesTagsCrossRefState_8kt.html", null ],
+    [ "NotesTagsCrossRefViewModel.kt", "NotesTagsCrossRefViewModel_8kt.html", null ],
     [ "NotesViewModel.kt", "NotesViewModel_8kt.html", null ],
-    [ "TagsState.kt", "TagsState_8kt.html", null ]
+    [ "TagsState.kt", "TagsState_8kt.html", null ],
+    [ "TagsViewModel.kt", "TagsViewModel_8kt.html", null ]
 ];

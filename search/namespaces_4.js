@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['string_0',['String',['../namespaceString.html',1,'']]]
+  ['roomdatabase_0',['RoomDatabase',['../namespaceRoomDatabase.html',1,'']]]
 ];

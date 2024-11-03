@@ -15,8 +15,11 @@ var searchData=
   ['noteslistpageorg_2ekt_12',['NotesListPageORG.kt',['../NotesListPageORG_8kt.html',1,'']]],
   ['notesstate_2ekt_13',['NotesState.kt',['../NotesState_8kt.html',1,'']]],
   ['notestagscrossref_2ekt_14',['NotesTagsCrossRef.kt',['../NotesTagsCrossRef_8kt.html',1,'']]],
-  ['notesviewmodel_15',['NotesViewModel',['../namespaceNotesViewModel.html',1,'']]],
-  ['notesviewmodel_2ekt_16',['NotesViewModel.kt',['../NotesViewModel_8kt.html',1,'']]],
-  ['noteswithtags_2ekt_17',['NotesWithTags.kt',['../NotesWithTags_8kt.html',1,'']]],
-  ['null_18',['null',['../namespacenull.html',1,'']]]
+  ['notestagscrossrefstate_2ekt_15',['NotesTagsCrossRefState.kt',['../NotesTagsCrossRefState_8kt.html',1,'']]],
+  ['notestagscrossrefviewmodel_2ekt_16',['NotesTagsCrossRefViewModel.kt',['../NotesTagsCrossRefViewModel_8kt.html',1,'']]],
+  ['notesviewmodel_17',['NotesViewModel',['../namespaceNotesViewModel.html',1,'']]],
+  ['notesviewmodel_2ekt_18',['NotesViewModel.kt',['../NotesViewModel_8kt.html',1,'']]],
+  ['noteswithtagpage_2ekt_19',['NotesWithTagPage.kt',['../NotesWithTagPage_8kt.html',1,'']]],
+  ['noteswithtags_2ekt_20',['NotesWithTags.kt',['../NotesWithTags_8kt.html',1,'']]],
+  ['null_21',['null',['../namespacenull.html',1,'']]]
 ];
