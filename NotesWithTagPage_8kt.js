@@ -1,4 +1,4 @@
 var NotesWithTagPage_8kt =
 [
-    [ "collectAsState", "NotesWithTagPage_8kt.html#aeaa0484b5dd82eb80f26bb818ab6d72d", null ]
+    [ "collectAsState", "NotesWithTagPage_8kt.html#a37ea99057a87a9a7635c64aa7f46dba7", null ]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unit_0',['Unit',['../namespaceUnit.html',1,'']]]
+  ['viewmodel_0',['ViewModel',['../namespaceViewModel.html',1,'']]]
 ];

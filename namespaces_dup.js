@@ -7,10 +7,8 @@ var namespaces_dup =
     [ "ExampleInstrumentedTest", "namespaceExampleInstrumentedTest.html", [
       [ "useAppContext", "namespaceExampleInstrumentedTest.html#a7e9ae581c604e09e50c70e7ed7e1f1c0", null ]
     ] ],
-    [ "Int", "namespaceInt.html", [
-      [ "collectAsState", "namespaceInt.html#aeaa0484b5dd82eb80f26bb818ab6d72d", null ]
-    ] ],
     [ "NavController", "namespaceNavController.html", null ],
+    [ "Note", "namespaceNote.html", null ],
     [ "NotesDao", "namespaceNotesDao.html", null ],
     [ "NotesEvent", "namespaceNotesEvent.html", null ],
     [ "NotesViewModel", "namespaceNotesViewModel.html", null ],
@@ -23,6 +21,7 @@ var namespaces_dup =
     [ "TagsViewModel", "namespaceTagsViewModel.html", null ],
     [ "title", "namespacetitle.html", null ],
     [ "Unit", "namespaceUnit.html", [
+      [ "collectAsState", "namespaceUnit.html#a37ea99057a87a9a7635c64aa7f46dba7", null ],
       [ "if", "namespaceUnit.html#a11b555fd0085da840f1263526351f140", null ]
     ] ],
     [ "ViewModel", "namespaceViewModel.html", null ]

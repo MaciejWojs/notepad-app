@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['roomdatabase_0',['RoomDatabase',['../namespaceRoomDatabase.html',1,'']]]
+  ['tagsviewmodel_0',['TagsViewModel',['../namespaceTagsViewModel.html',1,'']]],
+  ['title_1',['title',['../namespacetitle.html',1,'']]]
 ];
