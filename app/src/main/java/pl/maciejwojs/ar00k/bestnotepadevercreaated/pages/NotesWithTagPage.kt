@@ -34,12 +34,18 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesTagsCrossRefViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote2
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 
 @Composable
-fun NotesWithTagPage(navigator: NavController, viewModel: NotesTagsCrossRefViewModel, tagID: Int) {
+fun NotesWithTagPage(
+    navigator: NavController,
+    viewModel: NotesTagsCrossRefViewModel,
+    tagID: Int,
+    navigateToEditNotePage: (Note) -> Unit
+) {
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(tagID) {
@@ -111,10 +117,12 @@ fun NotesWithTagPage(navigator: NavController, viewModel: NotesTagsCrossRefViewM
                     Log.d("NotesWithTagPage", "Loading notes for tagID: $tagID")
                     val notes = state.notesWithTag.flatMap { it.notes } // Flatten notes
                     items(notes, key = { it.noteID }) { singleNote -> // Use flattened notes list
-                        GenerateNote2(note = singleNote, onDelete = {
+                        GenerateNote(note = singleNote, onDelete = {
                             Log.d("NotesWithTagPage", "Deleting note: ${singleNote.title}")
                             // Uncomment and implement the deletion event
                             // viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
+                        }, onEdit = {
+                            navigateToEditNotePage(singleNote)
                         })
                     }
                 }

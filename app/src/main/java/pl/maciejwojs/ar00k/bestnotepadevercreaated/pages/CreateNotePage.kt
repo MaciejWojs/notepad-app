@@ -46,8 +46,6 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreat
 fun CreateNotePage(
     navigator: NavController,
     onCreate: (String, String) -> Unit // Callback with title and content parameters
-
-
 ) {
     var noteTitle by remember { mutableStateOf("") }
     var noteContent by remember { mutableStateOf("") }

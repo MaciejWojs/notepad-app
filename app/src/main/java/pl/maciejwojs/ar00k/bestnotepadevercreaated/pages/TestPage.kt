@@ -36,7 +36,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesDao
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote2
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 @Composable
@@ -119,7 +119,7 @@ fun TestPage(navigator: NavController, viewModel: NotesViewModel, dao: NotesDao)
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     items(state.notes, key = { it.noteID }) { singleNote ->
-                        GenerateNote2(note = singleNote, onDelete = {
+                        GenerateNote(note = singleNote, onDelete = {
                             Log.d("TestPage", "Deleting note: ${singleNote.title}")
                             viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
                             Toast.makeText(
@@ -131,6 +131,8 @@ fun TestPage(navigator: NavController, viewModel: NotesViewModel, dao: NotesDao)
                                 "TestPage",
                                 "Current notes after deletion: ${state.notes.map { it.title }}"
                             )
+                        }, onEdit = {
+                            navigator.navigate("EditNotePage/${singleNote.noteID}")
                         })
                     }
                 }

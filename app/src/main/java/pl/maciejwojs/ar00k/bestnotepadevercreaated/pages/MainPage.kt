@@ -37,12 +37,17 @@ import androidx.navigation.NavController
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote2
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 
 @Composable
-fun MainPage(navigator: NavController, viewModel: NotesViewModel) {
+fun MainPage(
+    navigator: NavController,
+    viewModel: NotesViewModel,
+    navigateToEditNotePage: (Note) -> Unit
+) {
     val state = viewModel.state.collectAsState().value
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
@@ -105,7 +110,7 @@ fun MainPage(navigator: NavController, viewModel: NotesViewModel) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     items(state.notes, key = { it.noteID }) { singleNote ->
-                        GenerateNote2(note = singleNote, onDelete = {
+                        GenerateNote(note = singleNote, onDelete = {
                             Log.d("TestPage", "Deleting note: ${singleNote.title}")
                             viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
                             // Log the current state after deletion
@@ -113,7 +118,10 @@ fun MainPage(navigator: NavController, viewModel: NotesViewModel) {
                                 "TestPage",
                                 "Current notes after deletion: ${state.notes.map { it.title }}"
                             )
-                        })
+                        }, onEdit = {
+                            navigateToEditNotePage(singleNote)
+                        }
+                        )
                     }
                 }
             }

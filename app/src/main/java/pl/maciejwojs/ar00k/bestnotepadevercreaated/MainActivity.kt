@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.CreateNotePage
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.EditNotePage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.HamburgerPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.MainPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.NotesListPage
@@ -56,59 +57,49 @@ class MainActivity : ComponentActivity() {
         val dao: NotesDao = NotesDatabase.getInstance(this).dao
         enableEdgeToEdge()
         lifecycleScope.launch {
-            if (dao.isAddingRelations() == 0){
-            dao.insertRelation()
-            }
-            if (dao.getNotesCount() == 0) {
-                dao.insertNote(note = Note("Pierwsza notatka", "lorem ipsum abc"))
-                dao.insertNote(
-                    note = Note(
-                        "Druga notatka",
-                        "Las jest jednym z najcenniejszych ekosystemów na Ziemi, pełnym różnorodnych gatunków roślin i zwierząt, które wzajemnie się wspierają i tworzą złożony system biologiczny. Drzewa, jako najważniejszy składnik lasu, pełnią kluczową rolę w produkcji tlenu, który jest niezbędny dla życia na naszej planecie. Liście drzew pochłaniają dwutlenek węgla i dzięki procesowi fotosyntezy przekształcają go w tlen. Las jest również miejscem zamieszkania dla wielu gatunków zwierząt, od drobnych owadów po duże ssaki. Różne gatunki zamieszkują poszczególne piętra lasu, tworząc wielowarstwowy system, gdzie każde stworzenie ma swoją rolę. Wśród drzew znajdują schronienie, pożywienie i możliwość rozmnażania się. Ludzie także korzystają z bogactw lasu, pozyskując drewno, owoce leśne czy grzyby. Wiele społeczności zależy od zasobów lasów do codziennego przetrwania. Niestety, działalność człowieka, taka jak wycinka drzew i zanieczyszczenie środowiska, prowadzi do degradacji lasów. W związku z tym ochrona lasów stała się kluczowym celem działań ekologicznych. Warto zrozumieć, jak ważne są lasy, by móc dążyć do ich zrównoważonej ochrony i przyszłości dla wszystkich mieszkańców naszej planety."
-                    )
-                )
-                dao.insertNote(note = Note("trzecia notatka", "lorem ipsum abc"))
+            if (dao.isAddingRelations() == 0) {
+                dao.insertRelation()
             }
             if (dao.getTagsCount() == 0) {
                 dao.insertTag(tag = Tag("Zakupy"))
                 dao.insertTag(tag = Tag("Szkoła"))
             }
         }
-        val notesViewModel by viewModels<NotesViewModel>(
-            factoryProducer = {
-                object : ViewModelProvider.Factory {
-                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                        return NotesViewModel(dao) as T
-                    }
+        val notesViewModel by viewModels<NotesViewModel>(factoryProducer = {
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return NotesViewModel(dao) as T
                 }
             }
-        )
-        val tagsViewModel by viewModels<TagsViewModel>(
-            factoryProducer = {
-                object : ViewModelProvider.Factory {
-                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                        return TagsViewModel(dao) as T
-                    }
+        })
+        val tagsViewModel by viewModels<TagsViewModel>(factoryProducer = {
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return TagsViewModel(dao) as T
                 }
             }
-        )
-        val notesWithTagPageViewModel by viewModels<NotesTagsCrossRefViewModel>(
-            factoryProducer = {
-                object : ViewModelProvider.Factory {
-                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                        return NotesTagsCrossRefViewModel(dao) as T
-                    }
+        })
+        val notesWithTagPageViewModel by viewModels<NotesTagsCrossRefViewModel>(factoryProducer = {
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return NotesTagsCrossRefViewModel(dao) as T
                 }
             }
-        )
+        })
 
 
         setContent {
+            val bundle = Bundle()
             val state by notesViewModel.state.collectAsState()
             val navController = rememberNavController()
             NavHost(navController = navController, startDestination = "MainPage") {
                 composable("MainPage") {
-                    MainPage(navController, viewModel = notesViewModel)
+                    MainPage(navController,
+                        viewModel = notesViewModel,
+                        navigateToEditNotePage = { note ->
+                            navController.currentBackStackEntry?.savedStateHandle?.set("note", note)
+                            navController.navigate("EditNotePage")
+                        })
                 }
                 composable("SettingsPage") {
                     SettingsPage(navController)
@@ -123,21 +114,17 @@ class MainActivity : ComponentActivity() {
                     HamburgerPage(navController, tagsViewModel)
                 }
                 composable("CreateNotePage") {
-                    CreateNotePage(
-                        navigator = navController,
-                        onCreate = { title, content ->
-                            // Insert note creation logic here, like saving the note in a database
-                            notesViewModel.viewModelScope.launch {
-                                dao.insertNote(Note(title, content))
-                            }
+                    CreateNotePage(navigator = navController, onCreate = { title, content ->
+                        // Insert note creation logic here, like saving the note in a database
+                        notesViewModel.viewModelScope.launch {
+                            dao.insertNote(Note(title, content))
                         }
-                    )
+                    })
                 }
 
 
                 composable(
-                    "NotesWithTagPage/{tagID}",
-                    arguments = listOf(navArgument("tagID") {
+                    "NotesWithTagPage/{tagID}", arguments = listOf(navArgument("tagID") {
                         type = NavType.IntType; nullable = false
                     })
                 ) { backStackEntry ->
@@ -148,12 +135,33 @@ class MainActivity : ComponentActivity() {
                     NotesWithTagPage(
                         navigator = navController,
                         viewModel = notesWithTagPageViewModel,
-                        tagID = tagID
+                        tagID = tagID,
+                        navigateToEditNotePage = { note ->
+                            navController.currentBackStackEntry?.savedStateHandle?.set("note", note)
+                            navController.navigate("EditNotePage")
+                        }
                     )
                 }
+                composable("EditNotePage") {
+                    // Retrieve the Note object from the previous back stack entry's savedStateHandle
+                    val note =
+                        navController.previousBackStackEntry?.savedStateHandle?.get<Note>("note")
+
+                    // Ensure the note is non-null before passing it to EditNotePage
+                    if (note != null) {
+                        EditNotePage(
+                            navigator = navController,
+                            onEdit = { title, content ->
+                                notesViewModel.viewModelScope.launch {
+                                    dao.updateNote(note.noteID, title, content)
+                                }
+                            }, note = note
+                        )
+                    }
+                }
             }
-//            DestinationsNavHost(navGraph = RootNavGraph)
         }
+//            DestinationsNavHost(navGraph = RootNavGraph)
     }
 
 
@@ -180,7 +188,9 @@ class MainActivity : ComponentActivity() {
  * @param modifier [Modifier] stosowany do układu kompozytowego. Domyślnie jest to pusty modifier.
  */
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(400)) {
+fun Greeting(
+    name: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(400)
+) {
     Text(
         text = "$name!", modifier = modifier, fontWeight = weight
 

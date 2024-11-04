@@ -37,10 +37,11 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 //    weight: FontWeight? = null,
 //) {
 @Composable
-fun GenerateNote2(
+fun GenerateNote(
     modifier: Modifier = Modifier,
     note: Note,
     onDelete: () -> Unit, // Pass a lambda function to handle deletion
+    onEdit: () -> Unit, // Pass a lambda function to handle editing
     weight: FontWeight? = null,
 ) {
     val context = LocalContext.current
@@ -51,6 +52,7 @@ fun GenerateNote2(
             .shadow(elevation = 20.dp, spotColor = MaterialTheme.colorScheme.onSurface)
             .pointerInput(Unit) {
                 detectTapGestures(onTap = {
+                    onEdit()
                     Toast
                         .makeText(context, "Tap", Toast.LENGTH_SHORT)
                         .show()

@@ -39,20 +39,20 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 @Composable
 fun EditNotePage(
     navigator: NavController,
-    onCreate: (String, String) -> Unit, // Callback with title and content parameters
-    noteID:Int,
-
-
+    onEdit: (String, String) -> Unit,
+    note: Note
 ) {
-    var noteTitle by remember { mutableStateOf("") }
-    var noteContent by remember { mutableStateOf("") }
-    noteTitle="sample title"
+    var noteTitle by remember { mutableStateOf(note.title) }
+    var noteContent by remember { mutableStateOf(note.content)}
+
+    // Use LaunchedEffect to load the note when the noteID changes
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
@@ -71,7 +71,7 @@ fun EditNotePage(
                         if (!navigator.popBackStack()) {
                             navigator.navigate("MainPage")
                         } else {
-                            onCreate(noteTitle, noteContent)
+                            onEdit(noteTitle, noteContent)
                         }
                     }
                     Row(
@@ -103,7 +103,7 @@ fun EditNotePage(
                     GenerateIconButton(
                         icon = Icons.Default.Check, "Save Note"
                     ) {
-                        onCreate(noteTitle,noteContent)
+                        onEdit(noteTitle, noteContent)
                     }
                 }
 
@@ -121,10 +121,9 @@ fun EditNotePage(
 
                 ) {
                     Card(
-                        Modifier
-                            .shadow(elevation = 20.dp, spotColor = MaterialTheme.colorScheme.onSurface)
-
-
+                        Modifier.shadow(
+                            elevation = 20.dp, spotColor = MaterialTheme.colorScheme.onSurface
+                        )
                     ) {
                         Box(
                             modifier = Modifier
@@ -173,8 +172,8 @@ fun EditNotePage(
 
                 }
 
-                }
             }
         }
     }
+}
 
