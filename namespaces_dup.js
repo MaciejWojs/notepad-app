@@ -18,7 +18,6 @@ var namespaces_dup =
       [ "dao", "namespaceRoomDatabase.html#a67427c6156a488ac25367a603b639f1f", null ],
       [ "java", "namespaceRoomDatabase.html#ad83bb6c8d401055e78394af92b14653e", null ]
     ] ],
-    [ "TagsViewModel", "namespaceTagsViewModel.html", null ],
     [ "title", "namespacetitle.html", null ],
     [ "Unit", "namespaceUnit.html", [
       [ "collectAsState", "namespaceUnit.html#a37ea99057a87a9a7635c64aa7f46dba7", null ],

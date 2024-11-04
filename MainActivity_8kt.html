@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.1.7</span>
+   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.1.8</span>
    </div>
   </td>
  </tr>
@@ -113,18 +113,19 @@ Pakiety</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Funkcje</h2></td></tr>
 <tr class="memitem:ac93e02521caa7c6608824507a471b057" id="r_ac93e02521caa7c6608824507a471b057"><td class="memItemLeft" align="right" valign="top">override fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceComponentActivity.html#ac93e02521caa7c6608824507a471b057">ComponentActivity.onCreate</a> (savedInstanceState:Bundle?)</td></tr>
-<tr class="memdesc:ac93e02521caa7c6608824507a471b057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wywoływana, gdy aktywność jest po raz pierwszy tworzona.  <br /></td></tr>
+<tr class="memdesc:ac93e02521caa7c6608824507a471b057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the activity is first created.  <br /></td></tr>
 <tr class="separator:ac93e02521caa7c6608824507a471b057"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b5f15eaf13cf16988ed3a266d92720a" id="r_a8b5f15eaf13cf16988ed3a266d92720a"><td class="memItemLeft" align="right" valign="top">override fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceComponentActivity.html#a8b5f15eaf13cf16988ed3a266d92720a">ComponentActivity.onStart</a> ()</td></tr>
-<tr class="memdesc:a8b5f15eaf13cf16988ed3a266d92720a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wywoływana, gdy aktywność staje się widoczna dla użytkownika.  <br /></td></tr>
+<tr class="memdesc:a8b5f15eaf13cf16988ed3a266d92720a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the activity becomes visible to the user.  <br /></td></tr>
 <tr class="separator:a8b5f15eaf13cf16988ed3a266d92720a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e17281e1e36713c40997779a8720e20" id="r_a8e17281e1e36713c40997779a8720e20"><td class="memItemLeft" align="right" valign="top">fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e17281e1e36713c40997779a8720e20">Greeting</a> (name:String, modifier:Modifier=Modifier, weight:FontWeight?=FontWeight(400))</td></tr>
-<tr class="memdesc:a8e17281e1e36713c40997779a8720e20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja kompozytowa, która wyświetla wiadomość powitalną.  <br /></td></tr>
+<tr class="memdesc:a8e17281e1e36713c40997779a8720e20"><td class="mdescLeft">&#160;</td><td class="mdescRight">A composable function that displays a greeting message.  <br /></td></tr>
 <tr class="separator:a8e17281e1e36713c40997779a8720e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f7b658a3de4acdc1e91008cdc1baf4c" id="r_a3f7b658a3de4acdc1e91008cdc1baf4c"><td class="memItemLeft" align="right" valign="top">fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f7b658a3de4acdc1e91008cdc1baf4c">CreateNoteTitle</a> (noteTitle:String, modifier:Modifier=Modifier, weight:FontWeight?=FontWeight(900))</td></tr>
+<tr class="memdesc:a3f7b658a3de4acdc1e91008cdc1baf4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">A composable function that displays the title of a note.  <br /></td></tr>
 <tr class="separator:a3f7b658a3de4acdc1e91008cdc1baf4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed63c3eaaa4cb69bb08cba4720b457bd" id="r_aed63c3eaaa4cb69bb08cba4720b457bd"><td class="memItemLeft" align="right" valign="top">fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed63c3eaaa4cb69bb08cba4720b457bd">GreetingPreview</a> ()</td></tr>
-<tr class="memdesc:aed63c3eaaa4cb69bb08cba4720b457bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja podglądu dla kompozytu [Greeting].  <br /></td></tr>
+<tr class="memdesc:aed63c3eaaa4cb69bb08cba4720b457bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preview function for the [Greeting] composable.  <br /></td></tr>
 <tr class="separator:aed63c3eaaa4cb69bb08cba4720b457bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Dokumentacja funkcji</h2>
@@ -160,6 +161,17 @@ Funkcje</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>A composable function that displays the title of a note. </p>
+<p>This function displays the title text of a note with a specified font weight.</p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">noteTitle</td><td>The title of the note to be displayed. </td></tr>
+    <tr><td class="paramname">modifier</td><td>[Modifier] applied to the composable layout. Default is an empty modifier. </td></tr>
+    <tr><td class="paramname">weight</td><td>[FontWeight] applied to the font style of the note title text. Default is FontWeight(900). </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a8e17281e1e36713c40997779a8720e20" name="a8e17281e1e36713c40997779a8720e20"></a>
@@ -194,12 +206,13 @@ Funkcje</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Funkcja kompozytowa, która wyświetla wiadomość powitalną. </p>
-<p>Ta funkcja wyświetla tekst powitalny z użyciem podanej nazwy.</p>
+<p>A composable function that displays a greeting message. </p>
+<p>This function displays a greeting message with the provided name.</p>
 <dl class="params"><dt>Parametry</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>Nazwa, która ma być wyświetlana w wiadomości powitalnej. </td></tr>
-    <tr><td class="paramname">modifier</td><td>[Modifier] stosowany do układu kompozytowego. Domyślnie jest to pusty modifier. </td></tr>
+    <tr><td class="paramname">name</td><td>The name to be displayed in the greeting message. </td></tr>
+    <tr><td class="paramname">modifier</td><td>[Modifier] applied to the composable layout. Default is an empty modifier. </td></tr>
+    <tr><td class="paramname">weight</td><td>[FontWeight] applied to the font style of the greeting text. Default is FontWeight(400). </td></tr>
   </table>
   </dd>
 </dl>
@@ -229,8 +242,8 @@ Funkcje</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Funkcja podglądu dla kompozytu [Greeting]. </p>
-<p>Wyświetla podgląd wiadomości powitalnej z "Android" jako nazwą. </p>
+<p>Preview function for the [Greeting] composable. </p>
+<p>Displays a preview of the greeting message with "Android" as the name. </p>
 
 </div>
 </div>
