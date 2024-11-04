@@ -16,11 +16,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -41,7 +46,20 @@ fun HamburgerPage(navigator: NavController, viewModel: TagsViewModel) {
     val state = viewModel.state.collectAsState().value
     val context = LocalContext.current
     BestNotepadEverCreatedTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = {
+//                        navigator.navigate("CreateTagPage")
+                    },
+                    containerColor = MaterialTheme.colorScheme.onSecondary,
+                    shape = CircleShape,
+                    elevation = FloatingActionButtonDefaults.elevation(20.dp)
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Add tag")
+                }
+            }) { innerPadding ->
 
             Column(modifier = Modifier.padding(innerPadding)) {
                 Row(
