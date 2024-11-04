@@ -7,7 +7,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
-import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 /**
@@ -27,10 +27,9 @@ import java.time.format.DateTimeFormatter
 data class Note(
     val title: String,
     val content: String,
-    val modificationTime: String = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).toString(),
-    val creationTime: String = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).toString(),
-    @PrimaryKey(autoGenerate = true)
-    val noteID: Int = 0
-): Parcelable
+    val modificationTime: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
+    val creationTime: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
+    @PrimaryKey(autoGenerate = true) val noteID: Int = 0
+) : Parcelable
 //TODO zrobić pole na zablokowanie notatki i dostosować resztę kodu
 //TODO zmienić pola na Timestamp i dostosować resztę kodu

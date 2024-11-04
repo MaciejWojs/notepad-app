@@ -98,7 +98,7 @@ fun CreateNotePage(
                         GenerateIconButton(Icons.Default.Search, "Search menu") {}
                     }
                     GenerateIconButton(
-                        icon = Icons.Default.Check, "Save Note"
+                        icon = Icons.Default.Check, "Save Note", transparent = true, isEnabled = false
                     ) {
                         onCreate(noteTitle,noteContent)
                     }
