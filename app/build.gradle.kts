@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp") version "2.0.21-1.0.26"
     id("kotlin-parcelize")
+    id ("org.jetbrains.dokka")
 }
 
 android {
@@ -28,6 +29,10 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+
+    subprojects {
+        apply(plugin = "org.jetbrains.dokka")
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
