@@ -11,7 +11,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.NotesWithTags
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.TagsWithNotes
-import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Dao
@@ -32,9 +32,8 @@ interface NotesDao {
         id: Int,
         title: String,
         content: String,
-        modificationDate: String = LocalDate.now().format(
-            DateTimeFormatter.ofPattern("dd-MM-yyyy")
-        ).toString()
+        modificationDate: String = LocalDateTime.now()
+            .format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy"))
     )
 
     @Delete
