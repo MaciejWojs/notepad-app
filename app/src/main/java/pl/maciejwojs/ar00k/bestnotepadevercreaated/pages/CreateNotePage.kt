@@ -23,6 +23,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,7 +41,12 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun CreateNotePage(navigator: NavController) {
+fun CreateNotePage(
+    navigator: NavController,
+    onCreate: (String, String) -> Unit // Callback with title and content parameters
+) {
+    var noteTitle by remember { mutableStateOf("") }
+    var noteContent by remember { mutableStateOf("") }
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
@@ -51,11 +60,12 @@ fun CreateNotePage(navigator: NavController) {
                     horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
                 ) {
                     GenerateIconButton(
-                        icon = Icons.AutoMirrored.Filled.ArrowBack,
-                        "Back to main screen"
+                        icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen"
                     ) {
                         if (!navigator.popBackStack()) {
                             navigator.navigate("MainPage")
+                        } else {
+                            onCreate(noteTitle, noteContent)
                         }
                     }
                     Row(
@@ -113,7 +123,6 @@ fun CreateNotePage(navigator: NavController) {
                                     color = MaterialTheme.colorScheme.outline,
                                     shape = RoundedCornerShape(roundness.dp)
                                 )
-
                                 .padding(7.dp)
                                 .scale(0.9f)
                                 .height(250.dp)

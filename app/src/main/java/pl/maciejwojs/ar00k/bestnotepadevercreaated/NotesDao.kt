@@ -13,6 +13,12 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.TagsWithNotes
 
 @Dao
 interface NotesDao {
+    //Do wrzucenia relacji przy włączeniu aplikacji
+    @Query("SELECT COUNT(*) from NotesTagsCrossRef")
+    suspend fun isAddingRelations(): Int
+
+    @Query("INSERT  INTO NotesTagsCrossRef VALUES (2,1), (1,1), (1,2)")
+    suspend fun insertRelation()
     //Kwerendy do Notatek
     @Upsert
     suspend fun insertNote(note: Note)
@@ -22,6 +28,10 @@ interface NotesDao {
 
     @Query("SELECT * FROM notes")
     fun getNotes(): Flow<List<Note>>
+
+    //Zliczanie notatek z bazy danych
+    @Query("SELECT COUNT(*) FROM notes")
+    suspend fun getNotesCount(): Int
 
     @Transaction
     @Query("SELECT * FROM notes WHERE noteID=:id")
@@ -38,6 +48,10 @@ interface NotesDao {
     @Transaction
     @Query("Select * FROM tags")
     fun getTags(): Flow<List<Tag>>
+
+    //Zliczanie tagów z bazy danych
+    @Query("SELECT COUNT(*) FROM tags")
+    suspend fun getTagsCount(): Int
 
     @Transaction
     @Query("SELECT name FROM tags WHERE tagID=:id")
