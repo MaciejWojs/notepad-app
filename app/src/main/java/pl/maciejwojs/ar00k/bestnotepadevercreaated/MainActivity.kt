@@ -8,8 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,26 +34,31 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.TestPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 /**
- * Główna aktywność aplikacji BestNotepadEverCreated.
+ * The main activity of the application BestNotepadEverCreated.
  *
- * Ta aktywność rozszerza [ComponentActivity] i służy jako główny punkt wejścia do aplikacji.
- * Używa Jetpack Compose do wyświetlania interfejsu użytkownika i wyświetla wiadomości Toast w trakcie zmian cyklu życia.
+ * This activity extends [ComponentActivity] and serves as the primary entry point for the application.
+ * It uses Jetpack Compose for the UI and displays Toast messages during lifecycle changes.
  */
 class MainActivity : ComponentActivity() {
 
     /**
-     * Wywoływana, gdy aktywność jest po raz pierwszy tworzona.
+     * Called when the activity is first created.
      *
-     * Ta metoda ustawia interfejs użytkownika dla aktywności przy użyciu Jetpack Compose.
+     * This method sets up the UI for the activity using Jetpack Compose and initializes database interactions
+     * and ViewModels required by the application.
      *
-     * @param savedInstanceState Pakiet zawierający poprzednio zapisany stan aktywności.
+     * @param savedInstanceState A bundle containing the previously saved state of the activity.
      * @see ComponentActivity.onCreate
      */
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize DAO to interact with the database
         val dao: NotesDao = NotesDatabase.getInstance(this).dao
+
         enableEdgeToEdge()
+
+        // Launch coroutine to set up default relations and tags in the database if not already present
         lifecycleScope.launch {
             if (dao.isAddingRelations() == 0) {
                 dao.insertRelation()
@@ -65,6 +68,8 @@ class MainActivity : ComponentActivity() {
                 dao.insertTag(tag = Tag("Szkoła"))
             }
         }
+
+        // Initialize ViewModels with a custom factory
         val notesViewModel by viewModels<NotesViewModel>(factoryProducer = {
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -87,14 +92,13 @@ class MainActivity : ComponentActivity() {
             }
         })
 
-
+        // Set up the Jetpack Compose UI
         setContent {
-            val bundle = Bundle()
-            val state by notesViewModel.state.collectAsState()
             val navController = rememberNavController()
             NavHost(navController = navController, startDestination = "MainPage") {
                 composable("MainPage") {
-                    MainPage(navController,
+                    MainPage(
+                        navController,
                         viewModel = notesViewModel,
                         navigateToEditNotePage = { note ->
                             navController.currentBackStackEntry?.savedStateHandle?.set("note", note)
@@ -111,18 +115,24 @@ class MainActivity : ComponentActivity() {
                     TestPage(navController, viewModel = notesViewModel, dao = dao)
                 }
                 composable("HamburgerPage") {
-                    HamburgerPage(navController, tagsViewModel)
+                    HamburgerPage(
+                        navController,
+                        tagsViewModel,
+                        onCreate = { tagName ->
+                            tagsViewModel.viewModelScope.launch {
+                                dao.insertTag(
+                                    Tag(tagName)
+                                )
+                            }
+                        })
                 }
                 composable("CreateNotePage") {
                     CreateNotePage(navigator = navController, onCreate = { title, content ->
-                        // Insert note creation logic here, like saving the note in a database
                         notesViewModel.viewModelScope.launch {
                             dao.insertNote(Note(title, content))
                         }
                     })
                 }
-
-
                 composable(
                     "NotesWithTagPage/{tagID}", arguments = listOf(navArgument("tagID") {
                         type = NavType.IntType; nullable = false
@@ -130,8 +140,6 @@ class MainActivity : ComponentActivity() {
                 ) { backStackEntry ->
                     val tagID = backStackEntry.arguments?.getInt("tagID")
                         ?: error("Required argument 'tagID' is missing")
-
-                    // Pass tagID to NotesWithTagPage
                     NotesWithTagPage(
                         navigator = navController,
                         viewModel = notesWithTagPageViewModel,
@@ -143,11 +151,8 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 composable("EditNotePage") {
-                    // Retrieve the Note object from the previous back stack entry's savedStateHandle
                     val note =
                         navController.previousBackStackEntry?.savedStateHandle?.get<Note>("note")
-
-                    // Ensure the note is non-null before passing it to EditNotePage
                     if (note != null) {
                         EditNotePage(
                             navigator = navController,
@@ -161,14 +166,12 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-//            DestinationsNavHost(navGraph = RootNavGraph)
     }
 
-
     /**
-     * Wywoływana, gdy aktywność staje się widoczna dla użytkownika.
+     * Called when the activity becomes visible to the user.
      *
-     * Wyświetla wiadomość Toast, aby wskazać, że aktywność jest w stanie onStart().
+     * Displays a Toast message to indicate that the activity is in the onStart() state.
      *
      * @see ComponentActivity.onStart
      */
@@ -180,12 +183,13 @@ class MainActivity : ComponentActivity() {
 }
 
 /**
- * Funkcja kompozytowa, która wyświetla wiadomość powitalną.
+ * A composable function that displays a greeting message.
  *
- * Ta funkcja wyświetla tekst powitalny z użyciem podanej nazwy.
+ * This function displays a greeting message with the provided name.
  *
- * @param name Nazwa, która ma być wyświetlana w wiadomości powitalnej.
- * @param modifier [Modifier] stosowany do układu kompozytowego. Domyślnie jest to pusty modifier.
+ * @param name The name to be displayed in the greeting message.
+ * @param modifier [Modifier] applied to the composable layout. Default is an empty modifier.
+ * @param weight [FontWeight] applied to the font style of the greeting text. Default is FontWeight(400).
  */
 @Composable
 fun Greeting(
@@ -193,24 +197,31 @@ fun Greeting(
 ) {
     Text(
         text = "$name!", modifier = modifier, fontWeight = weight
-
     )
 }
 
+/**
+ * A composable function that displays the title of a note.
+ *
+ * This function displays the title text of a note with a specified font weight.
+ *
+ * @param noteTitle The title of the note to be displayed.
+ * @param modifier [Modifier] applied to the composable layout. Default is an empty modifier.
+ * @param weight [FontWeight] applied to the font style of the note title text. Default is FontWeight(900).
+ */
 @Composable
 fun CreateNoteTitle(
     noteTitle: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(900)
 ) {
     Text(
         text = noteTitle, modifier = modifier, fontWeight = weight
-
     )
 }
 
 /**
- * Funkcja podglądu dla kompozytu [Greeting].
+ * Preview function for the [Greeting] composable.
  *
- * Wyświetla podgląd wiadomości powitalnej z "Android" jako nazwą.
+ * Displays a preview of the greeting message with "Android" as the name.
  */
 @Preview(showBackground = true)
 @Composable
