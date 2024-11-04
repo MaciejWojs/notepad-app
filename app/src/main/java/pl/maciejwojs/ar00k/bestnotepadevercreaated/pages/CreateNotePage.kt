@@ -30,15 +30,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun CreateNotePage(
@@ -101,9 +96,7 @@ fun CreateNotePage(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                val currentDate = LocalDate.now()
-                val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
-                val formattedDate = currentDate.format(formatter)
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
@@ -114,25 +107,8 @@ fun CreateNotePage(
                         )
 
                 ) {
-                    for (i in 0..1) {
-                        GenerateNote(
-                            Modifier
-                                .clip(RoundedCornerShape(roundness.dp))
-                                .border(
-                                    width = 2.dp,
-                                    color = MaterialTheme.colorScheme.outline,
-                                    shape = RoundedCornerShape(roundness.dp)
-                                )
-                                .padding(7.dp)
-                                .scale(0.9f)
-                                .height(250.dp)
-                                .fillMaxWidth(0.8f),
-                            weight = null,
-                            creationDate = formattedDate
-                        )
 
-                        Spacer(modifier = Modifier.height(50.dp))
-                    }
+                   //TODO programuj interfejs
                 }
             }
         }
