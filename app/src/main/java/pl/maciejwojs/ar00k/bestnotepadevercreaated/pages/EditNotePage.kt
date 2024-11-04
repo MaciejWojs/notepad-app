@@ -43,9 +43,10 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 @Composable
-fun CreateNotePage(
+fun EditNotePage(
     navigator: NavController,
-    onCreate: (String, String) -> Unit // Callback with title and content parameters
+    onCreate: (String, String) -> Unit, // Callback with title and content parameters
+    noteID:Int,
 
 
 ) {
