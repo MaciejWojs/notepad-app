@@ -18,5 +18,13 @@ data class NotesTagsCrossRefViewModel(
             _state.value = NotesTagsCrossRefState(notesWithTag = notes)
         }
     }
+
+    fun loadTagsByNote(noteID:Int) {
+        viewModelScope.launch {
+            val tags = dao.getTagsWithNotes(noteID)
+            _state.value = NotesTagsCrossRefState(tagsWithNote = tags)
+//            Log.i("Notes", "${_state.value.tagsWithNote.map{it.tags.flatMap { it.name }")
+        }
+    }
 }
 

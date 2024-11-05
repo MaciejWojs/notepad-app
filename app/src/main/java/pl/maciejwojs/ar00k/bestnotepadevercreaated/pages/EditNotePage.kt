@@ -1,5 +1,6 @@
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -21,15 +22,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,17 +47,36 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditNotePage(
     navigator: NavController,
     onEdit: (String, String) -> Unit,
-    note: Note
+    note: Note,
+    tags: List<Tag>,
+    currentNoteTags: List<Tag>
 ) {
     var noteTitle by remember { mutableStateOf(note.title) }
-    var noteContent by remember { mutableStateOf(note.content)}
+    var noteContent by remember { mutableStateOf(note.content) }
+
+    val scope = rememberCoroutineScope()
+    var showBottomSheet by remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState()
+
+    // Initialize checkedMap to keep track of each tag’s selection state
+    val checkedMap = remember {
+        mutableStateMapOf<Tag, Boolean>().apply {
+            tags.forEach { tag ->
+                put(tag, currentNoteTags.contains(tag))
+            }
+        }
+    }
+
+    Log.i("Liczba", "l tagow: ${currentNoteTags.size}")
 
     // Use LaunchedEffect to load the note when the noteID changes
     BestNotepadEverCreatedTheme {
@@ -164,14 +190,21 @@ fun EditNotePage(
                                         .padding(8.dp)
                                         .defaultMinSize(minHeight = 300.dp)
                                 )
+                                Button(onClick = { showBottomSheet = true }) {
+                                    Text(text = "Add tags")
+                                }
                             }
-
-
                         }
                     }
-
                 }
 
+                if (showBottomSheet) {
+                    ModalBottomSheet(
+                        onDismissRequest = { showBottomSheet = false },
+                        sheetState = sheetState
+                    ) {
+                    }
+                }
             }
         }
     }

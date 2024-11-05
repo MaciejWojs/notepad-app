@@ -1,5 +1,6 @@
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
+import CreateNotePage
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -8,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,7 +25,6 @@ import androidx.navigation.navArgument
 import kotlinx.coroutines.launch
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.CreateNotePage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.EditNotePage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.HamburgerPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.MainPage
@@ -97,8 +98,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             NavHost(navController = navController, startDestination = "MainPage") {
                 composable("MainPage") {
-                    MainPage(
-                        navController,
+                    MainPage(navController,
                         viewModel = notesViewModel,
                         navigateToEditNotePage = { note ->
                             navController.currentBackStackEntry?.savedStateHandle?.set("note", note)
@@ -115,23 +115,23 @@ class MainActivity : ComponentActivity() {
                     TestPage(navController, viewModel = notesViewModel, dao = dao)
                 }
                 composable("HamburgerPage") {
-                    HamburgerPage(
-                        navController,
-                        tagsViewModel,
-                        onCreate = { tagName ->
-                            tagsViewModel.viewModelScope.launch {
-                                dao.insertTag(
-                                    Tag(tagName)
-                                )
-                            }
-                        })
-                }
-                composable("CreateNotePage") {
-                    CreateNotePage(navigator = navController, onCreate = { title, content ->
-                        notesViewModel.viewModelScope.launch {
-                            dao.insertNote(Note(title, content))
+                    HamburgerPage(navController, tagsViewModel, onCreate = { tagName ->
+                        tagsViewModel.viewModelScope.launch {
+                            dao.insertTag(
+                                Tag(tagName)
+                            )
                         }
                     })
+                }
+                composable("CreateNotePage") {
+
+                    CreateNotePage(
+                        navigator = navController, onCreate = { title, content ->
+                            notesViewModel.viewModelScope.launch {
+                                dao.insertNote(Note(title, content))
+                            }
+                        }, tags = tagsViewModel.state.value.tags
+                    )
                 }
                 composable(
                     "NotesWithTagPage/{tagID}", arguments = listOf(navArgument("tagID") {
@@ -140,30 +140,38 @@ class MainActivity : ComponentActivity() {
                 ) { backStackEntry ->
                     val tagID = backStackEntry.arguments?.getInt("tagID")
                         ?: error("Required argument 'tagID' is missing")
-                    NotesWithTagPage(
-                        navigator = navController,
+                    NotesWithTagPage(navigator = navController,
                         viewModel = notesWithTagPageViewModel,
                         tagID = tagID,
                         navigateToEditNotePage = { note ->
                             navController.currentBackStackEntry?.savedStateHandle?.set("note", note)
                             navController.navigate("EditNotePage")
-                        }
-                    )
+                        })
                 }
                 composable("EditNotePage") {
-                    val note =
-                        navController.previousBackStackEntry?.savedStateHandle?.get<Note>("note")
+                    val note = navController.previousBackStackEntry?.savedStateHandle?.get<Note>("note")
                     if (note != null) {
+                        LaunchedEffect(note.noteID) {
+                            notesWithTagPageViewModel.loadTagsByNote(note.noteID)
+                        }
+
+                        val currentTags = notesWithTagPageViewModel.state.value.tagsWithNote.flatMap { it.tags }
+
+                        // Ensure that the tags are loaded before showing the EditNotePage
                         EditNotePage(
                             navigator = navController,
                             onEdit = { title, content ->
                                 notesViewModel.viewModelScope.launch {
                                     dao.updateNote(note.noteID, title, content)
                                 }
-                            }, note = note
+                            },
+                            note = note,
+                            tags = tagsViewModel.state.value.tags,
+                            currentNoteTags = currentTags // This will now be populated correctly
                         )
                     }
                 }
+
             }
         }
     }
