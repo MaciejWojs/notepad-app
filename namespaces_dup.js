@@ -8,7 +8,6 @@ var namespaces_dup =
       [ "useAppContext", "namespaceExampleInstrumentedTest.html#a7e9ae581c604e09e50c70e7ed7e1f1c0", null ]
     ] ],
     [ "NavController", "namespaceNavController.html", null ],
-    [ "Note", "namespaceNote.html", null ],
     [ "NotesDao", "namespaceNotesDao.html", null ],
     [ "NotesEvent", "namespaceNotesEvent.html", null ],
     [ "NotesViewModel", "namespaceNotesViewModel.html", null ],
@@ -18,6 +17,7 @@ var namespaces_dup =
       [ "dao", "namespaceRoomDatabase.html#a67427c6156a488ac25367a603b639f1f", null ],
       [ "java", "namespaceRoomDatabase.html#ad83bb6c8d401055e78394af92b14653e", null ]
     ] ],
+    [ "Tag", "namespaceTag.html", null ],
     [ "title", "namespacetitle.html", null ],
     [ "Unit", "namespaceUnit.html", [
       [ "collectAsState", "namespaceUnit.html#a37ea99057a87a9a7635c64aa7f46dba7", null ],

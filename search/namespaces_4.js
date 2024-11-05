@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['title_0',['title',['../namespacetitle.html',1,'']]]
+  ['tag_0',['Tag',['../namespaceTag.html',1,'']]],
+  ['title_1',['title',['../namespacetitle.html',1,'']]]
 ];
