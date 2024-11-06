@@ -1,8 +1,7 @@
 var namespaces_dup =
 [
     [ "ComponentActivity", "namespaceComponentActivity.html", [
-      [ "onCreate", "namespaceComponentActivity.html#ac93e02521caa7c6608824507a471b057", null ],
-      [ "onStart", "namespaceComponentActivity.html#a8b5f15eaf13cf16988ed3a266d92720a", null ]
+      [ "onCreate", "namespaceComponentActivity.html#ac93e02521caa7c6608824507a471b057", null ]
     ] ],
     [ "ExampleInstrumentedTest", "namespaceExampleInstrumentedTest.html", [
       [ "useAppContext", "namespaceExampleInstrumentedTest.html#a7e9ae581c604e09e50c70e7ed7e1f1c0", null ]
