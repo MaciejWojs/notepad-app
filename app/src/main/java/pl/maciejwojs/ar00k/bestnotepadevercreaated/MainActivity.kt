@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -137,7 +138,7 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 composable("CreateNotePage") {
-
+                    val tags = tagsViewModel.state.collectAsState().value.tags
                     CreateNotePage(
                         navigator = navController,
                         onCreate = { title, content ->
@@ -145,7 +146,7 @@ class MainActivity : ComponentActivity() {
                                 dao.insertNote(Note(title, content))
                             }
                         },
-                        tags = tagsViewModel.state.value.tags,
+                        tags = tags,
                     )
                 }
                 composable(
@@ -172,7 +173,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         val currentTags =
-                            notesWithTagPageViewModel.state.value.tagsWithNote.flatMap { it.tags }
+                            notesWithTagPageViewModel.state.collectAsState().value.tagsWithNote.flatMap { it.tags }
 
                         // Ensure that the tags are loaded before showing the EditNotePage
                         EditNotePage(
@@ -183,7 +184,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             },
                             note = note,
-                            tags = tagsViewModel.state.value.tags,
+                            tags = tagsViewModel.state.collectAsState().value.tags,
                             currentNoteTags = currentTags // This will now be populated correctly
                         )
                     }
