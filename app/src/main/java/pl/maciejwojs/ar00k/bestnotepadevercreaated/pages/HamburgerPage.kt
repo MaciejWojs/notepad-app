@@ -1,9 +1,9 @@
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,39 +21,64 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.TagsViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HamburgerPage(navigator: NavController, viewModel: TagsViewModel, onCreate: (String) -> Unit) {
+fun HamburgerPage(
+    navigator: NavController,
+    viewModel: TagsViewModel,
+    onCreate: (String) -> Unit,
+    onDelete: (Tag) -> Unit,
+    onEdit: (Tag, String) -> Unit
+) {
     val state = viewModel.state.collectAsState().value
     val context = LocalContext.current
     var showDialog by remember { mutableStateOf(false) }
     var tagName by remember { mutableStateOf("") }
+
+    val scope = rememberCoroutineScope()
+    var showBottomSheet by remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState()
+    var selectedTag by remember { mutableStateOf<Tag?>(null) }
+
+    var showEditDialog by remember { mutableStateOf(false) }
+    var editTagName by remember { mutableStateOf("") }
+
 
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
@@ -69,6 +94,36 @@ fun HamburgerPage(navigator: NavController, viewModel: TagsViewModel, onCreate: 
                 Icon(Icons.Default.Add, contentDescription = "Add tag")
             }
         }) { innerPadding ->
+
+            if (showBottomSheet && selectedTag != null) {
+                ModalBottomSheet(
+                    onDismissRequest = { showBottomSheet = false }, sheetState = sheetState
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally // Center all rows horizontally
+                    ) {
+                        Button(onClick = {
+                            //TODO usuwanie tagu
+                            onDelete(selectedTag!!)
+                            selectedTag = null
+                            showBottomSheet = false
+                        }) {
+                            Icon(Icons.Default.Delete, "Delete tag")
+                            Text(text = "Delete tag")
+                        }
+                        Spacer(Modifier.height(20.dp))
+                        Button(onClick = {
+//                            onEdit(selectedTag!!, "")
+                            showEditDialog = true
+                            showBottomSheet = false
+                        }) {
+                            Icon(Icons.Default.Edit, "Delete tag")
+                            Text(text = "Edit tag")
+                        }
+                    }
+                }
+            }
 
             if (showDialog) {
                 AlertDialog(icon = {
@@ -92,7 +147,7 @@ fun HamburgerPage(navigator: NavController, viewModel: TagsViewModel, onCreate: 
                 }, confirmButton = {
                     TextButton(onClick = {
                         onCreate(tagName)
-                        showDialog=false
+                        showDialog = false
                     }) {
                         Text("Confirm")
                     }
@@ -100,6 +155,46 @@ fun HamburgerPage(navigator: NavController, viewModel: TagsViewModel, onCreate: 
                     TextButton(onClick = {
                         showDialog = false
                         tagName = ""
+
+                    }) {
+                        Text("Dismiss")
+                    }
+                })
+            }
+
+            if (showEditDialog) {
+                editTagName=selectedTag!!.name
+                AlertDialog(icon = {
+//                    Icon(, contentDescription = "Example Icon")
+                }, title = {
+                    Text(text = "Edit tag")
+                }, text = {
+                    TextField(
+                        value = editTagName,
+                        onValueChange = { editTagName = it },
+                        label = { Text("Tag Name") },
+                        placeholder = { Text("Enter your tag name here") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                    )
+                }, onDismissRequest = {
+//                    onDismissRequest()
+                    editTagName = ""
+                    showEditDialog = false
+                }, confirmButton = {
+                    TextButton(onClick = {
+                        onEdit(selectedTag!!, editTagName)
+                        selectedTag=null
+                        editTagName=""
+                        showEditDialog = false
+                    }) {
+                        Text("Confirm")
+                    }
+                }, dismissButton = {
+                    TextButton(onClick = {
+                        showEditDialog = false
+                        editTagName = ""
 
                     }) {
                         Text("Dismiss")
@@ -172,18 +267,17 @@ fun HamburgerPage(navigator: NavController, viewModel: TagsViewModel, onCreate: 
                             Modifier
                                 .padding(horizontal = 50.dp)
                                 .fillMaxWidth()
-                                .clickable {
-                                    try {
+                                .clickable { }
+                                .pointerInput(Unit) {
+                                    detectTapGestures(onTap = {
                                         navigator.navigate("NotesWithTagPage/${tag.tagID}")
-
-                                    } catch (e: Exception) {
-                                        Log.e(
-                                            "NavigationError",
-                                            "Error navigating to NotesWithTagPage",
-                                            e
-                                        )
-                                    }
+                                    }, onLongPress = {
+//                                            onDelete()
+                                        showBottomSheet = true
+                                        selectedTag = tag
+                                    })
                                 },
+
                             contentAlignment = Alignment.Center,
                         ) {
                             Text(modifier = Modifier.padding(vertical = 10.dp), text = tag.name)

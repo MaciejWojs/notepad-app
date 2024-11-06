@@ -115,22 +115,37 @@ class MainActivity : ComponentActivity() {
                     TestPage(navController, viewModel = notesViewModel, dao = dao)
                 }
                 composable("HamburgerPage") {
-                    HamburgerPage(navController, tagsViewModel, onCreate = { tagName ->
-                        tagsViewModel.viewModelScope.launch {
-                            dao.insertTag(
-                                Tag(tagName)
-                            )
+                    HamburgerPage(
+                        navController, tagsViewModel,
+                        onCreate = { tagName ->
+                            tagsViewModel.viewModelScope.launch {
+                                dao.insertTag(
+                                    Tag(tagName)
+                                )
+                            }
+                        },
+                        onDelete = { tag ->
+                            tagsViewModel.viewModelScope.launch {
+                                dao.deleteTag(tag)
+                            }
+                        },
+                        onEdit = {tag, name->
+                            tagsViewModel.viewModelScope.launch {
+                                dao.updateTag(id=tag.tagID, name = name)
+                            }
                         }
-                    })
+                    )
                 }
                 composable("CreateNotePage") {
 
                     CreateNotePage(
-                        navigator = navController, onCreate = { title, content ->
+                        navigator = navController,
+                        onCreate = { title, content ->
                             notesViewModel.viewModelScope.launch {
                                 dao.insertNote(Note(title, content))
                             }
-                        }, tags = tagsViewModel.state.value.tags
+                        },
+                        tags = tagsViewModel.state.value.tags,
                     )
                 }
                 composable(
@@ -149,13 +164,15 @@ class MainActivity : ComponentActivity() {
                         })
                 }
                 composable("EditNotePage") {
-                    val note = navController.previousBackStackEntry?.savedStateHandle?.get<Note>("note")
+                    val note =
+                        navController.previousBackStackEntry?.savedStateHandle?.get<Note>("note")
                     if (note != null) {
                         LaunchedEffect(note.noteID) {
                             notesWithTagPageViewModel.loadTagsByNote(note.noteID)
                         }
 
-                        val currentTags = notesWithTagPageViewModel.state.value.tagsWithNote.flatMap { it.tags }
+                        val currentTags =
+                            notesWithTagPageViewModel.state.value.tagsWithNote.flatMap { it.tags }
 
                         // Ensure that the tags are loaded before showing the EditNotePage
                         EditNotePage(
@@ -171,41 +188,9 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 }
-
             }
         }
     }
-
-    /**
-     * Called when the activity becomes visible to the user.
-     *
-     * Displays a Toast message to indicate that the activity is in the onStart() state.
-     *
-     * @see ComponentActivity.onStart
-     */
-    override fun onStart() {
-        super.onStart()
-        Toast.makeText(applicationContext, "onStart()", Toast.LENGTH_LONG).show()
-    }
-
-}
-
-/**
- * A composable function that displays a greeting message.
- *
- * This function displays a greeting message with the provided name.
- *
- * @param name The name to be displayed in the greeting message.
- * @param modifier [Modifier] applied to the composable layout. Default is an empty modifier.
- * @param weight [FontWeight] applied to the font style of the greeting text. Default is FontWeight(400).
- */
-@Composable
-fun Greeting(
-    name: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(400)
-) {
-    Text(
-        text = "$name!", modifier = modifier, fontWeight = weight
-    )
 }
 
 /**
@@ -224,17 +209,4 @@ fun CreateNoteTitle(
     Text(
         text = noteTitle, modifier = modifier, fontWeight = weight
     )
-}
-
-/**
- * Preview function for the [Greeting] composable.
- *
- * Displays a preview of the greeting message with "Android" as the name.
- */
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BestNotepadEverCreatedTheme {
-        Greeting("Android")
-    }
 }

@@ -55,6 +55,12 @@ interface NotesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTag(tag: Tag)
 
+    @Query("UPDATE tags SET name=:name WHERE tagID = :id")
+    suspend fun updateTag(
+        id: Int,
+        name: String,
+    )
+
     @Delete
     suspend fun deleteTag(tag: Tag)
 
