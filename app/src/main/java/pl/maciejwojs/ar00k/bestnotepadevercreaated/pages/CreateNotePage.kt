@@ -1,3 +1,4 @@
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -19,11 +20,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
@@ -65,9 +68,11 @@ fun CreateNotePage(
     val sheetState = rememberModalBottomSheetState()
 
     // Initialize checkedMap to keep track of each tag’s selection state
-    val checkedMap = remember { mutableStateMapOf<Tag, Boolean>().apply {
-        tags.forEach { tag -> this[tag] = false }
-    }}
+    val checkedMap = remember {
+        mutableStateMapOf<Tag, Boolean>().apply {
+            tags.forEach { tag -> this[tag] = false }
+        }
+    }
 
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -164,7 +169,11 @@ fun CreateNotePage(
                                         .defaultMinSize(minHeight = 300.dp)
                                 )
 
-                                Button(onClick = { showBottomSheet = true }) {
+                                Button(
+                                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                                    onClick = { showBottomSheet = true })
+                                {
+                                    Icon(imageVector = Icons.Default.Add,  contentDescription = "Add tags")
                                     Text(text = "Add tags")
                                 }
                             }
@@ -202,13 +211,14 @@ fun CreateNotePage(
                                 }
                             }
 
-
-                            Button(onClick = {
-                                scope.launch { sheetState.hide() }.invokeOnCompletion {
-                                    if (!sheetState.isVisible) showBottomSheet = false
-                                }
-                            }) {
-                                Text("Hide bottom sheet")
+                            Button(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                onClick = {
+                                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                        if (!sheetState.isVisible) showBottomSheet = false
+                                    }
+                                }) {
+                                Text("Hide")
                             }
                         }
                     }

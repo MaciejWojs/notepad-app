@@ -15,20 +15,25 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -45,6 +50,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import kotlinx.coroutines.launch
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
@@ -190,8 +196,12 @@ fun EditNotePage(
                                         .padding(8.dp)
                                         .defaultMinSize(minHeight = 300.dp)
                                 )
-                                Button(onClick = { showBottomSheet = true }) {
-                                    Text(text = "Add tags")
+                                Button(
+                                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                                    onClick = { showBottomSheet = true })
+                                {
+                                    Icon(imageVector = Icons.Default.Edit,  contentDescription = "Edit tags")
+                                    Text(text = "Add/modify tags")
                                 }
                             }
                         }
@@ -200,13 +210,44 @@ fun EditNotePage(
 
                 if (showBottomSheet) {
                     ModalBottomSheet(
-                        onDismissRequest = { showBottomSheet = false },
-                        sheetState = sheetState
+                        onDismissRequest = { showBottomSheet = false }, sheetState = sheetState
                     ) {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally // Center all rows horizontally
+                        ) {
+                            items(tags, key = { it.tagID }) { tag ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth(0.8f) // Limit row width to 80% of available width for centering
+                                        .clickable { },
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween // Space between Text and Switch
+                                ) {
+                                    Text(
+                                        text = tag.name,
+                                        modifier = Modifier.weight(1f) // Text takes remaining space
+                                    )
+                                    Switch(checked = checkedMap[tag] ?: false,
+                                        onCheckedChange = { isChecked ->
+                                            checkedMap[tag] = isChecked
+                                        })
+                                }
+                            }
+                        }
+
+                        Button(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            onClick = {
+                                scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                    if (!sheetState.isVisible) showBottomSheet = false
+                                }
+                            }) {
+                            Text("Hide")
+                        }
                     }
                 }
             }
         }
     }
 }
-

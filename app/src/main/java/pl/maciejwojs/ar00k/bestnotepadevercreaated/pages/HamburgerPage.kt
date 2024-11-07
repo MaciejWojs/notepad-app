@@ -1,5 +1,13 @@
+/**
+ * @file HamburgerPage.kt
+ * @brief Plik odpowiadający za stworzenie instancji view modeli i nawigację do odpowiednich stron
+ *
+ * W tym pliku znajduje się implementacja strony, na której użytkownik może zarządzać tagami.
+ * Umożliwia tworzenie nowych tagów, edytowanie istniejących, usuwanie ich oraz przejście do listy notatek przypisanych do tagów.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -104,7 +112,6 @@ fun HamburgerPage(
                         horizontalAlignment = Alignment.CenterHorizontally // Center all rows horizontally
                     ) {
                         Button(onClick = {
-                            //TODO usuwanie tagu
                             onDelete(selectedTag!!)
                             selectedTag = null
                             showBottomSheet = false
@@ -163,7 +170,7 @@ fun HamburgerPage(
             }
 
             if (showEditDialog) {
-                editTagName=selectedTag!!.name
+                editTagName = selectedTag!!.name
                 AlertDialog(icon = {
 //                    Icon(, contentDescription = "Example Icon")
                 }, title = {
@@ -179,14 +186,15 @@ fun HamburgerPage(
                             .padding(8.dp)
                     )
                 }, onDismissRequest = {
-//                    onDismissRequest()
                     editTagName = ""
                     showEditDialog = false
                 }, confirmButton = {
                     TextButton(onClick = {
                         onEdit(selectedTag!!, editTagName)
-                        selectedTag=null
-                        editTagName=""
+                        tagName = editTagName
+                        Log.d("TAG", tagName)
+                        selectedTag = null
+                        editTagName = ""
                         showEditDialog = false
                     }) {
                         Text("Confirm")

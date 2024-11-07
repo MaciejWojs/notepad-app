@@ -1,8 +1,13 @@
+/**
+ * @file MainActivity.kt
+ * @brief Plik odpowiadający za stworzenie instancji view modeli i nawigację do odpowiednich stron
+ *
+ */
+
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
 import CreateNotePage
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,7 +18,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -33,7 +37,6 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.NotesListPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.NotesWithTagPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.SettingsPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.TestPage
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 /**
  * The main activity of the application BestNotepadEverCreated.
@@ -205,7 +208,7 @@ class MainActivity : ComponentActivity() {
  */
 @Composable
 fun CreateNoteTitle(
-    noteTitle: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(900)
+    noteTitle: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(weight=900)
 ) {
     Text(
         text = noteTitle, modifier = modifier, fontWeight = weight
