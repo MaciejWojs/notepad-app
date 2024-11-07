@@ -58,7 +58,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreat
 @Composable
 fun CreateNotePage(
     navigator: NavController,
-    onCreate: (String, String) -> Unit,
+    onCreate: (String, String, Map<Tag, Boolean>) -> Unit,
     tags: List<Tag>
 ) {
     var noteTitle by remember { mutableStateOf("") }
@@ -92,7 +92,11 @@ fun CreateNotePage(
                         if (!navigator.popBackStack()) {
                             navigator.navigate("MainPage")
                         } else {
-                            onCreate(noteTitle, noteContent)
+                            onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
+//                            checkedMap.forEach { entry ->
+//                                Log.i("TAG", "id: ${entry.key} ${entry.value}")
+////                                onTagAdd(note, entry.key, entry.value)
+//                            }
                         }
                     }
                     Row(
@@ -119,7 +123,7 @@ fun CreateNotePage(
                         transparent = true,
                         isEnabled = true // Enable save once required fields are filled
                     ) {
-                        onCreate(noteTitle, noteContent)
+                        onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
                     }
                 }
 
@@ -193,7 +197,13 @@ fun CreateNotePage(
                                     Row(
                                         modifier = Modifier
                                             .fillMaxWidth(0.8f) // Limit row width to 80% of available width for centering
-                                            .clickable { },
+                                            .clickable {
+                                                if (checkedMap[tag] != null) {
+                                                    checkedMap[tag] = !checkedMap[tag]!!
+                                                } else {
+                                                    checkedMap[tag] = true
+                                                }
+                                            },
                                         verticalAlignment = Alignment.CenterVertically,
                                         horizontalArrangement = Arrangement.SpaceBetween // Space between Text and Switch
                                     ) {

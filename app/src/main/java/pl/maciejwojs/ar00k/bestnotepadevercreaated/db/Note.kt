@@ -29,7 +29,7 @@ data class Note(
     val content: String,
     val modificationTime: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
     val creationTime: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
-    @PrimaryKey(autoGenerate = true) val noteID: Int = 0
+    @PrimaryKey(autoGenerate = true) val noteID: Long = 0
 ) : Parcelable
 //TODO zrobić pole na zablokowanie notatki i dostosować resztę kodu
 //TODO zmienić pola na Timestamp i dostosować resztę kodu

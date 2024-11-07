@@ -5,6 +5,6 @@ import androidx.room.Index
 
 @Entity(primaryKeys = ["noteID", "tagID"], indices = [Index("noteID"), Index("tagID")])
 data class NotesTagsCrossRef(
-    val noteID: Int,
-    val tagID: Int
+    val noteID: Long,
+    val tagID: Long
 )

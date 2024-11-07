@@ -28,7 +28,7 @@ interface NotesDao {
      * @return Liczba relacji w tabeli `NotesTagsCrossRef`.
      */
     @Query("SELECT COUNT(*) from NotesTagsCrossRef")
-    suspend fun isAddingRelations(): Int
+    suspend fun isAddingRelations(): Long
 
     /**
      * Dodaje przykładowe relacje między notatkami a tagami przy uruchomieniu aplikacji.
@@ -43,8 +43,8 @@ interface NotesDao {
      *
      * @param note Obiekt [Note] reprezentujący notatkę do wstawienia.
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNote(note: Note)
+    @Insert(entity = Note::class,onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNote(note: Note): Long
 
     /**
      * Aktualizuje tytuł, treść oraz czas modyfikacji notatki.
@@ -56,7 +56,7 @@ interface NotesDao {
      */
     @Query("UPDATE notes SET title=:title, content=:content,modificationTime=:modificationDate WHERE noteID = :id")
     suspend fun updateNote(
-        id: Int,
+        id: Long,
         title: String,
         content: String,
         modificationDate: String = LocalDateTime.now()
@@ -85,7 +85,7 @@ interface NotesDao {
      * @return Liczba notatek w bazie danych.
      */
     @Query("SELECT COUNT(*) FROM notes")
-    suspend fun getNotesCount(): Int
+    suspend fun getNotesCount(): Long
 
     /**
      * Pobiera notatkę na podstawie identyfikatora.
@@ -95,7 +95,7 @@ interface NotesDao {
      */
     @Transaction
     @Query("SELECT * FROM notes WHERE noteID=:id")
-    suspend fun getNoteFromID(id: Int): Note
+    suspend fun getNoteFromID(id: Long): Note
 
 
     // Kwerendy do Tagów
@@ -116,7 +116,7 @@ interface NotesDao {
      */
     @Query("UPDATE tags SET name=:name WHERE tagID = :id")
     suspend fun updateTag(
-        id: Int,
+        id: Long,
         name: String,
     )
 
@@ -143,7 +143,7 @@ interface NotesDao {
      * @return Liczba tagów w bazie danych.
      */
     @Query("SELECT COUNT(*) FROM tags")
-    suspend fun getTagsCount(): Int
+    suspend fun getTagsCount(): Long
 
     /**
      * Pobiera nazwę tagu na podstawie identyfikatora jako przepływ [Flow].
@@ -153,18 +153,18 @@ interface NotesDao {
      */
     @Transaction
     @Query("SELECT name FROM tags WHERE tagID=:id")
-    fun getTagFromID(id: Int): Flow<List<String>>
+    fun getTagFromID(id: Long): Flow<List<String>>
 
 
     /**
      * Pobiera listę notatek przypisanych do danego tagu na podstawie identyfikatora tagu.
      *
      * @param tagId Identyfikator tagu, dla którego mają być pobrane notatki.
-     * @return Lista [NotesWithTags] zawierająca notatki powiązane z tagiem.
+     * @return Lista [NotesWithTags] zawierająca notatki powiązane z tagcheiem.
      */
     @Transaction
     @Query("SELECT * FROM tags WHERE tagID = :tagId")
-    suspend fun getNotesWithTags(tagId: Int): List<NotesWithTags>
+    suspend fun getNotesWithTags(tagId: Long): List<NotesWithTags>
 
     /**
      * Pobiera listę tagów przypisanych do danej notatki na podstawie identyfikatora notatki.
@@ -174,5 +174,15 @@ interface NotesDao {
      */
     @Transaction
     @Query("SELECT * FROM notes WHERE noteID = :noteId")
-    suspend fun getTagsWithNotes(noteId: Int): List<TagsWithNotes>
+    suspend fun getTagsWithNotes(noteId: Long): List<TagsWithNotes>
+
+    @Query("INSERT INTO NotesTagsCrossRef VALUES (:noteID, :tagID)")
+    suspend fun insertRelationBetweenNoteAndTag(noteID: Long, tagID: Long)
+
+    @Query("DElETE FROM notestagscrossref WHERE noteID=:noteID AND tagID=:tagID")
+    suspend fun deleteRelationBetweenNoteAndTag(noteID: Long, tagID: Long)
+
+
+    @Query("SELECT COUNT(*) FROM notestagscrossref WHERE noteID = :noteID AND tagID=:tagID")
+    suspend fun checkIfRelationBetweenNoteAndTagExist(noteID: Long, tagID: Long):Int
 }

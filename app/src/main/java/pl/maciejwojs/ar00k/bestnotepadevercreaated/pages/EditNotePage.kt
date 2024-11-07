@@ -37,6 +37,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -62,6 +63,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreat
 fun EditNotePage(
     navigator: NavController,
     onEdit: (String, String) -> Unit,
+    onTagEdit: (Note, Tag, Boolean) -> Unit,
     note: Note,
     tags: List<Tag>,
     currentNoteTags: List<Tag>
@@ -74,11 +76,15 @@ fun EditNotePage(
     val sheetState = rememberModalBottomSheetState()
 
     // Initialize checkedMap to keep track of each tag’s selection state
-    val checkedMap = remember {
-        mutableStateMapOf<Tag, Boolean>().apply {
-            tags.forEach { tag ->
-                put(tag, currentNoteTags.contains(tag))
-            }
+    // Initialize checkedMap with an empty map
+    val checkedMap = remember { mutableStateMapOf<Tag, Boolean>() }
+
+    // Update checkedMap based on the current note's tags when tags or currentNoteTags change
+    LaunchedEffect(tags, currentNoteTags) {
+        checkedMap.clear() // Clear any previous values
+        tags.forEach { tag ->
+            // Initialize the checked state for each tag based on its presence in currentNoteTags
+            checkedMap[tag] = currentNoteTags.contains(tag)
         }
     }
 
@@ -136,6 +142,10 @@ fun EditNotePage(
                         icon = Icons.Default.Check, "Save Note"
                     ) {
                         onEdit(noteTitle, noteContent)
+                        checkedMap.forEach { entry ->
+                            Log.i("TAG", "id: ${entry.key} ${entry.value}")
+                            onTagEdit(note, entry.key, entry.value)
+                        }
                     }
                 }
 
@@ -196,11 +206,12 @@ fun EditNotePage(
                                         .padding(8.dp)
                                         .defaultMinSize(minHeight = 300.dp)
                                 )
-                                Button(
-                                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                                    onClick = { showBottomSheet = true })
-                                {
-                                    Icon(imageVector = Icons.Default.Edit,  contentDescription = "Edit tags")
+                                Button(modifier = Modifier.align(Alignment.CenterHorizontally),
+                                    onClick = { showBottomSheet = true }) {
+                                    Icon(
+                                        imageVector = Icons.Default.Edit,
+                                        contentDescription = "Edit tags"
+                                    )
                                     Text(text = "Add/modify tags")
                                 }
                             }
@@ -220,7 +231,13 @@ fun EditNotePage(
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth(0.8f) // Limit row width to 80% of available width for centering
-                                        .clickable { },
+                                        .clickable {
+                                            if (checkedMap[tag] != null) {
+                                                checkedMap[tag] = !checkedMap[tag]!!
+                                            } else {
+                                                checkedMap[tag] = true
+                                            }
+                                        },
                                     verticalAlignment = Alignment.CenterVertically,
                                     horizontalArrangement = Arrangement.SpaceBetween // Space between Text and Switch
                                 ) {
@@ -236,13 +253,11 @@ fun EditNotePage(
                             }
                         }
 
-                        Button(
-                            modifier = Modifier.align(Alignment.CenterHorizontally),
-                            onClick = {
-                                scope.launch { sheetState.hide() }.invokeOnCompletion {
-                                    if (!sheetState.isVisible) showBottomSheet = false
-                                }
-                            }) {
+                        Button(modifier = Modifier.align(Alignment.CenterHorizontally), onClick = {
+                            scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                if (!sheetState.isVisible) showBottomSheet = false
+                            }
+                        }) {
                             Text("Hide")
                         }
                     }

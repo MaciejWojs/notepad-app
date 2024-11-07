@@ -12,14 +12,14 @@ data class NotesTagsCrossRefViewModel(
     private val _state = MutableStateFlow(NotesTagsCrossRefState())
     val state: StateFlow<NotesTagsCrossRefState> get() = _state
 
-    fun loadNotesByTag(tagId: Int) {
+    fun loadNotesByTag(tagId: Long) {
         viewModelScope.launch {
             val notes = dao.getNotesWithTags(tagId)
             _state.value = NotesTagsCrossRefState(notesWithTag = notes)
         }
     }
 
-    fun loadTagsByNote(noteID:Int) {
+    fun loadTagsByNote(noteID: Long) {
         viewModelScope.launch {
             val tags = dao.getTagsWithNotes(noteID)
             _state.value = NotesTagsCrossRefState(tagsWithNote = tags)

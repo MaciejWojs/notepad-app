@@ -8,13 +8,13 @@ package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
 import CreateNotePage
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -65,10 +65,10 @@ class MainActivity : ComponentActivity() {
 
         // Launch coroutine to set up default relations and tags in the database if not already present
         lifecycleScope.launch {
-            if (dao.isAddingRelations() == 0) {
-                dao.insertRelation()
-            }
-            if (dao.getTagsCount() == 0) {
+//            if (dao.isAddingRelations() == 0) {
+//                dao.insertRelation()
+//            }
+            if (dao.getTagsCount() == 0L) {
                 dao.insertTag(tag = Tag("Zakupy"))
                 dao.insertTag(tag = Tag("Szkoła"))
             }
@@ -119,34 +119,37 @@ class MainActivity : ComponentActivity() {
                     TestPage(navController, viewModel = notesViewModel, dao = dao)
                 }
                 composable("HamburgerPage") {
-                    HamburgerPage(
-                        navController, tagsViewModel,
-                        onCreate = { tagName ->
-                            tagsViewModel.viewModelScope.launch {
-                                dao.insertTag(
-                                    Tag(tagName)
-                                )
-                            }
-                        },
-                        onDelete = { tag ->
-                            tagsViewModel.viewModelScope.launch {
-                                dao.deleteTag(tag)
-                            }
-                        },
-                        onEdit = {tag, name->
-                            tagsViewModel.viewModelScope.launch {
-                                dao.updateTag(id=tag.tagID, name = name)
-                            }
+                    HamburgerPage(navController, tagsViewModel, onCreate = { tagName ->
+                        tagsViewModel.viewModelScope.launch {
+                            dao.insertTag(
+                                Tag(tagName)
+                            )
                         }
-                    )
+                    }, onDelete = { tag ->
+                        tagsViewModel.viewModelScope.launch {
+                            dao.deleteTag(tag)
+                        }
+                    }, onEdit = { tag, name ->
+                        tagsViewModel.viewModelScope.launch {
+                            dao.updateTag(id = tag.tagID, name = name)
+                        }
+                    })
                 }
                 composable("CreateNotePage") {
                     val tags = tagsViewModel.state.collectAsState().value.tags
                     CreateNotePage(
                         navigator = navController,
-                        onCreate = { title, content ->
+                        onCreate = { title, content, map ->
+                            val note = Note(title, content)
                             notesViewModel.viewModelScope.launch {
-                                dao.insertNote(Note(title, content))
+                                val insertedNoteID = dao.insertNote(note)
+                                if (map.isNotEmpty()) {
+                                    map.forEach { entry ->
+                                        if(entry.value){
+                                        dao.insertRelationBetweenNoteAndTag(insertedNoteID, entry.key.tagID)
+                                        }
+                                    }
+                                }
                             }
                         },
                         tags = tags,
@@ -154,10 +157,10 @@ class MainActivity : ComponentActivity() {
                 }
                 composable(
                     "NotesWithTagPage/{tagID}", arguments = listOf(navArgument("tagID") {
-                        type = NavType.IntType; nullable = false
+                        type = NavType.LongType; nullable = false
                     })
                 ) { backStackEntry ->
-                    val tagID = backStackEntry.arguments?.getInt("tagID")
+                    val tagID = backStackEntry.arguments?.getLong("tagID")
                         ?: error("Required argument 'tagID' is missing")
                     NotesWithTagPage(navigator = navController,
                         viewModel = notesWithTagPageViewModel,
@@ -171,16 +174,13 @@ class MainActivity : ComponentActivity() {
                     val note =
                         navController.previousBackStackEntry?.savedStateHandle?.get<Note>("note")
                     if (note != null) {
-                        LaunchedEffect(note.noteID) {
-                            notesWithTagPageViewModel.loadTagsByNote(note.noteID)
-                        }
+                        notesWithTagPageViewModel.loadTagsByNote(note.noteID)
 
                         val currentTags =
                             notesWithTagPageViewModel.state.collectAsState().value.tagsWithNote.flatMap { it.tags }
 
                         // Ensure that the tags are loaded before showing the EditNotePage
-                        EditNotePage(
-                            navigator = navController,
+                        EditNotePage(navigator = navController,
                             onEdit = { title, content ->
                                 notesViewModel.viewModelScope.launch {
                                     dao.updateNote(note.noteID, title, content)
@@ -188,8 +188,30 @@ class MainActivity : ComponentActivity() {
                             },
                             note = note,
                             tags = tagsViewModel.state.collectAsState().value.tags,
-                            currentNoteTags = currentTags // This will now be populated correctly
-                        )
+                            currentNoteTags = currentTags, // This will now be populated correctly
+                            onTagEdit = { n, tag, addNote ->
+                                tagsViewModel.viewModelScope.launch {
+                                    if (dao.checkIfRelationBetweenNoteAndTagExist(
+                                            noteID = n.noteID, tagID = tag.tagID
+                                        ) == 0 && addNote
+                                    ) {
+                                        dao.insertRelationBetweenNoteAndTag(n.noteID, tag.tagID)
+                                        Log.i("TAG", "Dodawanie tagu ${tag.name}")
+                                    }
+                                    if (dao.checkIfRelationBetweenNoteAndTagExist(
+                                            noteID = n.noteID, tagID = tag.tagID
+                                        ) == 1 && !addNote
+                                    ) {
+                                        Log.i("TAG", "usuwanie tagu ${tag.name}")
+                                        dao.deleteRelationBetweenNoteAndTag(n.noteID, tag.tagID)
+                                    }
+
+                                    notesWithTagPageViewModel.viewModelScope.launch {
+                                        notesWithTagPageViewModel.loadTagsByNote(noteID = note.noteID)
+                                    }
+                                }
+
+                            })
                     }
                 }
             }
@@ -208,7 +230,7 @@ class MainActivity : ComponentActivity() {
  */
 @Composable
 fun CreateNoteTitle(
-    noteTitle: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(weight=900)
+    noteTitle: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(weight = 900)
 ) {
     Text(
         text = noteTitle, modifier = modifier, fontWeight = weight

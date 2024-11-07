@@ -43,7 +43,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreat
 fun NotesWithTagPage(
     navigator: NavController,
     viewModel: NotesTagsCrossRefViewModel,
-    tagID: Int,
+    tagID: Long,
     navigateToEditNotePage: (Note) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
