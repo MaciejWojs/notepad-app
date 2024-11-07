@@ -9,7 +9,7 @@ var NAVTREEINDEX0 =
 "IconButtonGeneration_8kt.html":[2,0,0,0,1,0,0,0,0,0,0,0],
 "IconButtonGeneration_8kt.html#a11b555fd0085da840f1263526351f140":[2,0,0,0,1,0,0,0,0,0,0,0,0],
 "MainActivity_8kt.html":[2,0,0,0,1,0,0,0,0,0,5],
-"MainActivity_8kt.html#a3f7b658a3de4acdc1e91008cdc1baf4c":[2,0,0,0,1,0,0,0,0,0,5,0],
+"MainActivity_8kt.html#a6664e5b037448db02484c1bf3a004370":[2,0,0,0,1,0,0,0,0,0,5,0],
 "MainActivity_8kt.html#ac93e02521caa7c6608824507a471b057":[2,0,0,0,1,0,0,0,0,0,5,1],
 "MainPage_8kt.html":[2,0,0,0,1,0,0,0,0,0,2,3],
 "Note_8kt.html":[2,0,0,0,1,0,0,0,0,0,1,1],
