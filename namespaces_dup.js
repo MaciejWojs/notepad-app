@@ -12,9 +12,10 @@ var namespaces_dup =
     [ "NotesViewModel", "namespaceNotesViewModel.html", null ],
     [ "null", "namespacenull.html", null ],
     [ "RoomDatabase", "namespaceRoomDatabase.html", [
-      [ "build", "namespaceRoomDatabase.html#a6d994b3f7ea496ccb8b361fa0527db9d", null ],
+      [ "build", "namespaceRoomDatabase.html#aadf1ab25f1ce05891cffcd52ab0bb668", null ],
       [ "dao", "namespaceRoomDatabase.html#a67427c6156a488ac25367a603b639f1f", null ],
-      [ "java", "namespaceRoomDatabase.html#ad83bb6c8d401055e78394af92b14653e", null ]
+      [ "java", "namespaceRoomDatabase.html#ad83bb6c8d401055e78394af92b14653e", null ],
+      [ "note_db", "namespaceRoomDatabase.html#a4417269a6632dbeaa411f483be21eb6c", null ]
     ] ],
     [ "Tag", "namespaceTag.html", null ],
     [ "title", "namespacetitle.html", null ],
