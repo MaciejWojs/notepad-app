@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 data class NotesTagsCrossRefViewModel(
-    private val dao: NotesDao
+    private val dao: NotesDao,
 ) : ViewModel() {
     private val _state = MutableStateFlow(NotesTagsCrossRefState())
     val state: StateFlow<NotesTagsCrossRefState> get() = _state
@@ -27,4 +27,3 @@ data class NotesTagsCrossRefViewModel(
         }
     }
 }
-

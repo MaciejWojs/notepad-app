@@ -40,13 +40,16 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 @Composable
-fun TestPage(navigator: NavController, viewModel: NotesViewModel, dao: NotesDao) {
+fun TestPage(
+    navigator: NavController,
+    viewModel: NotesViewModel,
+    dao: NotesDao,
+) {
     val context = LocalContext.current
     val state = viewModel.state.collectAsState().value
 //    val noteList = state.notes
 //        ?: emptyList() // Ensuring a non-null list
     BestNotepadEverCreatedTheme {
-
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
             Column(modifier = Modifier.padding(innerPadding)) {
@@ -55,21 +58,21 @@ fun TestPage(navigator: NavController, viewModel: NotesViewModel, dao: NotesDao)
                         .height(50.dp)
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.onSecondary)
-                        .padding(horizontal = 8.dp), //1 Add some padding to the row
-                    horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                        .padding(horizontal = 8.dp), // 1 Add some padding to the row
+                    horizontalArrangement = Arrangement.SpaceBetween, // Arrange items in row
                 ) {
 //                            Row(
 //                                Modifier
 //                                    .fillMaxWidth()
 //                            ) {
                     GenerateIconButton(
-                        icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen"
+                        icon = Icons.AutoMirrored.Filled.ArrowBack,
+                        "Back to main screen",
                     ) {
                         if (!navigator.popBackStack()) {
                             // Przejdź do głównego ekranu lub innego widoku początkowego
                             navigator.navigate("MainPage")
                         }
-
                     }
                     Row(
                         Modifier
@@ -81,7 +84,7 @@ fun TestPage(navigator: NavController, viewModel: NotesViewModel, dao: NotesDao)
                             .border(
                                 width = 2.dp,
                                 color = MaterialTheme.colorScheme.outline,
-                                shape = RoundedCornerShape(25.dp)
+                                shape = RoundedCornerShape(25.dp),
                             )
                             .clickable {
 //                                Toast
@@ -93,11 +96,11 @@ fun TestPage(navigator: NavController, viewModel: NotesViewModel, dao: NotesDao)
 //                                    .show()
                             },
                         horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
-
                         Text(
-                            text = "Search", Modifier.padding(start = 5.dp)
+                            text = "Search",
+                            Modifier.padding(start = 5.dp),
 //                                            .align(alignment = Alignment.CenterVertically)
                         )
 
@@ -116,20 +119,22 @@ fun TestPage(navigator: NavController, viewModel: NotesViewModel, dao: NotesDao)
                 // List of Notes
                 LazyColumn(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     items(state.notes, key = { it.noteID }) { singleNote ->
                         GenerateNote(note = singleNote, onDelete = {
                             Log.d("TestPage", "Deleting note: ${singleNote.title}")
                             viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
                             Toast.makeText(
-                                context, "${singleNote.title} deleted", Toast.LENGTH_SHORT
+                                context,
+                                "${singleNote.title} deleted",
+                                Toast.LENGTH_SHORT,
                             ).show()
 
                             // Log the current state after deletion
                             Log.d(
                                 "TestPage",
-                                "Current notes after deletion: ${state.notes.map { it.title }}"
+                                "Current notes after deletion: ${state.notes.map { it.title }}",
                             )
                         }, onEdit = {
                             navigator.navigate("EditNotePage/${singleNote.noteID}")

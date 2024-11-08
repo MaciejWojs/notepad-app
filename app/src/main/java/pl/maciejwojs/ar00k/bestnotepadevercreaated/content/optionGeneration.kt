@@ -1,6 +1,5 @@
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.content
 
-
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,13 +18,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun GenerateOption(optionText: String = "sample text", optionTitle: String = "sample title") {
+fun GenerateOption(
+    optionText: String = "sample text",
+    optionTitle: String = "sample title",
+) {
     var checked by remember { mutableStateOf(true) }
 
     Row(
-        modifier = Modifier
-            .clickable { }
-            .fillMaxWidth(0.8f),
+        modifier =
+            Modifier
+                .clickable { }
+                .fillMaxWidth(0.8f),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
@@ -37,7 +40,8 @@ fun GenerateOption(optionText: String = "sample text", optionTitle: String = "sa
                 fontSize = 20.sp,
             )
             Text(
-                text = optionText, modifier = Modifier
+                text = optionText,
+                modifier = Modifier,
             )
         }
 

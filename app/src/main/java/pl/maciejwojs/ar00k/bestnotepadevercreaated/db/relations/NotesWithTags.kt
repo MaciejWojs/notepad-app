@@ -11,7 +11,7 @@ data class NotesWithTags(
     @Relation(
         parentColumn = "tagID",
         entityColumn = "noteID",
-        associateBy = Junction(NotesTagsCrossRef::class)
+        associateBy = Junction(NotesTagsCrossRef::class),
     )
-    val notes: List<Note>
+    val notes: List<Note>,
 )

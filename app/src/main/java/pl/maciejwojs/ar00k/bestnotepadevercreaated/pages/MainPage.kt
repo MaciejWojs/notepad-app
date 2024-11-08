@@ -41,12 +41,11 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
-
 @Composable
 fun MainPage(
     navigator: NavController,
     viewModel: NotesViewModel,
-    navigateToEditNotePage: (Note) -> Unit
+    navigateToEditNotePage: (Note) -> Unit,
 ) {
     val state = viewModel.state.collectAsState().value
     BestNotepadEverCreatedTheme {
@@ -57,7 +56,7 @@ fun MainPage(
                 },
                 containerColor = MaterialTheme.colorScheme.onSecondary,
                 shape = CircleShape,
-                elevation = FloatingActionButtonDefaults.elevation(20.dp)
+                elevation = FloatingActionButtonDefaults.elevation(20.dp),
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add")
             }
@@ -68,8 +67,8 @@ fun MainPage(
                         .height(50.dp)
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.onSecondary)
-                        .padding(horizontal = 8.dp), //1 Add some padding to the row
-                    horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                        .padding(horizontal = 8.dp), // 1 Add some padding to the row
+                    horizontalArrangement = Arrangement.SpaceBetween, // Arrange items in row
                 ) {
                     GenerateIconButton { navigator.navigate("HamburgerPage") }
                     Row(
@@ -82,24 +81,23 @@ fun MainPage(
                             .border(
                                 width = 2.dp,
                                 color = MaterialTheme.colorScheme.outline,
-                                shape = RoundedCornerShape(25.dp)
+                                shape = RoundedCornerShape(25.dp),
                             )
                             .clickable {
-                                //TODO search implementation
+                                // TODO search implementation
                             },
                         horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            text = "Search", Modifier.padding(start = 5.dp)
+                            text = "Search",
+                            Modifier.padding(start = 5.dp),
 //                                            .align(alignment = Alignment.CenterVertically)
                         )
                         GenerateIconButton(Icons.Default.Search, "Search menu") {}
                     }
                     GenerateIconButton(icon = Icons.Default.Settings, "Settings") {
-
                         navigator.navigate("SettingsPage")
-
                     }
                 }
 
@@ -107,20 +105,23 @@ fun MainPage(
 
                 LazyColumn(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     items(state.notes, key = { it.noteID }) { singleNote ->
-                        GenerateNote(note = singleNote, onDelete = {
-                            Log.d("TestPage", "Deleting note: ${singleNote.title}")
-                            viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
-                            // Log the current state after deletion
-                            Log.d(
-                                "TestPage",
-                                "Current notes after deletion: ${state.notes.map { it.title }}"
-                            )
-                        }, onEdit = {
-                            navigateToEditNotePage(singleNote)
-                        }
+                        GenerateNote(
+                            note = singleNote,
+                            onDelete = {
+                                Log.d("TestPage", "Deleting note: ${singleNote.title}")
+                                viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
+                                // Log the current state after deletion
+                                Log.d(
+                                    "TestPage",
+                                    "Current notes after deletion: ${state.notes.map { it.title }}",
+                                )
+                            },
+                            onEdit = {
+                                navigateToEditNotePage(singleNote)
+                            },
                         )
                     }
                 }

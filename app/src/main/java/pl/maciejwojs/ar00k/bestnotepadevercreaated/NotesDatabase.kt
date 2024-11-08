@@ -10,9 +10,8 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.NotesTagsCrossRe
 
 @Database(
     entities = [Note::class, Tag::class, NotesTagsCrossRef::class],
-    version = 1
+    version = 1,
 )
-
 abstract class NotesDatabase : RoomDatabase() {
     abstract val dao: NotesDao
 
@@ -25,7 +24,7 @@ abstract class NotesDatabase : RoomDatabase() {
                 return INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
                     NotesDatabase::class.java,
-                    "note_db"
+                    "note_db",
                 ).build().also { INSTANCE = it }
             }
         }

@@ -21,7 +21,6 @@ import java.time.format.DateTimeFormatter
  */
 @Dao
 interface NotesDao {
-
     /**
      * Sprawdza, czy relacje między notatkami a tagami zostały już dodane do bazy danych.
      *
@@ -43,7 +42,7 @@ interface NotesDao {
      *
      * @param note Obiekt [Note] reprezentujący notatkę do wstawienia.
      */
-    @Insert(entity = Note::class,onConflict = OnConflictStrategy.REPLACE)
+    @Insert(entity = Note::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note: Note): Long
 
     /**
@@ -59,8 +58,9 @@ interface NotesDao {
         id: Long,
         title: String,
         content: String,
-        modificationDate: String = LocalDateTime.now()
-            .format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy"))
+        modificationDate: String =
+            LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
     )
 
     /**
@@ -96,7 +96,6 @@ interface NotesDao {
     @Transaction
     @Query("SELECT * FROM notes WHERE noteID=:id")
     suspend fun getNoteFromID(id: Long): Note
-
 
     // Kwerendy do Tagów
 
@@ -155,7 +154,6 @@ interface NotesDao {
     @Query("SELECT name FROM tags WHERE tagID=:id")
     fun getTagFromID(id: Long): Flow<List<String>>
 
-
     /**
      * Pobiera listę notatek przypisanych do danego tagu na podstawie identyfikatora tagu.
      *
@@ -177,12 +175,20 @@ interface NotesDao {
     suspend fun getTagsWithNotes(noteId: Long): List<TagsWithNotes>
 
     @Query("INSERT INTO NotesTagsCrossRef VALUES (:noteID, :tagID)")
-    suspend fun insertRelationBetweenNoteAndTag(noteID: Long, tagID: Long)
+    suspend fun insertRelationBetweenNoteAndTag(
+        noteID: Long,
+        tagID: Long,
+    )
 
     @Query("DElETE FROM notestagscrossref WHERE noteID=:noteID AND tagID=:tagID")
-    suspend fun deleteRelationBetweenNoteAndTag(noteID: Long, tagID: Long)
-
+    suspend fun deleteRelationBetweenNoteAndTag(
+        noteID: Long,
+        tagID: Long,
+    )
 
     @Query("SELECT COUNT(*) FROM notestagscrossref WHERE noteID = :noteID AND tagID=:tagID")
-    suspend fun checkIfRelationBetweenNoteAndTagExist(noteID: Long, tagID: Long):Int
+    suspend fun checkIfRelationBetweenNoteAndTagExist(
+        noteID: Long,
+        tagID: Long,
+    ): Int
 }

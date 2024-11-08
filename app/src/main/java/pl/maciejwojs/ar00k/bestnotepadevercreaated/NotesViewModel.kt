@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class NotesViewModel(
-    private val dao: NotesDao
+    private val dao: NotesDao,
 ) : ViewModel() {
     private val _state = MutableStateFlow(NotesState())
     val state: StateFlow<NotesState> get() = _state
@@ -28,7 +28,7 @@ class NotesViewModel(
         when (event) {
             is NotesEvent.DeleteNote -> {
                 viewModelScope.launch {
-                        dao.deleteNote(event.note)
+                    dao.deleteNote(event.note)
                 }
             }
 
@@ -36,7 +36,7 @@ class NotesViewModel(
             is NotesEvent.SetContent -> {
                 _state.update {
                     it.copy(
-                        content = event.content
+                        content = event.content,
                     )
                 }
             }
@@ -44,7 +44,7 @@ class NotesViewModel(
             is NotesEvent.SetTitle -> {
                 _state.update {
                     it.copy(
-                        title = event.title
+                        title = event.title,
                     )
                 }
             }

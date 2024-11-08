@@ -66,7 +66,7 @@ fun EditNotePage(
     onTagEdit: (Note, Tag, Boolean) -> Unit,
     note: Note,
     tags: List<Tag>,
-    currentNoteTags: List<Tag>
+    currentNoteTags: List<Tag>,
 ) {
     var noteTitle by remember { mutableStateOf(note.title) }
     var noteContent by remember { mutableStateOf(note.content) }
@@ -100,11 +100,12 @@ fun EditNotePage(
                         .height(50.dp)
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.onSecondary)
-                        .padding(horizontal = 8.dp), //1 Add some padding to the row
-                    horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                        .padding(horizontal = 8.dp), // 1 Add some padding to the row
+                    horizontalArrangement = Arrangement.SpaceBetween, // Arrange items in row
                 ) {
                     GenerateIconButton(
-                        icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen"
+                        icon = Icons.AutoMirrored.Filled.ArrowBack,
+                        "Back to main screen",
                     ) {
                         if (!navigator.popBackStack()) {
                             navigator.navigate("MainPage")
@@ -122,24 +123,25 @@ fun EditNotePage(
                             .border(
                                 width = 2.dp,
                                 color = MaterialTheme.colorScheme.outline,
-                                shape = RoundedCornerShape(25.dp)
+                                shape = RoundedCornerShape(25.dp),
                             )
                             .clickable {
-                                //TODO search Implementation
+                                // TODO search Implementation
                             },
                         horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
-
                         Text(
-                            text = "Search", Modifier.padding(start = 5.dp)
+                            text = "Search",
+                            Modifier.padding(start = 5.dp),
 //                                            .align(alignment = Alignment.CenterVertically)
                         )
 
                         GenerateIconButton(Icons.Default.Search, "Search menu") {}
                     }
                     GenerateIconButton(
-                        icon = Icons.Default.Check, "Save Note"
+                        icon = Icons.Default.Check,
+                        "Save Note",
                     ) {
                         onEdit(noteTitle, noteContent)
                         checkedMap.forEach { entry ->
@@ -151,49 +153,47 @@ fun EditNotePage(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(
-                            rememberScrollState(1)
-
-                        )
-
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .verticalScroll(
+                                rememberScrollState(1),
+                            ),
                 ) {
                     Card(
                         Modifier.shadow(
-                            elevation = 20.dp, spotColor = MaterialTheme.colorScheme.onSurface
-                        )
+                            elevation = 20.dp,
+                            spotColor = MaterialTheme.colorScheme.onSurface,
+                        ),
                     ) {
                         Box(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(roundness.dp))
+                            modifier =
+                                Modifier
+                                    .clip(RoundedCornerShape(roundness.dp))
 //                                        .background(color)
-                                .border(
-                                    width = 2.dp,
-                                    color = MaterialTheme.colorScheme.outline,
-                                    shape = RoundedCornerShape(roundness.dp)
-                                )
-
-                                .padding(7.dp)
-                                .scale(0.9f)
-                                .defaultMinSize(minHeight = 500.dp)
-
-                                .fillMaxWidth(0.8f)
-
+                                    .border(
+                                        width = 2.dp,
+                                        color = MaterialTheme.colorScheme.outline,
+                                        shape = RoundedCornerShape(roundness.dp),
+                                    )
+                                    .padding(7.dp)
+                                    .scale(0.9f)
+                                    .defaultMinSize(minHeight = 500.dp)
+                                    .fillMaxWidth(0.8f),
                         ) {
-                            //Note title and Content
+                            // Note title and Content
                             Column {
                                 // Note Title TextField
                                 OutlinedTextField(
                                     value = noteTitle,
                                     onValueChange = { noteTitle = it },
                                     label = { Text("Title") },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(8.dp)
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(8.dp),
                                 )
 
                                 // Note Content TextField
@@ -201,16 +201,19 @@ fun EditNotePage(
                                     value = noteContent,
                                     onValueChange = { noteContent = it },
                                     label = { Text("Content") },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(8.dp)
-                                        .defaultMinSize(minHeight = 300.dp)
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(8.dp)
+                                            .defaultMinSize(minHeight = 300.dp),
                                 )
-                                Button(modifier = Modifier.align(Alignment.CenterHorizontally),
-                                    onClick = { showBottomSheet = true }) {
+                                Button(
+                                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                                    onClick = { showBottomSheet = true },
+                                ) {
                                     Icon(
                                         imageVector = Icons.Default.Edit,
-                                        contentDescription = "Edit tags"
+                                        contentDescription = "Edit tags",
                                     )
                                     Text(text = "Add/modify tags")
                                 }
@@ -221,34 +224,38 @@ fun EditNotePage(
 
                 if (showBottomSheet) {
                     ModalBottomSheet(
-                        onDismissRequest = { showBottomSheet = false }, sheetState = sheetState
+                        onDismissRequest = { showBottomSheet = false },
+                        sheetState = sheetState,
                     ) {
                         LazyColumn(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally // Center all rows horizontally
+                            horizontalAlignment = Alignment.CenterHorizontally, // Center all rows horizontally
                         ) {
                             items(tags, key = { it.tagID }) { tag ->
                                 Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth(0.8f) // Limit row width to 80% of available width for centering
-                                        .clickable {
-                                            if (checkedMap[tag] != null) {
-                                                checkedMap[tag] = !checkedMap[tag]!!
-                                            } else {
-                                                checkedMap[tag] = true
-                                            }
-                                        },
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth(0.8f) // Limit row width to 80% of available width for centering
+                                            .clickable {
+                                                if (checkedMap[tag] != null) {
+                                                    checkedMap[tag] = !checkedMap[tag]!!
+                                                } else {
+                                                    checkedMap[tag] = true
+                                                }
+                                            },
                                     verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween // Space between Text and Switch
+                                    horizontalArrangement = Arrangement.SpaceBetween, // Space between Text and Switch
                                 ) {
                                     Text(
                                         text = tag.name,
-                                        modifier = Modifier.weight(1f) // Text takes remaining space
+                                        modifier = Modifier.weight(1f), // Text takes remaining space
                                     )
-                                    Switch(checked = checkedMap[tag] ?: false,
+                                    Switch(
+                                        checked = checkedMap[tag] ?: false,
                                         onCheckedChange = { isChecked ->
                                             checkedMap[tag] = isChecked
-                                        })
+                                        },
+                                    )
                                 }
                             }
                         }

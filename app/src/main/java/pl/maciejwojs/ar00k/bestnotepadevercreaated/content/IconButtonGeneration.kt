@@ -16,7 +16,7 @@ fun GenerateIconButton(
     modifier: Modifier = Modifier,
     transparent: Boolean = false,
     isEnabled: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     if (transparent) {
         IconButton(onClick, modifier, enabled = isEnabled) {

@@ -43,17 +43,17 @@ fun SettingsPage(navigator: NavController) {
                         .height(50.dp)
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.onSecondary)
-                        .padding(horizontal = 8.dp), //1 Add some padding to the row
-                    horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                        .padding(horizontal = 8.dp), // 1 Add some padding to the row
+                    horizontalArrangement = Arrangement.SpaceBetween, // Arrange items in row
                 ) {
                     GenerateIconButton(
-                        icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen"
+                        icon = Icons.AutoMirrored.Filled.ArrowBack,
+                        "Back to main screen",
                     ) {
                         if (!navigator.popBackStack()) {
                             // Przejdź do głównego ekranu lub innego widoku początkowego
                             navigator.navigate("MainPage")
                         }
-
                     }
                     Row(
                         Modifier
@@ -65,17 +65,17 @@ fun SettingsPage(navigator: NavController) {
                             .border(
                                 width = 2.dp,
                                 color = MaterialTheme.colorScheme.outline,
-                                shape = RoundedCornerShape(25.dp)
+                                shape = RoundedCornerShape(25.dp),
                             )
                             .clickable {
-                                //TODO search Implementation
+                                // TODO search Implementation
                             },
                         horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
-
                         Text(
-                            text = "Search", Modifier.padding(start = 5.dp)
+                            text = "Search",
+                            Modifier.padding(start = 5.dp),
 //                                            .align(alignment = Alignment.CenterVertically)
                         )
 
@@ -92,16 +92,14 @@ fun SettingsPage(navigator: NavController) {
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(
-                            rememberScrollState(1)
-
-                        )
-
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .verticalScroll(
+                                rememberScrollState(1),
+                            ),
                 ) {
                     for (i in 0..3) {
                         GenerateOption()

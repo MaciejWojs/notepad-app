@@ -72,7 +72,7 @@ fun HamburgerPage(
     viewModel: TagsViewModel,
     onCreate: (String) -> Unit,
     onDelete: (Tag) -> Unit,
-    onEdit: (Tag, String) -> Unit
+    onEdit: (Tag, String) -> Unit,
 ) {
     val state = viewModel.state.collectAsState().value
     val context = LocalContext.current
@@ -87,7 +87,6 @@ fun HamburgerPage(
     var showEditDialog by remember { mutableStateOf(false) }
     var editTagName by remember { mutableStateOf("") }
 
-
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
             FloatingActionButton(
@@ -97,7 +96,7 @@ fun HamburgerPage(
                 },
                 containerColor = MaterialTheme.colorScheme.onSecondary,
                 shape = CircleShape,
-                elevation = FloatingActionButtonDefaults.elevation(20.dp)
+                elevation = FloatingActionButtonDefaults.elevation(20.dp),
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add tag")
             }
@@ -105,11 +104,12 @@ fun HamburgerPage(
 
             if (showBottomSheet && selectedTag != null) {
                 ModalBottomSheet(
-                    onDismissRequest = { showBottomSheet = false }, sheetState = sheetState
+                    onDismissRequest = { showBottomSheet = false },
+                    sheetState = sheetState,
                 ) {
                     Column(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally // Center all rows horizontally
+                        horizontalAlignment = Alignment.CenterHorizontally, // Center all rows horizontally
                     ) {
                         Button(onClick = {
                             onDelete(selectedTag!!)
@@ -133,19 +133,18 @@ fun HamburgerPage(
             }
 
             if (showDialog) {
-                AlertDialog(icon = {
-//                    Icon(, contentDescription = "Example Icon")
-                }, title = {
-                    Text(text = "Create new tag")
+                AlertDialog(title = {
+                    Text(text = "Create tag")
                 }, text = {
                     TextField(
                         value = tagName,
                         onValueChange = { tagName = it },
                         label = { Text("Tag Name") },
                         placeholder = { Text("Enter your tag name here") },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
                     )
                 }, onDismissRequest = {
 //                    onDismissRequest()
@@ -162,7 +161,6 @@ fun HamburgerPage(
                     TextButton(onClick = {
                         showDialog = false
                         tagName = ""
-
                     }) {
                         Text("Dismiss")
                     }
@@ -171,43 +169,47 @@ fun HamburgerPage(
 
             if (showEditDialog) {
                 editTagName = selectedTag!!.name
-                AlertDialog(icon = {
-//                    Icon(, contentDescription = "Example Icon")
-                }, title = {
-                    Text(text = "Edit tag")
-                }, text = {
-                    TextField(
-                        value = editTagName,
-                        onValueChange = { editTagName = it },
-                        label = { Text("Tag Name") },
-                        placeholder = { Text("Enter your tag name here") },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                    )
-                }, onDismissRequest = {
-                    editTagName = ""
-                    showEditDialog = false
-                }, confirmButton = {
-                    TextButton(onClick = {
-                        onEdit(selectedTag!!, editTagName)
-                        tagName = editTagName
-                        Log.d("TAG", tagName)
-                        selectedTag = null
+                AlertDialog(
+                    title = {
+                        Text(text = "Edit tag")
+                    },
+                    text = {
+                        TextField(
+                            value = editTagName,
+                            onValueChange = { editTagName = it },
+                            label = { Text("Tag Name") },
+                            placeholder = { Text("Enter your tag name here") },
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                        )
+                    },
+                    onDismissRequest = {
                         editTagName = ""
                         showEditDialog = false
-                    }) {
-                        Text("Confirm")
-                    }
-                }, dismissButton = {
-                    TextButton(onClick = {
-                        showEditDialog = false
-                        editTagName = ""
-
-                    }) {
-                        Text("Dismiss")
-                    }
-                })
+                    },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            onEdit(selectedTag!!, editTagName)
+                            tagName = editTagName
+                            Log.d("TAG", tagName)
+                            selectedTag = null
+                            editTagName = ""
+                            showEditDialog = false
+                        }) {
+                            Text("Confirm")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = {
+                            showEditDialog = false
+                            editTagName = ""
+                        }) {
+                            Text("Dismiss")
+                        }
+                    },
+                )
             }
 
             Column(modifier = Modifier.padding(innerPadding)) {
@@ -216,17 +218,17 @@ fun HamburgerPage(
                         .height(50.dp)
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.onSecondary)
-                        .padding(horizontal = 8.dp), //1 Add some padding to the row
-                    horizontalArrangement = Arrangement.SpaceBetween // Arrange items in row
+                        .padding(horizontal = 8.dp), // 1 Add some padding to the row
+                    horizontalArrangement = Arrangement.SpaceBetween, // Arrange items in row
                 ) {
                     GenerateIconButton(
-                        icon = Icons.AutoMirrored.Filled.ArrowBack, "Back to main screen"
+                        icon = Icons.AutoMirrored.Filled.ArrowBack,
+                        "Back to main screen",
                     ) {
                         if (!navigator.popBackStack()) {
                             // Przejdź do głównego ekranu lub innego widoku początkowego
                             navigator.navigate("MainPage")
                         }
-
                     }
                     Row(
                         Modifier
@@ -238,17 +240,17 @@ fun HamburgerPage(
                             .border(
                                 width = 2.dp,
                                 color = MaterialTheme.colorScheme.outline,
-                                shape = RoundedCornerShape(25.dp)
+                                shape = RoundedCornerShape(25.dp),
                             )
                             .clickable {
-                                //TODO search Implementation
+                                // TODO search Implementation
                             },
                         horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
-
                         Text(
-                            text = "Search", Modifier.padding(start = 5.dp)
+                            text = "Search",
+                            Modifier.padding(start = 5.dp),
 //                                            .align(alignment = Alignment.CenterVertically)
                         )
 
@@ -265,10 +267,9 @@ fun HamburgerPage(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-
                 LazyColumn(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     items(state.tags, key = { it.tagID }) { tag ->
                         Box(
@@ -285,7 +286,6 @@ fun HamburgerPage(
                                         selectedTag = tag
                                     })
                                 },
-
                             contentAlignment = Alignment.Center,
                         ) {
                             Text(modifier = Modifier.padding(vertical = 10.dp), text = tag.name)

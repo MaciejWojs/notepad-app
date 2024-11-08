@@ -45,7 +45,6 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.TestPage
  * It uses Jetpack Compose for the UI and displays Toast messages during lifecycle changes.
  */
 class MainActivity : ComponentActivity() {
-
     /**
      * Called when the activity is first created.
      *
@@ -102,12 +101,14 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             NavHost(navController = navController, startDestination = "MainPage") {
                 composable("MainPage") {
-                    MainPage(navController,
+                    MainPage(
+                        navController,
                         viewModel = notesViewModel,
                         navigateToEditNotePage = { note ->
                             navController.currentBackStackEntry?.savedStateHandle?.set("note", note)
                             navController.navigate("EditNotePage")
-                        })
+                        },
+                    )
                 }
                 composable("SettingsPage") {
                     SettingsPage(navController)
@@ -122,7 +123,7 @@ class MainActivity : ComponentActivity() {
                     HamburgerPage(navController, tagsViewModel, onCreate = { tagName ->
                         tagsViewModel.viewModelScope.launch {
                             dao.insertTag(
-                                Tag(tagName)
+                                Tag(tagName),
                             )
                         }
                     }, onDelete = { tag ->
@@ -145,8 +146,11 @@ class MainActivity : ComponentActivity() {
                                 val insertedNoteID = dao.insertNote(note)
                                 if (map.isNotEmpty()) {
                                     map.forEach { entry ->
-                                        if(entry.value){
-                                        dao.insertRelationBetweenNoteAndTag(insertedNoteID, entry.key.tagID)
+                                        if (entry.value) {
+                                            dao.insertRelationBetweenNoteAndTag(
+                                                insertedNoteID,
+                                                entry.key.tagID,
+                                            )
                                         }
                                     }
                                 }
@@ -156,19 +160,27 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 composable(
-                    "NotesWithTagPage/{tagID}", arguments = listOf(navArgument("tagID") {
-                        type = NavType.LongType; nullable = false
-                    })
+                    "NotesWithTagPage/{tagID}",
+                    arguments =
+                        listOf(
+                            navArgument("tagID") {
+                                type = NavType.LongType
+                                nullable = false
+                            },
+                        ),
                 ) { backStackEntry ->
-                    val tagID = backStackEntry.arguments?.getLong("tagID")
-                        ?: error("Required argument 'tagID' is missing")
-                    NotesWithTagPage(navigator = navController,
+                    val tagID =
+                        backStackEntry.arguments?.getLong("tagID")
+                            ?: error("Required argument 'tagID' is missing")
+                    NotesWithTagPage(
+                        navigator = navController,
                         viewModel = notesWithTagPageViewModel,
                         tagID = tagID,
                         navigateToEditNotePage = { note ->
                             navController.currentBackStackEntry?.savedStateHandle?.set("note", note)
                             navController.navigate("EditNotePage")
-                        })
+                        },
+                    )
                 }
                 composable("EditNotePage") {
                     val note =
@@ -180,7 +192,8 @@ class MainActivity : ComponentActivity() {
                             notesWithTagPageViewModel.state.collectAsState().value.tagsWithNote.flatMap { it.tags }
 
                         // Ensure that the tags are loaded before showing the EditNotePage
-                        EditNotePage(navigator = navController,
+                        EditNotePage(
+                            navigator = navController,
                             onEdit = { title, content ->
                                 notesViewModel.viewModelScope.launch {
                                     dao.updateNote(note.noteID, title, content)
@@ -191,17 +204,22 @@ class MainActivity : ComponentActivity() {
                             currentNoteTags = currentTags, // This will now be populated correctly
                             onTagEdit = { n, tag, addNote ->
                                 tagsViewModel.viewModelScope.launch {
-                                    if (dao.checkIfRelationBetweenNoteAndTagExist(
-                                            noteID = n.noteID, tagID = tag.tagID
+                                    val isTagToEdit: Boolean =
+                                        dao.checkIfRelationBetweenNoteAndTagExist(
+                                            noteID = n.noteID, tagID = tag.tagID,
                                         ) == 0 && addNote
-                                    ) {
+
+                                    if (isTagToEdit) {
                                         dao.insertRelationBetweenNoteAndTag(n.noteID, tag.tagID)
                                         Log.i("TAG", "Dodawanie tagu ${tag.name}")
                                     }
-                                    if (dao.checkIfRelationBetweenNoteAndTagExist(
-                                            noteID = n.noteID, tagID = tag.tagID
+
+                                    val isTagToDelete: Boolean =
+                                        dao.checkIfRelationBetweenNoteAndTagExist(
+                                            noteID = n.noteID, tagID = tag.tagID,
                                         ) == 1 && !addNote
-                                    ) {
+
+                                    if (isTagToDelete) {
                                         Log.i("TAG", "usuwanie tagu ${tag.name}")
                                         dao.deleteRelationBetweenNoteAndTag(n.noteID, tag.tagID)
                                     }
@@ -210,8 +228,8 @@ class MainActivity : ComponentActivity() {
                                         notesWithTagPageViewModel.loadTagsByNote(noteID = note.noteID)
                                     }
                                 }
-
-                            })
+                            },
+                        )
                     }
                 }
             }
@@ -230,9 +248,13 @@ class MainActivity : ComponentActivity() {
  */
 @Composable
 fun CreateNoteTitle(
-    noteTitle: String, modifier: Modifier = Modifier, weight: FontWeight? = FontWeight(weight = 900)
+    noteTitle: String,
+    modifier: Modifier = Modifier,
+    weight: FontWeight? = FontWeight(weight = 900),
 ) {
     Text(
-        text = noteTitle, modifier = modifier, fontWeight = weight
+        text = noteTitle,
+        modifier = modifier,
+        fontWeight = weight,
     )
 }

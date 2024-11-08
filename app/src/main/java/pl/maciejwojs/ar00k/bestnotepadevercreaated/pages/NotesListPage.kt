@@ -30,26 +30,28 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 @Composable
 fun NotesListPage(
     navController: NavController,
-    viewModel: NotesViewModel
+    viewModel: NotesViewModel,
 ) {
     // Observe the ViewModel's state
     val state = viewModel.state.collectAsState().value
 
     // Scaffold to handle top app bar, FAB, or other layouts if needed
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(16.dp)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(16.dp),
     ) {
         // Page title
         Text(
             text = "Notes",
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(8.dp)
+            modifier =
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(8.dp),
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -57,7 +59,7 @@ fun NotesListPage(
         // Display notes in a LazyColumn
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             items(state.notes) { note ->
                 NoteItem(note = note)
@@ -70,35 +72,38 @@ fun NotesListPage(
 fun NoteItem(note: Note) {
     val context = LocalContext.current
     Card(
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .wrapContentHeight()
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .wrapContentHeight(),
     ) {
         Column(
-            modifier = Modifier
-                .padding(16.dp)
+            modifier =
+                Modifier
+                    .padding(16.dp),
         ) {
             Text(
                 text = note.title,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = note.content,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Created: ${note.creationTime}",
                 style = MaterialTheme.typography.labelSmall,
-                color = Color.Gray
+                color = Color.Gray,
             )
         }
     }

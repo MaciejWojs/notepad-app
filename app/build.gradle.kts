@@ -4,7 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp") version "2.0.21-1.0.26"
     id("kotlin-parcelize")
-    id ("org.jetbrains.dokka")
+    id("org.jetbrains.dokka")
+    alias(libs.plugins.ktlint.gradle)
 }
 
 android {
@@ -26,13 +27,14 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
 
     subprojects {
         apply(plugin = "org.jetbrains.dokka")
+        apply(plugin = "org.jlleitschuh.gradle.ktlint")
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -44,6 +46,14 @@ android {
     buildFeatures {
         compose = true
     }
+}
+ktlint {
+    android.set(true) // Enable Android-specific linting rules
+    ignoreFailures.set(true) // Prevents build from failing due to linting errors
+}
+
+tasks.named("build") {
+    dependsOn("ktlintFormat")
 }
 
 dependencies {
@@ -88,7 +98,6 @@ dependencies {
     // Testing Navigation
     androidTestImplementation(libs.androidx.navigation.testing)
 
-
 //    val room_version = "2.6.1"
 
     implementation(libs.androidx.room.runtime)
@@ -114,5 +123,4 @@ dependencies {
 
     // optional - Paging 3 Integration
     implementation(libs.androidx.room.paging)
-
 }

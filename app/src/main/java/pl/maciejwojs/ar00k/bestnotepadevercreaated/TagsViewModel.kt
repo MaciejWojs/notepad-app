@@ -8,8 +8,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class TagsViewModel(
-    private val dao: NotesDao
-
+    private val dao: NotesDao,
 ) : ViewModel() {
     private val _state = MutableStateFlow(TagsState())
     val state: StateFlow<TagsState> get() = _state
