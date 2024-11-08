@@ -52,7 +52,7 @@ ktlint {
     ignoreFailures.set(true) // Prevents build from failing due to linting errors
 }
 
-tasks.named("build") {
+tasks.named("preBuild") {
     dependsOn("ktlintFormat")
 }
 
