@@ -1,3 +1,8 @@
+/**
+ * Plik zawiera funkcje i komponenty do edycji notatek.
+ *
+ * @file EditNotePage.kt
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
 import android.util.Log
@@ -58,6 +63,16 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
+/**
+ * Strona edycji notatki.
+ *
+ * @param navigator Kontroler nawigacji.
+ * @param onEdit Funkcja wywoływana przy edycji notatki.
+ * @param onTagEdit Funkcja wywoływana przy edycji tagów notatki.
+ * @param note Notatka do edycji.
+ * @param tags Lista dostępnych tagów.
+ * @param currentNoteTags Lista tagów przypisanych do bieżącej notatki.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditNotePage(

@@ -1,3 +1,10 @@
+/**
+ * @file NotesTagsCrossRef.kt
+ * @brief Plik zawiera implementację relacji między notatkami a tagami.
+ *
+ * Plik ten definiuje encję NotesTagsCrossRef, która reprezentuje relację
+ * między notatkami a tagami w bazie danych.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations
 
 import androidx.room.Entity

@@ -1,3 +1,8 @@
+/**
+ * Plik zawiera funkcje generujące notatki.
+ *
+ * @file noteGeneration.kt
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.content
 
 import androidx.compose.foundation.border
@@ -40,6 +45,15 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.CreateNoteTitle
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 
+/**
+ * Funkcja generująca notatkę.
+ *
+ * @param modifier Modyfikator do zastosowania do komponentu.
+ * @param note Obiekt notatki.
+ * @param onDelete Lambda do obsługi usuwania notatki.
+ * @param onEdit Lambda do obsługi edycji notatki.
+ * @param weight Opcjonalna waga czcionki.
+ */
 // @Composable
 // fun GenerateNote2(
 //    modifier: Modifier = Modifier,

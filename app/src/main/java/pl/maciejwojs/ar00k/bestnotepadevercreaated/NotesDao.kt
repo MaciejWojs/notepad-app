@@ -1,3 +1,7 @@
+/**
+ * @file
+ * @brief Interfejs DAO (Data Access Object) do obsługi operacji związanych z notatkami i tagami w bazie danych.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
 import androidx.room.Dao

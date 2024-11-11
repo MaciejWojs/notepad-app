@@ -1,5 +1,9 @@
 /**
- * com.foo is a group of bar utils for operating on foo things.
+ * @file Note.kt
+ * @brief Plik zawiera implementację klasy Note.
+ *
+ * Plik ten definiuje encję Note, która reprezentuje notatkę w bazie danych.
+ * Klasa Note zawiera tytuł, treść, czas modyfikacji, czas utworzenia oraz unikalny identyfikator.
  */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.db
 

@@ -1,3 +1,10 @@
+/**
+ * @file settingsPage.kt
+ * @brief Plik zawiera implementację strony ustawień.
+ *
+ * Plik ten definiuje kompozycje i funkcje związane z wyświetlaniem
+ * i zarządzaniem ustawieniami w aplikacji.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
 import androidx.compose.foundation.background
@@ -32,6 +39,11 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateOption
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
+/**
+ * Strona ustawień.
+ *
+ * @param navigator Kontroler nawigacji.
+ */
 @Composable
 fun SettingsPage(navigator: NavController) {
     BestNotepadEverCreatedTheme {

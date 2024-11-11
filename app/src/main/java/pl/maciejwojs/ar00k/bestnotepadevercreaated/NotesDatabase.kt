@@ -1,3 +1,10 @@
+/**
+ * @file NotesDatabase.kt
+ * @brief Plik definiujący bazę danych notatek.
+ *
+ * Plik zawiera definicję bazy danych `NotesDatabase`, która zarządza tabelami notatek (`Note`), tagów (`Tag`) oraz relacji między nimi (`NotesTagsCrossRef`).
+ * Baza danych jest implementowana przy użyciu biblioteki Room.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
 import android.content.Context

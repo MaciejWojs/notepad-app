@@ -6,7 +6,7 @@
 
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
-import CreateNotePage
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.CreateNotePage
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -136,7 +136,7 @@ class MainActivity : ComponentActivity() {
                         }
                     })
                 }
-                composable("CreateNotePage") {
+                composable("pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.CreateNotePage") {
                     val tags = tagsViewModel.state.collectAsState().value.tags
                     CreateNotePage(
                         navigator = navController,

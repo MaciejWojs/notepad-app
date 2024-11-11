@@ -1,3 +1,10 @@
+/**
+ * @file NotesWithTags.kt
+ * @brief Plik zawiera implementację relacji między notatkami a tagami.
+ *
+ * Plik ten definiuje klasę NotesWithTags, która reprezentuje relację
+ * między notatkami a tagami w bazie danych.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations
 
 import androidx.room.Embedded

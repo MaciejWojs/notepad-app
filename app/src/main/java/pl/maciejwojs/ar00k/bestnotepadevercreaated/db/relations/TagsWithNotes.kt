@@ -1,3 +1,7 @@
+/**
+ * @file
+ * @brief Plik definiujący relację między notatkami a tagami w bazie danych.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations
 
 import androidx.room.Embedded

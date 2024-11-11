@@ -1,3 +1,8 @@
+/**
+ * Plik zawiera funkcje generujące różne opcje z przełącznikami.
+ *
+ * @file optionGeneration.kt
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.content
 
 import androidx.compose.foundation.clickable
@@ -17,6 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+/**
+ * Funkcja generująca opcję z przełącznikiem.
+ *
+ * @param optionText Tekst opcji.
+ * @param optionTitle Tytuł opcji.
+ */
 @Composable
 fun GenerateOption(
     optionText: String = "sample text",

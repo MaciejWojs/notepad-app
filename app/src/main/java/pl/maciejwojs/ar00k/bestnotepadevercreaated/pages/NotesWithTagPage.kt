@@ -1,3 +1,10 @@
+/**
+ * @file NotesWithTagPage.kt
+ * @brief Plik zawiera implementację strony notatek z wybranym tagiem.
+ *
+ * Plik ten definiuje kompozycje i funkcje związane z wyświetlaniem notatek
+ * przypisanych do konkretnego tagu w aplikacji.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
 import android.util.Log
@@ -38,6 +45,14 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
+/**
+ * Strona notatek z wybranym tagiem.
+ *
+ * @param navigator Kontroler nawigacji.
+ * @param viewModel Model widoku notatek z tagami.
+ * @param tagID Identyfikator tagu.
+ * @param navigateToEditNotePage Funkcja nawigacji do strony edycji notatki.
+ */
 @Composable
 fun NotesWithTagPage(
     navigator: NavController,

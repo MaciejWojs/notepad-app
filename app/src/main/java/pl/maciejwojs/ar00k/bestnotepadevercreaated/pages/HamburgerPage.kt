@@ -1,6 +1,6 @@
 /**
  * @file HamburgerPage.kt
- * @brief Plik odpowiadający za stworzenie instancji view modeli i nawigację do odpowiednich stron
+ * @brief Plik odpowiadający za zarządzanie tagami i nawigację do odpowiednich stron
  *
  * W tym pliku znajduje się implementacja strony, na której użytkownik może zarządzać tagami.
  * Umożliwia tworzenie nowych tagów, edytowanie istniejących, usuwanie ich oraz przejście do listy notatek przypisanych do tagów.
@@ -65,6 +65,15 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
+/**
+ * Strona zarządzania tagami.
+ *
+ * @param navigator Kontroler nawigacji.
+ * @param viewModel Model widoku tagów.
+ * @param onCreate Funkcja wywoływana przy tworzeniu nowego tagu.
+ * @param onDelete Funkcja wywoływana przy usuwaniu tagu.
+ * @param onEdit Funkcja wywoływana przy edycji tagu.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HamburgerPage(

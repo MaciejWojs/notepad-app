@@ -1,3 +1,10 @@
+/**
+ * @file MainPage.kt
+ * @brief Plik zawiera implementację głównej strony aplikacji.
+ *
+ * Plik ten definiuje kompozycje i funkcje związane z wyświetlaniem głównej strony
+ * oraz obsługą nawigacji w aplikacji.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
 import android.util.Log
@@ -52,7 +59,7 @@ fun MainPage(
         Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navigator.navigate("CreateNotePage")
+                    navigator.navigate("pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.CreateNotePage")
                 },
                 containerColor = MaterialTheme.colorScheme.onSecondary,
                 shape = CircleShape,

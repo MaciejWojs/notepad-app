@@ -1,4 +1,9 @@
-
+/**
+ * Plik zawiera implementację strony tworzenia notatki.
+ *
+ * @file CreateNotePage.kt
+ */
+package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -54,6 +59,13 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
+/**
+ * Strona tworzenia notatki.
+ *
+ * @param navigator Kontroler nawigacji.
+ * @param onCreate Funkcja wywoływana przy tworzeniu notatki.
+ * @param tags Lista tagów.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateNotePage(

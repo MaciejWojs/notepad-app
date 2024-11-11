@@ -1,3 +1,10 @@
+/**
+ * @file NotesListPage.kt
+ * @brief Plik zawiera implementację strony listy notatek.
+ *
+ * Plik ten definiuje kompozycje i funkcje związane z wyświetlaniem listy notatek
+ * oraz poszczególnych elementów notatek w aplikacji.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
 import androidx.compose.foundation.background
@@ -27,6 +34,12 @@ import androidx.navigation.NavController
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 
+/**
+ * Strona listy notatek.
+ *
+ * @param navController Kontroler nawigacji.
+ * @param viewModel Model widoku notatek.
+ */
 @Composable
 fun NotesListPage(
     navController: NavController,

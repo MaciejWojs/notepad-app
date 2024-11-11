@@ -1,3 +1,11 @@
+/**
+ * @file TestPage.kt
+ * @brief Plik zawiera definicję strony testowej aplikacji.
+ *
+ * Plik ten definiuje kompozycję strony testowej, która wyświetla listę notatek
+ * oraz umożliwia nawigację do głównej strony aplikacji, wyszukiwanie i ustawienia.
+ * Strona testowa korzysta z modelu widoku `NotesViewModel` oraz obiektu dostępu do danych `NotesDao`.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
 import android.util.Log
@@ -39,6 +47,13 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
+/**
+ * Strona testowa.
+ *
+ * @param navigator Kontroler nawigacji.
+ * @param viewModel Model widoku notatek.
+ * @param dao Obiekt dostępu do danych notatek.
+ */
 @Composable
 fun TestPage(
     navigator: NavController,
