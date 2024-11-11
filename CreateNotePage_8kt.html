@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.2.6</span>
+   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.2.7</span>
    </div>
   </td>
  </tr>
@@ -98,51 +98,9 @@ $(function(){initNavTree('CreateNotePage_8kt.html',''); initResizable(true); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Funkcje</a>  </div>
   <div class="headertitle"><div class="title">Dokumentacja pliku CreateNotePage.kt</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Plik zawiera implementację strony tworzenia notatki.  
-<a href="#details">Więcej...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Funkcje</h2></td></tr>
-<tr class="memitem:a4cd78ec38925387a7f580a43ab00caeb" id="r_a4cd78ec38925387a7f580a43ab00caeb"><td class="memItemLeft" align="right" valign="top">package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages import androidx.compose.foundation.background import androidx.compose.foundation.border import androidx.compose.foundation.clickable import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Box import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Row import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.defaultMinSize import androidx.compose.foundation.layout.fillMaxHeight import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.lazy.items import androidx.compose.foundation.rememberScrollState import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.foundation.verticalScroll import androidx.compose.material.icons.Icons import androidx.compose.material.icons.automirrored.filled.ArrowBack import androidx.compose.material.icons.filled.Add import androidx.compose.material.icons.filled.Check import androidx.compose.material.icons.filled.Search import androidx.compose.material3.Button import androidx.compose.material3.Card import androidx.compose.material3.ExperimentalMaterial3Api import androidx.compose.material3.Icon import androidx.compose.material3.MaterialTheme import androidx.compose.material3.ModalBottomSheet import androidx.compose.material3.OutlinedTextField import androidx.compose.material3.Scaffold import androidx.compose.material3.Switch import androidx.compose.material3.Text import androidx.compose.material3.rememberModalBottomSheetState import androidx.compose.runtime.Composable import androidx.compose.runtime.getValue import androidx.compose.runtime.mutableStateMapOf import androidx.compose.runtime.mutableStateOf import androidx.compose.runtime.remember import androidx.compose.runtime.rememberCoroutineScope import androidx.compose.runtime.setValue import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.draw.clip import androidx.compose.ui.draw.scale import androidx.compose.ui.draw.shadow import androidx.compose.ui.unit.dp import androidx.navigation.NavController import kotlinx.coroutines.launch import <a class="el" href="IconButtonGeneration_8kt.html#af029a3c95520a06db14151709d1426b5">pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton</a> import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4cd78ec38925387a7f580a43ab00caeb">OptIn</a> (ExperimentalMaterial3Api::class) @Composable fun CreateNotePage(navigator</td></tr>
-<tr class="memdesc:a4cd78ec38925387a7f580a43ab00caeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strona tworzenia notatki.  <br /></td></tr>
-<tr class="separator:a4cd78ec38925387a7f580a43ab00caeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
-<div class="textblock"><p>Plik zawiera implementację strony tworzenia notatki. </p>
-</div><h2 class="groupheader">Dokumentacja funkcji</h2>
-<a id="a4cd78ec38925387a7f580a43ab00caeb" name="a4cd78ec38925387a7f580a43ab00caeb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4cd78ec38925387a7f580a43ab00caeb">&#9670;&#160;</a></span>OptIn()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages import androidx.compose.foundation.background import androidx.compose.foundation.border import androidx.compose.foundation.clickable import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Box import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Row import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.defaultMinSize import androidx.compose.foundation.layout.fillMaxHeight import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.lazy.items import androidx.compose.foundation.rememberScrollState import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.foundation.verticalScroll import androidx.compose.material.icons.Icons import androidx.compose.material.icons.automirrored.filled.ArrowBack import androidx.compose.material.icons.filled.Add import androidx.compose.material.icons.filled.Check import androidx.compose.material.icons.filled.Search import androidx.compose.material3.Button import androidx.compose.material3.Card import androidx.compose.material3.ExperimentalMaterial3Api import androidx.compose.material3.Icon import androidx.compose.material3.MaterialTheme import androidx.compose.material3.ModalBottomSheet import androidx.compose.material3.OutlinedTextField import androidx.compose.material3.Scaffold import androidx.compose.material3.Switch import androidx.compose.material3.Text import androidx.compose.material3.rememberModalBottomSheetState import androidx.compose.runtime.Composable import androidx.compose.runtime.getValue import androidx.compose.runtime.mutableStateMapOf import androidx.compose.runtime.mutableStateOf import androidx.compose.runtime.remember import androidx.compose.runtime.rememberCoroutineScope import androidx.compose.runtime.setValue import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.draw.clip import androidx.compose.ui.draw.scale import androidx.compose.ui.draw.shadow import androidx.compose.ui.unit.dp import androidx.navigation.NavController import kotlinx.coroutines.launch import <a class="el" href="IconButtonGeneration_8kt.html#af029a3c95520a06db14151709d1426b5">pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton</a> import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme OptIn </td>
-          <td>(</td>
-          <td class="paramtype">ExperimentalMaterial3Api.class</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Strona tworzenia notatki. </p>
-<dl class="params"><dt>Parametry</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">navigator</td><td>Kontroler nawigacji. </td></tr>
-    <tr><td class="paramname">onCreate</td><td>Funkcja wywoływana przy tworzeniu notatki. </td></tr>
-    <tr><td class="paramname">tags</td><td>Lista tagów. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

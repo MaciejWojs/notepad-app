@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['database_0',['Database',['../NotesDatabase_8kt.html#a831bb25ee525537599e1b5d43324ff8f',1,'NotesDatabase.kt']]]
+  ['editnotepage_2ekt_0',['EditNotePage.kt',['../EditNotePage_8kt.html',1,'']]],
+  ['exampleinstrumentedtest_2ekt_1',['ExampleInstrumentedTest.kt',['../ExampleInstrumentedTest_8kt.html',1,'']]]
 ];

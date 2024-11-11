@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.2.6</span>
+   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.2.7</span>
    </div>
   </td>
  </tr>
@@ -98,61 +98,9 @@ $(function(){initNavTree('TestPage_8kt.html',''); initResizable(true); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Funkcje</a>  </div>
   <div class="headertitle"><div class="title">Dokumentacja pliku TestPage.kt</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Plik zawiera definicję strony testowej aplikacji.  
-<a href="#details">Więcej...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Funkcje</h2></td></tr>
-<tr class="memitem:affc337647c2018b6ed6abfe586e7bca4" id="r_affc337647c2018b6ed6abfe586e7bca4"><td class="memItemLeft" align="right" valign="top">package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages import android.util.Log import android.widget.Toast import androidx.compose.foundation.background import androidx.compose.foundation.border import androidx.compose.foundation.clickable import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Row import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxHeight import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.lazy.items import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material.icons.Icons import androidx.compose.material.icons.automirrored.filled.ArrowBack import androidx.compose.material.icons.filled.Search import androidx.compose.material.icons.filled.Settings import androidx.compose.material3.MaterialTheme import androidx.compose.material3.Scaffold import androidx.compose.material3.Text import androidx.compose.runtime.Composable import androidx.compose.runtime.collectAsState import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.draw.clip import androidx.compose.ui.platform.LocalContext import androidx.compose.ui.unit.dp import androidx.navigation.NavController import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesDao import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent import <a class="el" href="NotesViewModel_8kt.html#a8ae121bcec8b82c21b37d97ccf959d32">pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel</a> import <a class="el" href="IconButtonGeneration_8kt.html#af029a3c95520a06db14151709d1426b5">pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton</a> import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme Composable fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#affc337647c2018b6ed6abfe586e7bca4">TestPage</a> (navigator:NavController, viewModel:NotesViewModel, dao:NotesDao,)</td></tr>
-<tr class="memdesc:affc337647c2018b6ed6abfe586e7bca4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strona testowa.  <br /></td></tr>
-<tr class="separator:affc337647c2018b6ed6abfe586e7bca4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
-<div class="textblock"><p>Plik zawiera definicję strony testowej aplikacji. </p>
-<p>Plik ten definiuje kompozycję strony testowej, która wyświetla listę notatek oraz umożliwia nawigację do głównej strony aplikacji, wyszukiwanie i ustawienia. Strona testowa korzysta z modelu widoku <code>NotesViewModel</code> oraz obiektu dostępu do danych <code><a class="el" href="interfaceNotesDao.html" title="Interfejs DAO (Data Access Object) do obsługi operacji związanych z notatkami i tagami w bazie danych...">NotesDao</a></code>. </p>
-</div><h2 class="groupheader">Dokumentacja funkcji</h2>
-<a id="affc337647c2018b6ed6abfe586e7bca4" name="affc337647c2018b6ed6abfe586e7bca4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affc337647c2018b6ed6abfe586e7bca4">&#9670;&#160;</a></span>TestPage()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages import android.util.Log import android.widget.Toast import androidx.compose.foundation.background import androidx.compose.foundation.border import androidx.compose.foundation.clickable import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Row import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxHeight import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.lazy.items import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material.icons.Icons import androidx.compose.material.icons.automirrored.filled.ArrowBack import androidx.compose.material.icons.filled.Search import androidx.compose.material.icons.filled.Settings import androidx.compose.material3.MaterialTheme import androidx.compose.material3.Scaffold import androidx.compose.material3.Text import androidx.compose.runtime.Composable import androidx.compose.runtime.collectAsState import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.draw.clip import androidx.compose.ui.platform.LocalContext import androidx.compose.ui.unit.dp import androidx.navigation.NavController import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesDao import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent import <a class="el" href="NotesViewModel_8kt.html#a8ae121bcec8b82c21b37d97ccf959d32">pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel</a> import <a class="el" href="IconButtonGeneration_8kt.html#af029a3c95520a06db14151709d1426b5">pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton</a> import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme Composable fun TestPage </td>
-          <td>(</td>
-          <td class="paramtype">navigator:NavController</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">viewModel:NotesViewModel</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">dao:NotesDao</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Strona testowa. </p>
-<dl class="params"><dt>Parametry</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">navigator</td><td>Kontroler nawigacji. </td></tr>
-    <tr><td class="paramname">viewModel</td><td>Model widoku notatek. </td></tr>
-    <tr><td class="paramname">dao</td><td>Obiekt dostępu do danych notatek. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

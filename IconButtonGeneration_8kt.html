@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.2.6</span>
+   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.2.7</span>
    </div>
   </td>
  </tr>
@@ -98,79 +98,9 @@ $(function(){initNavTree('IconButtonGeneration_8kt.html',''); initResizable(true
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Funkcje</a>  </div>
   <div class="headertitle"><div class="title">Dokumentacja pliku IconButtonGeneration.kt</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Plik zawiera implementację generowania przycisków ikon.  
-<a href="#details">Więcej...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Funkcje</h2></td></tr>
-<tr class="memitem:af029a3c95520a06db14151709d1426b5" id="r_af029a3c95520a06db14151709d1426b5"><td class="memItemLeft" align="right" valign="top">package pl.maciejwojs.ar00k.bestnotepadevercreaated.content import androidx.compose.material.icons.Icons import androidx.compose.material.icons.filled.Menu import androidx.compose.material3.Icon import androidx.compose.material3.IconButton import androidx.compose.runtime.Composable import androidx.compose.ui.Modifier import androidx.compose.ui.graphics.Color import androidx.compose.ui.graphics.vector.ImageVector Composable fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af029a3c95520a06db14151709d1426b5">GenerateIconButton</a> (icon:ImageVector=Icons.Default.Menu, message:String=&quot;Menu&quot;, modifier:Modifier=Modifier, transparent:Boolean=false, isEnabled:Boolean=true, onClick:() -&gt; Unit,)</td></tr>
-<tr class="memdesc:af029a3c95520a06db14151709d1426b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generuje przycisk ikony.  <br /></td></tr>
-<tr class="separator:af029a3c95520a06db14151709d1426b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
-<div class="textblock"><p>Plik zawiera implementację generowania przycisków ikon. </p>
-<p>Plik ten definiuje kompozycje i funkcje związane z wyświetlaniem i zarządzaniem przyciskami ikon w aplikacji. </p>
-</div><h2 class="groupheader">Dokumentacja funkcji</h2>
-<a id="af029a3c95520a06db14151709d1426b5" name="af029a3c95520a06db14151709d1426b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af029a3c95520a06db14151709d1426b5">&#9670;&#160;</a></span>GenerateIconButton()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">package pl.maciejwojs.ar00k.bestnotepadevercreaated.content import androidx.compose.material.icons.Icons import androidx.compose.material.icons.filled.Menu import androidx.compose.material3.Icon import androidx.compose.material3.IconButton import androidx.compose.runtime.Composable import androidx.compose.ui.Modifier import androidx.compose.ui.graphics.Color import androidx.compose.ui.graphics.vector.ImageVector Composable fun GenerateIconButton </td>
-          <td>(</td>
-          <td class="paramtype">icon:ImageVector</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">Icons::Default::Menu</span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">message:String</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;Menu&quot;</span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">modifier:Modifier</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">Modifier</span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">transparent:Boolean</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">isEnabled:Boolean</td>          <td class="paramname"><span class="paramname"><em></em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">onClick:() -&gt;</td>          <td class="paramname"><span class="paramname"><em>Unit</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Generuje przycisk ikony. </p>
-<dl class="params"><dt>Parametry</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">icon</td><td>Ikona do wyświetlenia. Domyślnie <code>Icons.Default.Menu</code>. </td></tr>
-    <tr><td class="paramname">message</td><td>Opis ikony. Domyślnie "Menu". </td></tr>
-    <tr><td class="paramname">modifier</td><td>Modyfikator do zastosowania do przycisku. Domyślnie <code>Modifier</code>. </td></tr>
-    <tr><td class="paramname">transparent</td><td>Określa, czy ikona ma być przezroczysta. Domyślnie <code>false</code>. </td></tr>
-    <tr><td class="paramname">isEnabled</td><td>Określa, czy przycisk jest aktywny. Domyślnie <code>true</code>. </td></tr>
-    <tr><td class="paramname">onClick</td><td>Funkcja wywoływana po kliknięciu przycisku. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

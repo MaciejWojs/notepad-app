@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.2.6</span>
+   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.2.7</span>
    </div>
   </td>
  </tr>
@@ -98,53 +98,9 @@ $(function(){initNavTree('noteGeneration_8kt.html',''); initResizable(true); });
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Funkcje</a>  </div>
   <div class="headertitle"><div class="title">Dokumentacja pliku noteGeneration.kt</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Plik zawiera funkcje generujące notatki.  
-<a href="#details">Więcej...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Funkcje</h2></td></tr>
-<tr class="memitem:a9b6942b70403392550736f26709679c4" id="r_a9b6942b70403392550736f26709679c4"><td class="memItemLeft" align="right" valign="top">package pl.maciejwojs.ar00k.bestnotepadevercreaated.content import androidx.compose.foundation.border import androidx.compose.foundation.gestures.detectTapGestures import androidx.compose.foundation.layout.Box import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material.icons.Icons import androidx.compose.material.icons.filled.Delete import androidx.compose.material.icons.filled.Edit import androidx.compose.material3.Button import androidx.compose.material3.Card import androidx.compose.material3.ExperimentalMaterial3Api import androidx.compose.material3.Icon import androidx.compose.material3.MaterialTheme import androidx.compose.material3.ModalBottomSheet import androidx.compose.material3.Text import androidx.compose.material3.rememberModalBottomSheetState import androidx.compose.runtime.Composable import androidx.compose.runtime.getValue import androidx.compose.runtime.mutableStateOf import androidx.compose.runtime.remember import androidx.compose.runtime.rememberCoroutineScope import androidx.compose.runtime.setValue import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.draw.clip import androidx.compose.ui.draw.scale import androidx.compose.ui.draw.shadow import androidx.compose.ui.input.pointer.pointerInput import androidx.compose.ui.platform.LocalContext import androidx.compose.ui.text.font.FontWeight import androidx.compose.ui.unit.dp import kotlinx.coroutines.launch import <a class="el" href="MainActivity_8kt.html#a5928ad6b0dc606611ea8c87d89ead445">pl.maciejwojs.ar00k.bestnotepadevercreaated.CreateNoteTitle</a> import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b6942b70403392550736f26709679c4">OptIn</a> (ExperimentalMaterial3Api::class) @Composable fun GenerateNote(modifier</td></tr>
-<tr class="memdesc:a9b6942b70403392550736f26709679c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja generująca notatkę.  <br /></td></tr>
-<tr class="separator:a9b6942b70403392550736f26709679c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
-<div class="textblock"><p>Plik zawiera funkcje generujące notatki. </p>
-</div><h2 class="groupheader">Dokumentacja funkcji</h2>
-<a id="a9b6942b70403392550736f26709679c4" name="a9b6942b70403392550736f26709679c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b6942b70403392550736f26709679c4">&#9670;&#160;</a></span>OptIn()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">package pl.maciejwojs.ar00k.bestnotepadevercreaated.content import androidx.compose.foundation.border import androidx.compose.foundation.gestures.detectTapGestures import androidx.compose.foundation.layout.Box import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material.icons.Icons import androidx.compose.material.icons.filled.Delete import androidx.compose.material.icons.filled.Edit import androidx.compose.material3.Button import androidx.compose.material3.Card import androidx.compose.material3.ExperimentalMaterial3Api import androidx.compose.material3.Icon import androidx.compose.material3.MaterialTheme import androidx.compose.material3.ModalBottomSheet import androidx.compose.material3.Text import androidx.compose.material3.rememberModalBottomSheetState import androidx.compose.runtime.Composable import androidx.compose.runtime.getValue import androidx.compose.runtime.mutableStateOf import androidx.compose.runtime.remember import androidx.compose.runtime.rememberCoroutineScope import androidx.compose.runtime.setValue import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.draw.clip import androidx.compose.ui.draw.scale import androidx.compose.ui.draw.shadow import androidx.compose.ui.input.pointer.pointerInput import androidx.compose.ui.platform.LocalContext import androidx.compose.ui.text.font.FontWeight import androidx.compose.ui.unit.dp import kotlinx.coroutines.launch import <a class="el" href="MainActivity_8kt.html#a5928ad6b0dc606611ea8c87d89ead445">pl.maciejwojs.ar00k.bestnotepadevercreaated.CreateNoteTitle</a> import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness OptIn </td>
-          <td>(</td>
-          <td class="paramtype">ExperimentalMaterial3Api.class</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Funkcja generująca notatkę. </p>
-<dl class="params"><dt>Parametry</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">modifier</td><td>Modyfikator do zastosowania do komponentu. </td></tr>
-    <tr><td class="paramname">note</td><td>Obiekt notatki. </td></tr>
-    <tr><td class="paramname">onDelete</td><td>Lambda do obsługi usuwania notatki. </td></tr>
-    <tr><td class="paramname">onEdit</td><td>Lambda do obsługi edycji notatki. </td></tr>
-    <tr><td class="paramname">weight</td><td>Opcjonalna waga czcionki. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
