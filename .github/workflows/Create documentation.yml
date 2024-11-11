@@ -7,7 +7,8 @@ on:
       - '*.*.*'
 
 env:
-  PACKAGES: graphviz ghostscript python3
+  PACKAGES: graphviz ghostscript
+  PYTHON: 3.13
 
 jobs:
   Create_documentation:
@@ -27,6 +28,11 @@ jobs:
       - name: install packages
         if: steps.cache-packages.outputs.cache-hit != 'true'
         run: sudo apt update && sudo apt install -y ${{ env.PACKAGES }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON }}
 
       - name: Prettify doxygen
         run: |
