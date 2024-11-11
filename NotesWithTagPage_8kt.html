@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.2.5</span>
+   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.2.6</span>
    </div>
   </td>
  </tr>
@@ -98,9 +98,67 @@ $(function(){initNavTree('NotesWithTagPage_8kt.html',''); initResizable(true); }
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Funkcje</a>  </div>
   <div class="headertitle"><div class="title">Dokumentacja pliku NotesWithTagPage.kt</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Plik zawiera implementację strony notatek z wybranym tagiem.  
+<a href="#details">Więcej...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Funkcje</h2></td></tr>
+<tr class="memitem:a22b42b6033cb5b4a1c19472d444d308a" id="r_a22b42b6033cb5b4a1c19472d444d308a"><td class="memItemLeft" align="right" valign="top">package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages import android.util.Log import androidx.compose.foundation.background import androidx.compose.foundation.border import androidx.compose.foundation.clickable import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Row import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxHeight import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.lazy.items import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material.icons.Icons import androidx.compose.material.icons.automirrored.filled.ArrowBack import androidx.compose.material.icons.filled.Search import androidx.compose.material.icons.filled.Settings import androidx.compose.material3.MaterialTheme import androidx.compose.material3.Scaffold import androidx.compose.material3.Text import androidx.compose.runtime.Composable import androidx.compose.runtime.LaunchedEffect import androidx.compose.runtime.collectAsState import androidx.compose.runtime.getValue import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.draw.clip import androidx.compose.ui.unit.dp import androidx.navigation.NavController import <a class="el" href="NotesTagsCrossRefViewModel_8kt.html#ae8790dcacc27b837a7d46d5c17f3e771">pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesTagsCrossRefViewModel</a> import <a class="el" href="IconButtonGeneration_8kt.html#af029a3c95520a06db14151709d1426b5">pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton</a> import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme Composable fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22b42b6033cb5b4a1c19472d444d308a">NotesWithTagPage</a> (navigator:NavController, viewModel:NotesTagsCrossRefViewModel, tagID:Long, navigateToEditNotePage:(Note) -&gt; Unit,)</td></tr>
+<tr class="memdesc:a22b42b6033cb5b4a1c19472d444d308a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strona notatek z wybranym tagiem.  <br /></td></tr>
+<tr class="separator:a22b42b6033cb5b4a1c19472d444d308a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
+<div class="textblock"><p>Plik zawiera implementację strony notatek z wybranym tagiem. </p>
+<p>Plik ten definiuje kompozycje i funkcje związane z wyświetlaniem notatek przypisanych do konkretnego tagu w aplikacji. </p>
+</div><h2 class="groupheader">Dokumentacja funkcji</h2>
+<a id="a22b42b6033cb5b4a1c19472d444d308a" name="a22b42b6033cb5b4a1c19472d444d308a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22b42b6033cb5b4a1c19472d444d308a">&#9670;&#160;</a></span>NotesWithTagPage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages import android.util.Log import androidx.compose.foundation.background import androidx.compose.foundation.border import androidx.compose.foundation.clickable import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Row import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxHeight import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.lazy.items import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material.icons.Icons import androidx.compose.material.icons.automirrored.filled.ArrowBack import androidx.compose.material.icons.filled.Search import androidx.compose.material.icons.filled.Settings import androidx.compose.material3.MaterialTheme import androidx.compose.material3.Scaffold import androidx.compose.material3.Text import androidx.compose.runtime.Composable import androidx.compose.runtime.LaunchedEffect import androidx.compose.runtime.collectAsState import androidx.compose.runtime.getValue import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.draw.clip import androidx.compose.ui.unit.dp import androidx.navigation.NavController import <a class="el" href="NotesTagsCrossRefViewModel_8kt.html#ae8790dcacc27b837a7d46d5c17f3e771">pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesTagsCrossRefViewModel</a> import <a class="el" href="IconButtonGeneration_8kt.html#af029a3c95520a06db14151709d1426b5">pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton</a> import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme Composable fun NotesWithTagPage </td>
+          <td>(</td>
+          <td class="paramtype">navigator:NavController</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">viewModel:NotesTagsCrossRefViewModel</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tagID:Long</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">navigateToEditNotePage:(Note) -&gt;</td>          <td class="paramname"><span class="paramname"><em>Unit</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Strona notatek z wybranym tagiem. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">navigator</td><td>Kontroler nawigacji. </td></tr>
+    <tr><td class="paramname">viewModel</td><td>Model widoku notatek z tagami. </td></tr>
+    <tr><td class="paramname">tagID</td><td>Identyfikator tagu. </td></tr>
+    <tr><td class="paramname">navigateToEditNotePage</td><td>Funkcja nawigacji do strony edycji notatki. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.2.5</span>
+   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.2.6</span>
    </div>
   </td>
  </tr>
@@ -98,9 +98,50 @@ $(function(){initNavTree('MainPage_8kt.html',''); initResizable(true); });
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Funkcje</a>  </div>
   <div class="headertitle"><div class="title">Dokumentacja pliku MainPage.kt</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Plik zawiera implementację głównej strony aplikacji.  
+<a href="#details">Więcej...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Funkcje</h2></td></tr>
+<tr class="memitem:a436e8ad98a3ca93579581d302ecb7c83" id="r_a436e8ad98a3ca93579581d302ecb7c83"><td class="memItemLeft" align="right" valign="top">package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages import android.util.Log import androidx.compose.foundation.background import androidx.compose.foundation.border import androidx.compose.foundation.clickable import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Row import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxHeight import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.lazy.items import androidx.compose.foundation.shape.CircleShape import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material.icons.Icons import androidx.compose.material.icons.filled.Add import androidx.compose.material.icons.filled.Search import androidx.compose.material.icons.filled.Settings import androidx.compose.material3.FloatingActionButton import androidx.compose.material3.FloatingActionButtonDefaults import androidx.compose.material3.Icon import androidx.compose.material3.MaterialTheme import androidx.compose.material3.Scaffold import androidx.compose.material3.Text import androidx.compose.runtime.Composable import androidx.compose.runtime.collectAsState import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.draw.clip import androidx.compose.ui.unit.dp import androidx.navigation.NavController import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent import <a class="el" href="NotesViewModel_8kt.html#a8ae121bcec8b82c21b37d97ccf959d32">pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel</a> import <a class="el" href="IconButtonGeneration_8kt.html#af029a3c95520a06db14151709d1426b5">pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton</a> import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme Composable fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a436e8ad98a3ca93579581d302ecb7c83">MainPage</a> (navigator:NavController, viewModel:NotesViewModel, navigateToEditNotePage:(Note) -&gt; Unit,)</td></tr>
+<tr class="separator:a436e8ad98a3ca93579581d302ecb7c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
+<div class="textblock"><p>Plik zawiera implementację głównej strony aplikacji. </p>
+<p>Plik ten definiuje kompozycje i funkcje związane z wyświetlaniem głównej strony oraz obsługą nawigacji w aplikacji. </p>
+</div><h2 class="groupheader">Dokumentacja funkcji</h2>
+<a id="a436e8ad98a3ca93579581d302ecb7c83" name="a436e8ad98a3ca93579581d302ecb7c83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a436e8ad98a3ca93579581d302ecb7c83">&#9670;&#160;</a></span>MainPage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages import android.util.Log import androidx.compose.foundation.background import androidx.compose.foundation.border import androidx.compose.foundation.clickable import androidx.compose.foundation.layout.Arrangement import androidx.compose.foundation.layout.Column import androidx.compose.foundation.layout.Row import androidx.compose.foundation.layout.Spacer import androidx.compose.foundation.layout.fillMaxHeight import androidx.compose.foundation.layout.fillMaxSize import androidx.compose.foundation.layout.fillMaxWidth import androidx.compose.foundation.layout.height import androidx.compose.foundation.layout.padding import androidx.compose.foundation.lazy.LazyColumn import androidx.compose.foundation.lazy.items import androidx.compose.foundation.shape.CircleShape import androidx.compose.foundation.shape.RoundedCornerShape import androidx.compose.material.icons.Icons import androidx.compose.material.icons.filled.Add import androidx.compose.material.icons.filled.Search import androidx.compose.material.icons.filled.Settings import androidx.compose.material3.FloatingActionButton import androidx.compose.material3.FloatingActionButtonDefaults import androidx.compose.material3.Icon import androidx.compose.material3.MaterialTheme import androidx.compose.material3.Scaffold import androidx.compose.material3.Text import androidx.compose.runtime.Composable import androidx.compose.runtime.collectAsState import androidx.compose.ui.Alignment import androidx.compose.ui.Modifier import androidx.compose.ui.draw.clip import androidx.compose.ui.unit.dp import androidx.navigation.NavController import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent import <a class="el" href="NotesViewModel_8kt.html#a8ae121bcec8b82c21b37d97ccf959d32">pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel</a> import <a class="el" href="IconButtonGeneration_8kt.html#af029a3c95520a06db14151709d1426b5">pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton</a> import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme Composable fun MainPage </td>
+          <td>(</td>
+          <td class="paramtype">navigator:NavController</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">viewModel:NotesViewModel</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">navigateToEditNotePage:(Note) -&gt;</td>          <td class="paramname"><span class="paramname"><em>Unit</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
