@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['editnotepage_2ekt_0',['EditNotePage.kt',['../EditNotePage_8kt.html',1,'']]],
-  ['exampleinstrumentedtest_1',['ExampleInstrumentedTest',['../namespaceExampleInstrumentedTest.html',1,'']]],
-  ['exampleinstrumentedtest_2ekt_2',['ExampleInstrumentedTest.kt',['../ExampleInstrumentedTest_8kt.html',1,'']]]
+  ['hamburgerpage_2ekt_0',['HamburgerPage.kt',['../HamburgerPage_8kt.html',1,'']]]
 ];

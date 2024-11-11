@@ -24,17 +24,5 @@
 */
 var menudata={children:[
 {text:"Strona główna",url:"index.html"},
-{text:"Pakiety",url:"namespaces.html",children:[
-{text:"Lista pakietów",url:"namespaces.html"},
-{text:"Składowe pakietu",url:"namespacemembers.html",children:[
-{text:"Wszystko",url:"namespacemembers.html"},
-{text:"Funkcje",url:"namespacemembers_func.html"},
-{text:"Zmienne",url:"namespacemembers_vars.html"}]}]},
-{text:"Klasy",url:"annotated.html",children:[
-{text:"Lista klas",url:"annotated.html"},
-{text:"Indeks klas",url:"classes.html"}]},
 {text:"Pliki",url:"files.html",children:[
-{text:"Lista plików",url:"files.html"},
-{text:"Składowe plików",url:"globals.html",children:[
-{text:"Wszystko",url:"globals.html"},
-{text:"Funkcje",url:"globals_func.html"}]}]}]}
+{text:"Lista plików",url:"files.html"}]}]}

@@ -1,5 +1,10 @@
 var searchData=
 [
-  ['oncreate_0',['onCreate',['../namespaceComponentActivity.html#ac93e02521caa7c6608824507a471b057',1,'ComponentActivity']]],
-  ['optiongeneration_2ekt_1',['optionGeneration.kt',['../optionGeneration_8kt.html',1,'']]]
+  ['tag_2ekt_0',['Tag.kt',['../Tag_8kt.html',1,'']]],
+  ['tagsstate_2ekt_1',['TagsState.kt',['../TagsState_8kt.html',1,'']]],
+  ['tagsviewmodel_2ekt_2',['TagsViewModel.kt',['../TagsViewModel_8kt.html',1,'']]],
+  ['tagswithnotes_2ekt_3',['TagsWithNotes.kt',['../TagsWithNotes_8kt.html',1,'']]],
+  ['testpage_2ekt_4',['TestPage.kt',['../TestPage_8kt.html',1,'']]],
+  ['theme_2ekt_5',['Theme.kt',['../Theme_8kt.html',1,'']]],
+  ['type_2ekt_6',['Type.kt',['../Type_8kt.html',1,'']]]
 ];
