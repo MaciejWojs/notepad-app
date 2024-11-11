@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['settingspage_2ekt_0',['settingsPage.kt',['../settingsPage_8kt.html',1,'']]]
+  ['pagegeneration_2ekt_0',['pageGeneration.kt',['../pageGeneration_8kt.html',1,'']]]
 ];

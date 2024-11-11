@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.3.2</span>
+   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.3.3</span>
    </div>
   </td>
  </tr>
@@ -98,9 +98,73 @@ $(function(){initNavTree('HamburgerPage_8kt.html',''); initResizable(true); });
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Funkcje</a>  </div>
   <div class="headertitle"><div class="title">Dokumentacja pliku HamburgerPage.kt</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Plik odpowiadający za zarządzanie tagami i nawigację do odpowiednich stron.  
+<a href="#details">Więcej...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Funkcje</h2></td></tr>
+<tr class="memitem:a794112e38b13df691697638d0da96915" id="r_a794112e38b13df691697638d0da96915"><td class="memItemLeft" align="right" valign="top">Composable fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a794112e38b13df691697638d0da96915">HamburgerPage</a> (navigator:NavController, viewModel:TagsViewModel, onCreate:(String) -&gt; Unit, onDelete:(Tag) -&gt; Unit, onEdit:(Tag, String) -&gt; Unit,)</td></tr>
+<tr class="memdesc:a794112e38b13df691697638d0da96915"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strona zarządzania tagami.  <br /></td></tr>
+<tr class="separator:a794112e38b13df691697638d0da96915"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
+<div class="textblock"><p>Plik odpowiadający za zarządzanie tagami i nawigację do odpowiednich stron. </p>
+<p>W tym pliku znajduje się implementacja strony, na której użytkownik może zarządzać tagami. Umożliwia tworzenie nowych tagów, edytowanie istniejących, usuwanie ich oraz przejście do listy notatek przypisanych do tagów. </p>
+</div><h2 class="groupheader">Dokumentacja funkcji</h2>
+<a id="a794112e38b13df691697638d0da96915" name="a794112e38b13df691697638d0da96915"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a794112e38b13df691697638d0da96915">&#9670;&#160;</a></span>HamburgerPage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Composable fun HamburgerPage </td>
+          <td>(</td>
+          <td class="paramtype">navigator:NavController</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">viewModel:TagsViewModel</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">onCreate:(String) -&gt;</td>          <td class="paramname"><span class="paramname"><em>Unit</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">onDelete:(Tag) -&gt;</td>          <td class="paramname"><span class="paramname"><em>Unit</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">onEdit:(Tag, String) -&gt;</td>          <td class="paramname"><span class="paramname"><em>Unit</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Strona zarządzania tagami. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">navigator</td><td>Kontroler nawigacji. </td></tr>
+    <tr><td class="paramname">viewModel</td><td>Model widoku tagów. </td></tr>
+    <tr><td class="paramname">onCreate</td><td>Funkcja wywoływana przy tworzeniu nowego tagu. </td></tr>
+    <tr><td class="paramname">onDelete</td><td>Funkcja wywoływana przy usuwaniu tagu. </td></tr>
+    <tr><td class="paramname">onEdit</td><td>Funkcja wywoływana przy edycji tagu. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
