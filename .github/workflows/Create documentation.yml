@@ -18,7 +18,7 @@ jobs:
         uses: awalsh128/cache-apt-pkgs-action@latest
         id: cache-packages
         with:
-          packages: graphviz ghostscript
+          packages: graphviz ghostscript python3
           version: 1.0
           execute_install_scripts: true
       - name: install packages
