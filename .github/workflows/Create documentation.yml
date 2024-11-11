@@ -8,7 +8,6 @@ on:
 
 env:
   PACKAGES: graphviz ghostscript
-  PYTHON: 3.12
 
 jobs:
   Create_documentation:
@@ -28,16 +27,6 @@ jobs:
       - name: install packages
         if: steps.cache-packages.outputs.cache-hit != 'true'
         run: sudo apt update && sudo apt install -y ${{ env.PACKAGES }}
-
-      - name: Set up Python
-        uses: actions/setup-python@v5.3.0
-        with:
-          python-version: ${{ env.PYTHON }}
-
-      - name: Verify Python Installation
-        run: |
-          python3 --version
-          which python3
 
       - name: Prettify doxygen
         run: |
@@ -61,6 +50,8 @@ jobs:
 
       - name: Generate Doxygen Documentation
         uses: mattnotmitt/doxygen-action@edge
+        with:
+          additional-packages: python3
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
