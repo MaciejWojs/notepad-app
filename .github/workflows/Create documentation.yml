@@ -6,6 +6,9 @@ on:
     tags:
       - '*.*.*'
 
+env:
+  PACKAGES: graphviz ghostscript python3
+
 jobs:
   Create_documentation:
     runs-on: ubuntu-latest
@@ -18,12 +21,12 @@ jobs:
         uses: awalsh128/cache-apt-pkgs-action@latest
         id: cache-packages
         with:
-          packages: graphviz ghostscript python3
+          packages: ${{ env.PACKAGES }}
           version: 1.0
           execute_install_scripts: true
       - name: install packages
         if: steps.cache-packages.outputs.cache-hit != 'true'
-        run: sudo apt update && sudo apt install -y graphviz ghostscript
+        run: sudo apt update && sudo apt install -y ${{ env.PACKAGES }}
 
       - name: Prettify doxygen
         run: |
