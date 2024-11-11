@@ -30,7 +30,7 @@ jobs:
         run: sudo apt update && sudo apt install -y ${{ env.PACKAGES }}
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5.3.0
         with:
           python-version: ${{ env.PYTHON }}
 
