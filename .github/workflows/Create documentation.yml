@@ -43,6 +43,7 @@ jobs:
           echo "HTML_EXTRA_STYLESHEET  = doxygen-awesome.css doxygen-awesome-sidebar-only.css" >> Doxyfile
           newest_build=$(curl -s https://api.github.com/repos/MaciejWojs/notepad-app/releases/latest | jq -r '.tag_name')
           echo PROJECT_NUMBER         = ${newest_build} >> Doxyfile
+          chmod 777 ./filter.py
 
       - name: Generate Doxygen Documentation
         uses: mattnotmitt/doxygen-action@edge
