@@ -36,6 +36,7 @@ jobs:
           mv doxygen-awesome-css*/ doxygen-awesome-css/
           cp doxygen-awesome-css/doxygen-awesome.css . 
           cp doxygen-awesome-css/doxygen-awesome-sidebar-only.css .
+          echo -e "\n" >> Doxyfile
           echo "GENERATE_TREEVIEW      = YES" >> Doxyfile
           echo "DISABLE_INDEX          = NO" >> Doxyfile
           echo "FULL_SIDEBAR           = NO" >> Doxyfile
