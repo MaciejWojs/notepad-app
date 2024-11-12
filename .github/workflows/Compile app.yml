@@ -1,17 +1,20 @@
 name: Compile app
 on:
   push:
+    branches:
+      - main
     tags:
       - '*.*.*'
-
 env:
   JAVA_VERSION: 21
+  IS_TAG: ${{ startsWith(github.ref, 'refs/tags/') }}
 
 jobs:
   Comipile_APP:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    if: env.IS_TAG == 'true'
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v4

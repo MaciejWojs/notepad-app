@@ -26,6 +26,7 @@ jobs:
         uses: actions/checkout@v4
       - name: check for cache
         uses: awalsh128/cache-apt-pkgs-action@latest
+        if: env.IS_TAG == 'true'
         id: cache-packages
         with:
           packages: ${{ env.PACKAGES }}
@@ -74,7 +75,7 @@ jobs:
           publish_dir: ${{ env.HTML_DIR }}
 
       - name: compile doxygen latex documentation
-        if: startsWith(github.ref, 'refs/tags/')
+        if: env.IS_TAG == 'true'
         uses: xu-cheng/latex-action@3.2.0
         with:
           extra_system_packages: "inkscape"
@@ -83,19 +84,19 @@ jobs:
           root_file: refman.tex
 
       - name: Rename PDF file
-        if: startsWith(github.ref, 'refs/tags/')
+        if: env.IS_TAG == 'true'
         run: |
           cp ${{env.LATEX_DIR}}refman.pdf ./${{env.FILE_NAME}}.pdf
           sudo chmod 777 ${{env.LATEX_DIR}}refman.pdf
 
       - name: release the pdf
-        if: startsWith(github.ref, 'refs/tags/')
+        if: env.IS_TAG == 'true'
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
           artifacts: "${{env.FILE_NAME}}.pdf"
 
       - name: Webhook DC notification
-        if: startsWith(github.ref, 'refs/tags/')
+        if: env.IS_TAG == 'true'
         run: |
           curl -s -H "Content-Type: application/json" -d '{"content": "Stworzono dokumentację @everyone"}' ${{ secrets.DISCORD_WEBHOOK_URL }} &> /dev/null
