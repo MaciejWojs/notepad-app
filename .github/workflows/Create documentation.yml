@@ -26,7 +26,6 @@ jobs:
         uses: actions/checkout@v4
       - name: check for cache
         uses: awalsh128/cache-apt-pkgs-action@latest
-        if: env.IS_TAG == 'true'
         id: cache-packages
         with:
           packages: ${{ env.PACKAGES }}
