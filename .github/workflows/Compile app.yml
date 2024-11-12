@@ -4,6 +4,9 @@ on:
     tags:
       - '*.*.*'
 
+env:
+  JAVA_VERSION: 21
+
 jobs:
   Comipile_APP:
     runs-on: ubuntu-latest
@@ -13,11 +16,12 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v4
       
-      - name: Set up JDK 17
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: ${{ env.JAVA_VERSION }}
           distribution: 'zulu'
+          cache: 'gradle'
             
       - name: gradlew
         run: |
