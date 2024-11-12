@@ -54,9 +54,11 @@ jobs:
       - name: Set Doxygen project version
         run: |
           if [ "${{ env.IS_TAG }}" = "true" ]; then
-            echo PROJECT_NUMBER = ${NEWEST_TAG} >> Doxyfile
+            echo ${{env.NEWEST_TAG}}
+            echo PROJECT_NUMBER = ${{env.NEWEST_TAG}} >> Doxyfile
           else
             latest_tag=$(curl -s https://api.github.com/repos/${{ env.REPO }}/releases/latest | jq -r '.tag_name')
+            echo ${latest_tag}
             echo PROJECT_NUMBER = ${latest_tag} >> Doxyfile
           fi
 
