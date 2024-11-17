@@ -13,10 +13,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.AudioFilesNotesCrossRef
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.NotesTagsCrossRef
 
 @Database(
-    entities = [Note::class, Tag::class, NotesTagsCrossRef::class],
+    entities = [Note::class, Tag::class, NotesTagsCrossRef::class, AudioFilesNotesCrossRef::class],
     version = 1,
 )
 abstract class NotesDatabase : RoomDatabase() {

@@ -8,6 +8,7 @@
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -60,6 +61,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.TagsEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.TagsViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
@@ -79,9 +81,10 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreat
 fun HamburgerPage(
     navigator: NavController,
     viewModel: TagsViewModel,
-    onCreate: (String) -> Unit,
-    onDelete: (Tag) -> Unit,
-    onEdit: (Tag, String) -> Unit,
+//    onCreate: (String) -> Unit,
+//    onDelete: (Tag) -> Unit,
+//    onEdit: (Tag, String) -> Unit,
+//    onTag: (TagsEvent) -> Unit,
 ) {
     val state = viewModel.state.collectAsState().value
     val context = LocalContext.current
@@ -121,7 +124,8 @@ fun HamburgerPage(
                         horizontalAlignment = Alignment.CenterHorizontally, // Center all rows horizontally
                     ) {
                         Button(onClick = {
-                            onDelete(selectedTag!!)
+//                            onDelete(selectedTag!!)
+                            viewModel.onEvent(TagsEvent.DeleteTag(selectedTag!!))
                             selectedTag = null
                             showBottomSheet = false
                         }) {
@@ -150,6 +154,7 @@ fun HamburgerPage(
                         onValueChange = { tagName = it },
                         label = { Text("Tag Name") },
                         placeholder = { Text("Enter your tag name here") },
+                        isError = tagName.isEmpty(),
                         modifier =
                             Modifier
                                 .fillMaxWidth()
@@ -161,8 +166,14 @@ fun HamburgerPage(
                     showDialog = false
                 }, confirmButton = {
                     TextButton(onClick = {
-                        onCreate(tagName)
-                        showDialog = false
+//                        onCreate(tagName)
+                        if (tagName.isNotEmpty()) {
+                            viewModel.onEvent(TagsEvent.SaveTag(Tag(name = tagName)))
+                            showDialog = false
+                        } else {
+                            Toast.makeText(context, "Tag name cannot be empty", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     }) {
                         Text("Confirm")
                     }
@@ -188,6 +199,7 @@ fun HamburgerPage(
                             onValueChange = { editTagName = it },
                             label = { Text("Tag Name") },
                             placeholder = { Text("Enter your tag name here") },
+                            isError = editTagName.isEmpty(),
                             modifier =
                                 Modifier
                                     .fillMaxWidth()
@@ -200,12 +212,18 @@ fun HamburgerPage(
                     },
                     confirmButton = {
                         TextButton(onClick = {
-                            onEdit(selectedTag!!, editTagName)
-                            tagName = editTagName
-                            Log.d("TAG", tagName)
-                            selectedTag = null
-                            editTagName = ""
-                            showEditDialog = false
+//                            onEdit(selectedTag!!, editTagName)
+                            if (editTagName.isNotEmpty()) {
+                                viewModel.onEvent(TagsEvent.UpdateTag(selectedTag!!.copy(name = editTagName)))
+                                tagName = editTagName
+                                Log.d("TAG", tagName)
+                                selectedTag = null
+                                editTagName = ""
+                                showEditDialog = false
+                            } else {
+                                Toast.makeText(context, "Tag name cannot be empty", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
                         }) {
                             Text("Confirm")
                         }

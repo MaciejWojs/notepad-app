@@ -32,24 +32,29 @@ class NotesViewModel(
                 }
             }
 
-            NotesEvent.SaveNotes -> TODO()
-            is NotesEvent.SetContent -> {
-                _state.update {
-                    it.copy(
-                        content = event.content,
-                    )
+            is NotesEvent.SaveNote -> {
+                if (event.note.content.isNotEmpty() && event.note.title.isNotEmpty()) {
+                    viewModelScope.launch {
+                        dao.insertNote(event.note)
+                    }
+                } else {
+                    Log.i("BAZA", "Nie zapisano nowej notatki, bo brak treści lub tytułu")
                 }
             }
 
-            is NotesEvent.SetTitle -> {
-                _state.update {
-                    it.copy(
-                        title = event.title,
-                    )
+            is NotesEvent.UpdateNote -> {
+                if (event.note.content.isNotEmpty() && event.note.title.isNotEmpty()) {
+                    viewModelScope.launch {
+                        dao.updateNote(
+                            id = event.note.noteID,
+                            title = event.note.title,
+                            content = event.note.content,
+                        )
+                    }
+                } else {
+                    Log.i("BAZA", "Nie zapisano notatki, bo brak treści lub tytułu")
                 }
             }
-
-            is NotesEvent.setModificationTime -> TODO()
         }
     }
 }

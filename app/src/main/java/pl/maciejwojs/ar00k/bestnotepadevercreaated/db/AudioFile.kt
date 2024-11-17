@@ -7,9 +7,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "audioFiles")
-data class AudioFiles(
-    val name: String,
+data class AudioFile(
+//    val name: String,
 //    val path: String,
     val byteArray: ByteArray,
     @PrimaryKey(autoGenerate = true) val audioID: Long = 0,
-): Parcelable
+) : Parcelable

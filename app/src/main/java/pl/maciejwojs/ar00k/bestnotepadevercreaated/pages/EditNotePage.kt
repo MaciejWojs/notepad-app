@@ -57,6 +57,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
@@ -77,7 +78,9 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreat
 @Composable
 fun EditNotePage(
     navigator: NavController,
-    onEdit: (String, String) -> Unit,
+//    onEdit: (String, String) -> Unit,
+//    viewModel: NotesViewModel,
+    onEvent: (NotesEvent) -> Unit,
     onTagEdit: (Note, Tag, Boolean) -> Unit,
     note: Note,
     tags: List<Tag>,
@@ -125,7 +128,12 @@ fun EditNotePage(
                         if (!navigator.popBackStack()) {
                             navigator.navigate("MainPage")
                         } else {
-                            onEdit(noteTitle, noteContent)
+//                            onEdit(noteTitle, noteContent)
+                            onEvent(NotesEvent.UpdateNote(note.copy(title = noteTitle, content = noteContent)))
+//                            checkedMap.forEach { entry ->
+//                                Log.i("TAG", "id: ${entry.key} ${entry.value}")
+//                                onTagEdit(note, entry.key, entry.value)
+//                            }
                         }
                     }
                     Row(
@@ -158,7 +166,8 @@ fun EditNotePage(
                         icon = Icons.Default.Check,
                         "Save Note",
                     ) {
-                        onEdit(noteTitle, noteContent)
+//                        onEdit(noteTitle, noteContent)
+                        onEvent(NotesEvent.UpdateNote(note.copy(title = noteTitle, content = noteContent)))
                         checkedMap.forEach { entry ->
                             Log.i("TAG", "id: ${entry.key} ${entry.value}")
                             onTagEdit(note, entry.key, entry.value)

@@ -6,9 +6,7 @@
 
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.CreateNotePage
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -30,13 +28,12 @@ import androidx.navigation.navArgument
 import kotlinx.coroutines.launch
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.CreateNotePage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.EditNotePage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.HamburgerPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.MainPage
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.NotesListPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.NotesWithTagPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.SettingsPage
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.TestPage
 
 /**
  * The main activity of the application BestNotepadEverCreated.
@@ -113,28 +110,31 @@ class MainActivity : ComponentActivity() {
                 composable("SettingsPage") {
                     SettingsPage(navController)
                 }
-                composable("NotesListPage") {
-                    NotesListPage(navController, viewModel = notesViewModel)
-                }
-                composable("TestPage") {
-                    TestPage(navController, viewModel = notesViewModel, dao = dao)
-                }
+//                composable("NotesListPage") {
+//                    NotesListPage(navController, viewModel = notesViewModel)
+//                }
                 composable("HamburgerPage") {
-                    HamburgerPage(navController, tagsViewModel, onCreate = { tagName ->
-                        tagsViewModel.viewModelScope.launch {
-                            dao.insertTag(
-                                Tag(tagName),
-                            )
-                        }
-                    }, onDelete = { tag ->
-                        tagsViewModel.viewModelScope.launch {
-                            dao.deleteTag(tag)
-                        }
-                    }, onEdit = { tag, name ->
-                        tagsViewModel.viewModelScope.launch {
-                            dao.updateTag(id = tag.tagID, name = name)
-                        }
-                    })
+                    HamburgerPage(
+                        navController,
+                        tagsViewModel,
+//                        onCreate = { tagName ->
+//                        tagsViewModel.viewModelScope.launch {
+//                            dao.insertTag(
+//                                Tag(tagName),
+//                            )
+//                        }
+//                    }, onDelete = { tag ->
+//                        tagsViewModel.viewModelScope.launch {
+//                            dao.deleteTag(tag)
+//                        }
+//                    }, onEdit = { tag, name ->
+//                        tagsViewModel.viewModelScope.launch {
+//                            dao.updateTag(id = tag.tagID, name = name)
+//                        }
+//                        onEvent = { tagsViewModel.onEvent(it) },
+// //                        viewModel = TODO(),
+// //                        onTag = TODO()
+                    )
                 }
                 composable("pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.CreateNotePage") {
                     val tags = tagsViewModel.state.collectAsState().value.tags
@@ -194,40 +194,32 @@ class MainActivity : ComponentActivity() {
                         // Ensure that the tags are loaded before showing the EditNotePage
                         EditNotePage(
                             navigator = navController,
-                            onEdit = { title, content ->
-                                notesViewModel.viewModelScope.launch {
-                                    dao.updateNote(note.noteID, title, content)
-                                }
-                            },
+//                            onEdit = { title, content ->
+// //                                notesViewModel.viewModelScope.launch {
+// //                                    dao.updateNote(note.noteID, title, content)
+// //                                }
+// //                                notesViewModel.onEvent(NotesEvent.UpdateNote(note.copy(title = title, content = content)))
+//                                 },
+//                            viewModel = notesViewModel,
+                            onEvent = { notesViewModel.onEvent(it) },
                             note = note,
                             tags = tagsViewModel.state.collectAsState().value.tags,
                             currentNoteTags = currentTags, // This will now be populated correctly
                             onTagEdit = { n, tag, addNote ->
-                                tagsViewModel.viewModelScope.launch {
-                                    val isTagToEdit: Boolean =
-                                        dao.checkIfRelationBetweenNoteAndTagExist(
-                                            noteID = n.noteID, tagID = tag.tagID,
-                                        ) == 0 && addNote
-
-                                    if (isTagToEdit) {
-                                        dao.insertRelationBetweenNoteAndTag(n.noteID, tag.tagID)
-                                        Log.i("TAG", "Dodawanie tagu ${tag.name}")
-                                    }
-
-                                    val isTagToDelete: Boolean =
-                                        dao.checkIfRelationBetweenNoteAndTagExist(
-                                            noteID = n.noteID, tagID = tag.tagID,
-                                        ) == 1 && !addNote
-
-                                    if (isTagToDelete) {
-                                        Log.i("TAG", "usuwanie tagu ${tag.name}")
-                                        dao.deleteRelationBetweenNoteAndTag(n.noteID, tag.tagID)
-                                    }
-
-                                    notesWithTagPageViewModel.viewModelScope.launch {
-                                        notesWithTagPageViewModel.loadTagsByNote(noteID = note.noteID)
-                                    }
-                                }
+                                tagsViewModel.onEvent(
+                                    if (addNote) {
+                                        TagsEvent.AddTagToNote(
+                                            noteID = n.noteID,
+                                            tagID = tag.tagID,
+                                        )
+                                    } else {
+                                        TagsEvent.RemoveTagFromNote(
+                                            noteID = n.noteID,
+                                            tagID = tag.tagID,
+                                        )
+                                    },
+                                )
+                                notesWithTagPageViewModel.loadTagsByNote(noteID = note.noteID)
                             },
                         )
                     }
