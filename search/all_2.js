@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['editnotepage_0',['EditNotePage',['../EditNotePage_8kt.html#a877b598d4b3766424f07629488824b4c',1,'EditNotePage.kt']]],
-  ['editnotepage_2ekt_1',['EditNotePage.kt',['../EditNotePage_8kt.html',1,'']]],
-  ['exampleinstrumentedtest_2ekt_2',['ExampleInstrumentedTest.kt',['../ExampleInstrumentedTest_8kt.html',1,'']]]
+  ['database_0',['Database',['../NotesDatabase_8kt.html#afe1a4ca9d336cb145cfdf749f512f13b',1,'NotesDatabase.kt']]]
 ];

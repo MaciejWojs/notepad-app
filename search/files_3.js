@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hamburgerpage_2ekt_0',['HamburgerPage.kt',['../HamburgerPage_8kt.html',1,'']]]
+  ['globalvalues_2ekt_0',['globalValues.kt',['../globalValues_8kt.html',1,'']]]
 ];

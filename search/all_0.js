@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['color_2ekt_0',['Color.kt',['../Color_8kt.html',1,'']]],
-  ['createnotepage_1',['CreateNotePage',['../CreateNotePage_8kt.html#aa05654384f1b87243b7f91363dbab2e2',1,'CreateNotePage.kt']]],
-  ['createnotepage_2ekt_2',['CreateNotePage.kt',['../CreateNotePage_8kt.html',1,'']]],
-  ['createnotetitle_3',['CreateNoteTitle',['../MainActivity_8kt.html#a5928ad6b0dc606611ea8c87d89ead445',1,'MainActivity.kt']]]
+  ['audiofile_2ekt_0',['AudioFile.kt',['../AudioFile_8kt.html',1,'']]],
+  ['audiofilesnotescrossref_2ekt_1',['AudioFilesNotesCrossRef.kt',['../AudioFilesNotesCrossRef_8kt.html',1,'']]],
+  ['audiofileswithnotes_2ekt_2',['AudioFilesWithNotes.kt',['../AudioFilesWithNotes_8kt.html',1,'']]]
 ];
