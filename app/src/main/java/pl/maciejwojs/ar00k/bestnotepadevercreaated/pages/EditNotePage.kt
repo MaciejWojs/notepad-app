@@ -6,6 +6,7 @@
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -54,6 +55,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
@@ -96,7 +98,7 @@ fun EditNotePage(
     // Initialize checkedMap to keep track of each tag’s selection state
     // Initialize checkedMap with an empty map
     val checkedMap = remember { mutableStateMapOf<Tag, Boolean>() }
-
+    val context = LocalContext.current
     // Update checkedMap based on the current note's tags when tags or currentNoteTags change
     LaunchedEffect(tags, currentNoteTags) {
         checkedMap.clear() // Clear any previous values
@@ -128,12 +130,15 @@ fun EditNotePage(
                         if (!navigator.popBackStack()) {
                             navigator.navigate("MainPage")
                         } else {
-//                            onEdit(noteTitle, noteContent)
-                            onEvent(NotesEvent.UpdateNote(note.copy(title = noteTitle, content = noteContent)))
-//                            checkedMap.forEach { entry ->
-//                                Log.i("TAG", "id: ${entry.key} ${entry.value}")
-//                                onTagEdit(note, entry.key, entry.value)
-//                            }
+                            if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
+                                onEvent(NotesEvent.UpdateNote(note.copy(title = noteTitle, content = noteContent)))
+//                                checkedMap.forEach { entry ->
+//                                    Log.i("TAG", "id: ${entry.key} ${entry.value}")
+//                                    onTagEdit(note, entry.key, entry.value)
+//                                }
+                            } else {
+                                Toast.makeText(context, "Title and content cannot be empty", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                     Row(
@@ -166,14 +171,17 @@ fun EditNotePage(
                         icon = Icons.Default.Check,
                         "Save Note",
                     ) {
-//                        onEdit(noteTitle, noteContent)
-                        onEvent(NotesEvent.UpdateNote(note.copy(title = noteTitle, content = noteContent)))
-                        checkedMap.forEach { entry ->
-                            Log.i("TAG", "id: ${entry.key} ${entry.value}")
-                            onTagEdit(note, entry.key, entry.value)
+                        if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
+                            onEvent(NotesEvent.UpdateNote(note.copy(title = noteTitle, content = noteContent)))
+                            checkedMap.forEach { entry ->
+                                Log.i("TAG", "id: ${entry.key} ${entry.value}")
+                                onTagEdit(note, entry.key, entry.value)
+                            }
+                        } else {
+                            Toast.makeText(context, "Title and content cannot be empty", Toast.LENGTH_SHORT).show()
                         }
                     }
-                }
+                }`
 
                 Spacer(modifier = Modifier.height(20.dp))
 
