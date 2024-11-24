@@ -99,6 +99,7 @@ fun EditNotePage(
     // Initialize checkedMap with an empty map
     val checkedMap = remember { mutableStateMapOf<Tag, Boolean>() }
     val context = LocalContext.current
+
     // Update checkedMap based on the current note's tags when tags or currentNoteTags change
     LaunchedEffect(tags, currentNoteTags) {
         checkedMap.clear() // Clear any previous values
@@ -181,7 +182,7 @@ fun EditNotePage(
                             Toast.makeText(context, "Title and content cannot be empty", Toast.LENGTH_SHORT).show()
                         }
                     }
-                }`
+                }
 
                 Spacer(modifier = Modifier.height(20.dp))
 
