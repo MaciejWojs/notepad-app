@@ -225,8 +225,6 @@ fun CreateNotePage(
                                             .padding(8.dp)
                                             .defaultMinSize(minHeight = 300.dp),
                                 )
-
-
                             }
                         }
                     }

@@ -12,6 +12,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Settings
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.NotesWithTags
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.TagsWithNotes
@@ -200,5 +201,21 @@ interface NotesDao {
     suspend fun updateNotePrivacy(
         id: Long,
         isPrivate: Boolean,
+    )
+
+    //    Kwerendy do Ustawień
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSettings(settings: Settings)
+
+    @Query("SELECT * FROM settings")
+    fun getSettings(): Flow<List<Settings>>
+
+    @Query("SELECT COUNT(*) FROM settings")
+    suspend fun getSettingsCount(): Long
+
+    @Query("UPDATE settings SET isSet = :isSet WHERE settingsID = :id")
+    suspend fun updateSettings(
+        id: Long,
+        isSet: Boolean,
     )
 }
