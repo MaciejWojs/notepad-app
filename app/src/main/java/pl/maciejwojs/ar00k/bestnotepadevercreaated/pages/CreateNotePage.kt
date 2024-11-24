@@ -4,6 +4,7 @@
  * @file CreateNotePage.kt
  */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -12,12 +13,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -51,6 +55,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
@@ -78,6 +83,7 @@ fun CreateNotePage(
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
+    val context = LocalContext.current
 
     // Initialize checkedMap to keep track of each tag’s selection state
     val checkedMap =
@@ -88,7 +94,31 @@ fun CreateNotePage(
         }
 
     BestNotepadEverCreatedTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+        Scaffold(bottomBar = {
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+//                        .height(50.dp)
+                        .background(MaterialTheme.colorScheme.onSecondary)
+//                        .padding(WindowInsets.systemBars.asPaddingValues())
+                        .padding(bottom = WindowInsets.systemBars.asPaddingValues().calculateBottomPadding()),
+            ) {
+                Button(
+                    onClick = { showBottomSheet = true },
+                ) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add tags")
+                    Text(text = "Add tags")
+                }
+                Button(
+                    onClick = {
+                    },
+                ) {
+                    Text(text = "Toggle Privacy")
+                }
+            }
+        }, modifier = Modifier.fillMaxSize()) { innerPadding ->
 
             Column(modifier = Modifier.padding(innerPadding)) {
                 Row(
@@ -106,11 +136,11 @@ fun CreateNotePage(
                         if (!navigator.popBackStack()) {
                             navigator.navigate("MainPage")
                         } else {
-                            onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
-//                            checkedMap.forEach { entry ->
-//                                Log.i("TAG", "id: ${entry.key} ${entry.value}")
-// //                                onTagAdd(note, entry.key, entry.value)
-//                            }
+                            if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
+                                onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
+                            } else {
+                                Toast.makeText(context, "Title and content cannot be empty", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                     Row(
@@ -137,7 +167,11 @@ fun CreateNotePage(
                         transparent = true,
                         isEnabled = true, // Enable save once required fields are filled
                     ) {
-                        onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
+                        if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
+                            onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
+                        } else {
+                            Toast.makeText(context, "Title and content cannot be empty", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
 
@@ -191,14 +225,6 @@ fun CreateNotePage(
                                             .padding(8.dp)
                                             .defaultMinSize(minHeight = 300.dp),
                                 )
-
-                                Button(
-                                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                                    onClick = { showBottomSheet = true },
-                                ) {
-                                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add tags")
-                                    Text(text = "Add tags")
-                                }
                             }
                         }
                     }
