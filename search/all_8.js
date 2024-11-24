@@ -1,21 +1,7 @@
 var searchData=
 [
-  ['note_2ekt_0',['Note.kt',['../Note_8kt.html',1,'']]],
-  ['notegeneration_2ekt_1',['noteGeneration.kt',['../noteGeneration_8kt.html',1,'']]],
-  ['notesdao_2',['NotesDao',['../interfaceNotesDao.html',1,'']]],
-  ['notesdao_2ekt_3',['NotesDao.kt',['../NotesDao_8kt.html',1,'']]],
-  ['notesdatabase_2ekt_4',['NotesDatabase.kt',['../NotesDatabase_8kt.html',1,'']]],
-  ['notesevent_5',['NotesEvent',['../interfaceNotesEvent.html',1,'']]],
-  ['notesevent_2ekt_6',['NotesEvent.kt',['../NotesEvent_8kt.html',1,'']]],
-  ['notesstate_2ekt_7',['NotesState.kt',['../NotesState_8kt.html',1,'']]],
-  ['notestagscrossref_2ekt_8',['NotesTagsCrossRef.kt',['../NotesTagsCrossRef_8kt.html',1,'']]],
-  ['notestagscrossrefstate_2ekt_9',['NotesTagsCrossRefState.kt',['../NotesTagsCrossRefState_8kt.html',1,'']]],
-  ['notestagscrossrefviewmodel_10',['NotesTagsCrossRefViewModel',['../NotesTagsCrossRefViewModel_8kt.html#aae20beea6dd81ccc71fd6f16365af008',1,'NotesTagsCrossRefViewModel.kt']]],
-  ['notestagscrossrefviewmodel_2ekt_11',['NotesTagsCrossRefViewModel.kt',['../NotesTagsCrossRefViewModel_8kt.html',1,'']]],
-  ['notesviewmodel_12',['NotesViewModel',['../NotesViewModel_8kt.html#aff6739272f2f4ac73819e6750c1fc4c8',1,'NotesViewModel.kt']]],
-  ['notesviewmodel_2ekt_13',['NotesViewModel.kt',['../NotesViewModel_8kt.html',1,'']]],
-  ['noteswithaudiofiles_2ekt_14',['NotesWithAudioFiles.kt',['../NotesWithAudioFiles_8kt.html',1,'']]],
-  ['noteswithtagpage_15',['NotesWithTagPage',['../NotesWithTagPage_8kt.html#affd86d31cc540ea4a1dadb103d0e6113',1,'NotesWithTagPage.kt']]],
-  ['noteswithtagpage_2ekt_16',['NotesWithTagPage.kt',['../NotesWithTagPage_8kt.html',1,'']]],
-  ['noteswithtags_2ekt_17',['NotesWithTags.kt',['../NotesWithTags_8kt.html',1,'']]]
+  ['mainactivity_0',['MainActivity',['../classMainActivity.html',1,'']]],
+  ['mainactivity_2ekt_1',['MainActivity.kt',['../MainActivity_8kt.html',1,'']]],
+  ['mainpage_2',['MainPage',['../MainPage_8kt.html#acfb603f708f0e450c3d7ffe38f946466',1,'MainPage.kt']]],
+  ['mainpage_2ekt_3',['MainPage.kt',['../MainPage_8kt.html',1,'']]]
 ];

@@ -30,7 +30,8 @@ var menudata={children:[
 {text:"Hierarchia klas",url:"inherits.html"},
 {text:"Składowe klas",url:"functions.html",children:[
 {text:"Wszystko",url:"functions.html"},
-{text:"Funkcje",url:"functions_func.html"}]}]},
+{text:"Funkcje",url:"functions_func.html"},
+{text:"Zmienne",url:"functions_vars.html"}]}]},
 {text:"Pliki",url:"files.html",children:[
 {text:"Lista plików",url:"files.html"},
 {text:"Składowe plików",url:"globals.html",children:[

@@ -1,9 +1,10 @@
 var indexSectionsWithContent =
 {
-  0: "acdeghimnoprst",
-  1: "mnt",
+  0: "acdeghilmnoprst",
+  1: "mnst",
   2: "aceghimnopst",
-  3: "cdeghmnorst"
+  3: "cdeghmnorst",
+  4: "l"
 };
 
 var indexSectionNames =
@@ -11,7 +12,8 @@ var indexSectionNames =
   0: "all",
   1: "classes",
   2: "files",
-  3: "functions"
+  3: "functions",
+  4: "variables"
 };
 
 var indexSectionLabels =
@@ -19,6 +21,7 @@ var indexSectionLabels =
   0: "Wszystko",
   1: "Klasy",
   2: "Pliki",
-  3: "Funkcje"
+  3: "Funkcje",
+  4: "Zmienne"
 };
 

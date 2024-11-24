@@ -5,5 +5,6 @@ var hierarchy =
     ] ],
     [ "NotesDao", "interfaceNotesDao.html", null ],
     [ "NotesEvent", "interfaceNotesEvent.html", null ],
+    [ "SettingsEvent", "interfaceSettingsEvent.html", null ],
     [ "TagsEvent", "interfaceTagsEvent.html", null ]
 ];
