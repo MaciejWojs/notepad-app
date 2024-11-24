@@ -4,6 +4,7 @@
  * @file CreateNotePage.kt
  */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -51,6 +52,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
@@ -78,6 +80,7 @@ fun CreateNotePage(
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
+    val context = LocalContext.current
 
     // Initialize checkedMap to keep track of each tag’s selection state
     val checkedMap =
@@ -106,11 +109,11 @@ fun CreateNotePage(
                         if (!navigator.popBackStack()) {
                             navigator.navigate("MainPage")
                         } else {
-                            onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
-//                            checkedMap.forEach { entry ->
-//                                Log.i("TAG", "id: ${entry.key} ${entry.value}")
-// //                                onTagAdd(note, entry.key, entry.value)
-//                            }
+                            if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
+                                onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
+                            } else {
+                                Toast.makeText(context, "Title and content cannot be empty", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                     Row(
@@ -137,7 +140,11 @@ fun CreateNotePage(
                         transparent = true,
                         isEnabled = true, // Enable save once required fields are filled
                     ) {
-                        onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
+                        if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
+                            onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
+                        } else {
+                            Toast.makeText(context, "Title and content cannot be empty", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
 
