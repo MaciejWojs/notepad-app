@@ -58,6 +58,7 @@ interface NotesDao {
      * @param content Nowa treść notatki.
      * @param modificationDate Data modyfikacji, domyślnie aktualny czas.
      */
+
     @Query("UPDATE notes SET title=:title, content=:content,modificationTime=:modificationDate WHERE noteID = :id")
     suspend fun updateNote(
         id: Long,
@@ -98,10 +99,16 @@ interface NotesDao {
      * @param id Identyfikator notatki do pobrania.
      * @return Obiekt [Note] reprezentujący notatkę o podanym identyfikatorze.
      */
+
     @Transaction
     @Query("SELECT * FROM notes WHERE noteID=:id")
     suspend fun getNoteFromID(id: Long): Note
 
+    @Query("UPDATE notes SET isPrivate = :isPrivate WHERE noteID = :id")
+    suspend fun updateNotePrivacy(
+        id: Long,
+        isPrivate: Boolean,
+    )
     // Kwerendy do Tagów
 
     /**
@@ -196,12 +203,6 @@ interface NotesDao {
         noteID: Long,
         tagID: Long,
     ): Int
-
-    @Query("UPDATE notes SET isPrivate = :isPrivate WHERE noteID = :id")
-    suspend fun updateNotePrivacy(
-        id: Long,
-        isPrivate: Boolean,
-    )
 
     //    Kwerendy do Ustawień
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -38,3 +38,4 @@ data class Note(
 ) : Parcelable
 // TODO zrobić pole na zablokowanie notatki i dostosować resztę kodu
 // TODO zmienić pola na Timestamp i dostosować resztę kodu
+// TODO dodać pole na usuniętą notatke(soft delete,tag jako kosz) i dostosować resztę kodu

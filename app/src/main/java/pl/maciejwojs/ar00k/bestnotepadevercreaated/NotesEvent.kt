@@ -30,3 +30,11 @@ sealed interface TagsEvent {
 
     data class RemoveTagFromNote(val noteID: Long, val tagID: Long) : TagsEvent
 }
+
+sealed interface SettingsEvent {
+    object LoadSettings : SettingsEvent
+
+    data class UpdateSetting(val key: String, val value: Any) : SettingsEvent
+
+    object ResetSettings : SettingsEvent
+}
