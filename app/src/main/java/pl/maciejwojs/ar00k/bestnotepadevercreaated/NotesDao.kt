@@ -195,4 +195,10 @@ interface NotesDao {
         noteID: Long,
         tagID: Long,
     ): Int
+
+    @Query("UPDATE notes SET isPrivate = :isPrivate WHERE noteID = :id")
+    suspend fun updateNotePrivacy(
+        id: Long,
+        isPrivate: Boolean,
+    )
 }
