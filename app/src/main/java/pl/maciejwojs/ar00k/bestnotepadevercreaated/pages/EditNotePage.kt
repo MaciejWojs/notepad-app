@@ -133,10 +133,10 @@ fun EditNotePage(
                         } else {
                             if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
                                 onEvent(NotesEvent.UpdateNote(note.copy(title = noteTitle, content = noteContent)))
-//                                checkedMap.forEach { entry ->
-//                                    Log.i("TAG", "id: ${entry.key} ${entry.value}")
-//                                    onTagEdit(note, entry.key, entry.value)
-//                                }
+                                checkedMap.forEach { entry ->
+                                    Log.i("TAG", "id: ${entry.key} ${entry.value}")
+                                    onTagEdit(note, entry.key, entry.value)
+                                }
                             } else {
                                 Toast.makeText(context, "Title and content cannot be empty", Toast.LENGTH_SHORT).show()
                             }
