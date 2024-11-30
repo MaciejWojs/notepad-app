@@ -4,6 +4,7 @@
  * @file CreateNotePage.kt
  */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
+
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -12,11 +13,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,18 +23,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
@@ -52,16 +47,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 /**
@@ -84,6 +78,7 @@ fun CreateNotePage(
     var showBottomSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
     val context = LocalContext.current
+    val isPrivate = remember { mutableStateOf(false) }
 
     // Initialize checkedMap to keep track of each tag’s selection state
     val checkedMap =
@@ -103,7 +98,12 @@ fun CreateNotePage(
 //                        .height(50.dp)
                         .background(MaterialTheme.colorScheme.onSecondary)
 //                        .padding(WindowInsets.systemBars.asPaddingValues())
-                        .padding(bottom = WindowInsets.systemBars.asPaddingValues().calculateBottomPadding()),
+                        .padding(
+                            bottom =
+                                WindowInsets.systemBars
+                                    .asPaddingValues()
+                                    .calculateBottomPadding(),
+                        ),
             ) {
                 Button(
                     onClick = { showBottomSheet = true },
@@ -113,6 +113,8 @@ fun CreateNotePage(
                 }
                 Button(
                     onClick = {
+                        isPrivate.value = !isPrivate.value
+//                        Toast.makeText(context, "Privacy toggled", Toast.LENGTH_SHORT).show()
                     },
                 ) {
                     Text(text = "Toggle Privacy")
@@ -128,6 +130,7 @@ fun CreateNotePage(
                         .background(MaterialTheme.colorScheme.onSecondary)
                         .padding(horizontal = 8.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     GenerateIconButton(
                         icon = Icons.AutoMirrored.Filled.ArrowBack,
@@ -139,101 +142,72 @@ fun CreateNotePage(
                             if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
                                 onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
                             } else {
-                                Toast.makeText(context, "Title and content cannot be empty", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    context,
+                                    "Title and content cannot be empty",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
                             }
                         }
                     }
-                    Row(
-                        Modifier
-                            .clip(RoundedCornerShape(25.dp))
-                            .align(Alignment.CenterVertically)
-                            .fillMaxHeight(0.55f)
-                            .fillMaxWidth(0.75f)
-                            .border(
-                                width = 2.dp,
-                                color = MaterialTheme.colorScheme.outline,
-                                shape = RoundedCornerShape(25.dp),
-                            )
-                            .clickable { /*TODO search implementation*/ },
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(text = "Search", Modifier.padding(start = 5.dp))
-                        GenerateIconButton(Icons.Default.Search, "Search menu") {}
-                    }
-                    GenerateIconButton(
-                        icon = Icons.Default.Check,
-                        "Save Note",
-                        transparent = true,
-                        isEnabled = true, // Enable save once required fields are filled
-                    ) {
-                        if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
-                            onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
-                        } else {
-                            Toast.makeText(context, "Title and content cannot be empty", Toast.LENGTH_SHORT).show()
-                        }
-                    }
+
+                    BasicTextField(
+                        value = noteTitle,
+                        onValueChange = { noteTitle = it },
+                        singleLine = true,
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(0.dp),
+                        textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.onSurface),
+                        cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
+                        decorationBox = { innerTextField ->
+                            Box(
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(0.dp)
+                                        .border(
+                                            width = 1.dp,
+                                            color = Color.Gray,
+                                            shape = MaterialTheme.shapes.small,
+                                        )
+                                        .padding(horizontal = 4.dp, vertical = 8.dp),
+                            ) {
+                                if (noteTitle.isEmpty()) {
+                                    Text(
+                                        text = "Note title",
+                                        Modifier.alpha(0.5f),
+                                    )
+                                }
+                                innerTextField()
+                            }
+                        },
+                    )
                 }
 
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                OutlinedTextField(
+                    value = noteContent,
+                    onValueChange = { noteContent = it },
+                    label = { Text("Content") },
                     modifier =
                         Modifier
-                            .fillMaxWidth()
-                            .verticalScroll(rememberScrollState()),
-                ) {
-                    Card(
-                        Modifier.shadow(
-                            elevation = 20.dp,
-                            spotColor = MaterialTheme.colorScheme.onSurface,
-                        ),
+                            .fillMaxSize()
+                            .padding(8.dp)
+                            .defaultMinSize(minHeight = 300.dp),
+                )
+
+                if (showBottomSheet) {
+                    ModalBottomSheet(
+                        onDismissRequest = { showBottomSheet = false },
+                        sheetState = sheetState,
                     ) {
-                        Box(
-                            modifier =
-                                Modifier
-                                    .clip(RoundedCornerShape(roundness.dp))
-                                    .border(
-                                        width = 2.dp,
-                                        color = MaterialTheme.colorScheme.outline,
-                                        shape = RoundedCornerShape(roundness.dp),
-                                    )
-                                    .padding(7.dp)
-                                    .scale(0.9f)
-                                    .defaultMinSize(minHeight = 500.dp)
-                                    .fillMaxWidth(0.8f),
-                        ) {
-                            Column {
-                                OutlinedTextField(
-                                    value = noteTitle,
-                                    onValueChange = { noteTitle = it },
-                                    label = { Text("Title") },
-                                    modifier =
-                                        Modifier
-                                            .fillMaxWidth()
-                                            .padding(8.dp),
-                                )
-
-                                OutlinedTextField(
-                                    value = noteContent,
-                                    onValueChange = { noteContent = it },
-                                    label = { Text("Content") },
-                                    modifier =
-                                        Modifier
-                                            .fillMaxWidth()
-                                            .padding(8.dp)
-                                            .defaultMinSize(minHeight = 300.dp),
-                                )
-                            }
-                        }
-                    }
-
-                    if (showBottomSheet) {
-                        ModalBottomSheet(
-                            onDismissRequest = { showBottomSheet = false },
-                            sheetState = sheetState,
-                        ) {
+                        if (tags.isEmpty()) {
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                text = "No tags available",
+                            )
+                        } else {
                             LazyColumn(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalAlignment = Alignment.CenterHorizontally, // Center all rows horizontally
@@ -266,17 +240,17 @@ fun CreateNotePage(
                                     }
                                 }
                             }
+                        }
 
-                            Button(
-                                modifier = Modifier.align(Alignment.CenterHorizontally),
-                                onClick = {
-                                    scope.launch { sheetState.hide() }.invokeOnCompletion {
-                                        if (!sheetState.isVisible) showBottomSheet = false
-                                    }
-                                },
-                            ) {
-                                Text("Hide")
-                            }
+                        Button(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            onClick = {
+                                scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                    if (!sheetState.isVisible) showBottomSheet = false
+                                }
+                            },
+                        ) {
+                            Text("Hide")
                         }
                     }
                 }

@@ -109,6 +109,16 @@ interface NotesDao {
         id: Long,
         isPrivate: Boolean,
     )
+
+    @Query("UPDATE notes SET isDeleted = :isDeleted WHERE noteID = :id")
+    suspend fun updateNoteDeleted(
+        id: Long,
+        isDeleted: Boolean,
+    )
+
+    @Query("SELECT * FROM notes WHERE isDeleted = 1")
+    fun getTrashNotes(): Flow<List<Note>>
+
     // Kwerendy do Tagów
 
     /**

@@ -37,7 +37,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -47,7 +46,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 
 /**
- * Funkcja generująca notatkę.
+ * Funkcja generująca notatkę w koszu.
  *
  * @param modifier Modyfikator do zastosowania do komponentu.
  * @param note Obiekt notatki.
@@ -57,33 +56,29 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GenerateNote(
+fun GenerateNoteTrash(
     modifier: Modifier = Modifier,
     note: Note,
-    onDelete: () -> Unit, // Pass a lambda function to handle deletion
-    onEdit: () -> Unit, // Pass a lambda function to handle editing
+    onDelete: () -> Unit,
+    onRestore: () -> Unit,
     weight: FontWeight? = null,
 ) {
-    val context = LocalContext.current
-//    val state = viewModel.state.collectAsState().value
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
+
     Card(
-        Modifier
-            .shadow(elevation = 20.dp, spotColor = MaterialTheme.colorScheme.onSurface)
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onTap = { onEdit() },
-                    onLongPress = { showBottomSheet = true },
-                )
-            },
+        modifier =
+            Modifier
+                .shadow(elevation = 20.dp, spotColor = MaterialTheme.colorScheme.onSurface)
+                .pointerInput(Unit) {
+                    detectTapGestures(onLongPress = { showBottomSheet = true })
+                },
     ) {
         Box(
             modifier =
                 Modifier
                     .clip(RoundedCornerShape(roundness.dp))
-//                                        .background(color)
                     .border(
                         width = 2.dp,
                         color = MaterialTheme.colorScheme.outline,
@@ -95,7 +90,6 @@ fun GenerateNote(
                     .fillMaxWidth(0.8f)
                     .then(modifier),
         ) {
-            // Note title and Content
             Column {
                 CreateNoteTitle(
                     noteTitle = note.title,
@@ -112,16 +106,15 @@ fun GenerateNote(
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
-            // Note creation and modification date
             Column(
                 modifier = Modifier.align(Alignment.BottomEnd),
             ) {
                 Text(
-                    text = note.modificationTime, // przyszłe pociagniecie z bazy
+                    text = note.modificationTime,
                     modifier = Modifier,
                 )
                 Text(
-                    text = note.creationTime, // przyszłe pociagniecie z bazy
+                    text = note.creationTime,
                     modifier = Modifier,
                 )
             }
@@ -135,14 +128,14 @@ fun GenerateNote(
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally, // Center all rows horizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Button(onClick = onEdit) {
-                    Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit note")
-                    Text(text = "Edit note")
+                Button(onClick = onRestore) {
+                    Icon(imageVector = Icons.Default.Edit, contentDescription = "Restore note")
+                    Text(text = "Restore note")
                 }
                 Button(onClick = onDelete) {
-                    Icon(imageVector = Icons.Default.Delete, contentDescription = "Edit note")
+                    Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete note")
                     Text(text = "Delete note")
                 }
                 Button(
