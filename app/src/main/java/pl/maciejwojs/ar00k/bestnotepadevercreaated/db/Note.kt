@@ -32,6 +32,7 @@ data class Note(
     val title: String,
     val content: String,
     val modificationTime: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
+    val isDeleted: Boolean = false,
     val creationTime: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
     val isPrivate: Boolean = false,
     @PrimaryKey(autoGenerate = true) val noteID: Long = 0,

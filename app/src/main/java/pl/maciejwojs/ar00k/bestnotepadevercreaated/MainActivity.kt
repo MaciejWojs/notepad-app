@@ -27,13 +27,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import kotlinx.coroutines.launch
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.CreateNotePage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.EditNotePage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.HamburgerPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.MainPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.NotesWithTagPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.SettingsPage
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.TrashPage
 
 /**
  * The main activity of the application BestNotepadEverCreated.
@@ -64,10 +64,10 @@ class MainActivity : ComponentActivity() {
 //            if (dao.isAddingRelations() == 0) {
 //                dao.insertRelation()
 //            }
-            if (dao.getTagsCount() == 0L) {
-                dao.insertTag(tag = Tag("Zakupy"))
-                dao.insertTag(tag = Tag("Szkoła"))
-            }
+//            if (dao.getTagsCount() == 0L) {
+//                dao.insertTag(tag = Tag("Zakupy"))
+//                dao.insertTag(tag = Tag("Szkoła"))
+//            }
         }
 
         // Initialize ViewModels with a custom factory
@@ -107,12 +107,14 @@ class MainActivity : ComponentActivity() {
                         },
                     )
                 }
+
+                composable("TrashPage") {
+                    TrashPage(navController, notesViewModel)
+                }
+
                 composable("SettingsPage") {
                     SettingsPage(navController)
                 }
-//                composable("NotesListPage") {
-//                    NotesListPage(navController, viewModel = notesViewModel)
-//                }
                 composable("HamburgerPage") {
                     HamburgerPage(
                         navController,

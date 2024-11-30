@@ -221,7 +221,11 @@ fun HamburgerPage(
                                 editTagName = ""
                                 showEditDialog = false
                             } else {
-                                Toast.makeText(context, "Tag name cannot be empty", Toast.LENGTH_SHORT)
+                                Toast.makeText(
+                                    context,
+                                    "Tag name cannot be empty",
+                                    Toast.LENGTH_SHORT,
+                                )
                                     .show()
                             }
                         }) {
@@ -293,6 +297,28 @@ fun HamburgerPage(
                 }
 
                 Spacer(modifier = Modifier.height(20.dp))
+
+                Box(
+                    Modifier
+                        .padding(horizontal = 50.dp)
+                        .fillMaxWidth()
+                        .clickable { }
+                        .pointerInput(Unit) {
+                            detectTapGestures(onTap = {
+                                navigator.navigate("TrashPage")
+                            })
+                        },
+                    contentAlignment = Alignment.Center,
+                ) {
+//                    Row(
+//                        verticalAlignment = Alignment.CenterVertically, // Wyrównanie elementów w wierszu
+//                        horizontalArrangement = Arrangement.Center,
+//                    ) {
+//                        Icon(Icons.Default.Delete, contentDescription = "Trash")
+//                        Text(modifier = Modifier.padding(vertical = 10.dp), text = "Kosz")
+                    Text(modifier = Modifier.padding(vertical = 10.dp), text = "Kosz")
+                }
+                Spacer(modifier = Modifier.height(25.dp))
 
                 LazyColumn(
                     horizontalAlignment = Alignment.CenterHorizontally,

@@ -1,10 +1,3 @@
-/**
- * @file MainPage.kt
- * @brief Plik zawiera implementację głównej strony aplikacji.
- *
- * Plik ten definiuje kompozycje i funkcje związane z wyświetlaniem głównej strony
- * oraz obsługą nawigacji w aplikacji.
- */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
 import android.util.Log
@@ -36,6 +29,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,17 +39,16 @@ import androidx.navigation.NavController
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNoteTrash
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 @Composable
-fun MainPage(
+fun TrashPage(
     navigator: NavController,
     viewModel: NotesViewModel,
-    navigateToEditNotePage: (Note) -> Unit,
 ) {
-    val state = viewModel.state.collectAsState().value
+    val notes by viewModel.trashNotes.collectAsState(initial = emptyList())
+    val scope = rememberCoroutineScope()
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
             FloatingActionButton(
@@ -114,21 +108,23 @@ fun MainPage(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    items(state.notes.filter { !it.isDeleted }, key = { it.noteID }) { singleNote ->
-                        GenerateNote(
+                    items(notes, key = { it.noteID }) { singleNote ->
+                        GenerateNoteTrash(
                             note = singleNote,
-                            onDelete = {
+                            onRestore = {
                                 Log.d("TestPage", "Deleting note: ${singleNote.title}")
 //                                viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
                                 viewModel.onEvent(NotesEvent.UpdateNoteTrash(singleNote))
                                 // Log the current state after deletion
-                                Log.d(
-                                    "TestPage",
-                                    "Current notes after deletion: ${state.notes.map { it.title }}",
-                                )
+//                                Log.d(
+//                                    "TestPage",
+//                                    "Current notes after deletion: ${notes.notes.map { it.title }}",
+//                                )
                             },
-                            onEdit = {
-                                navigateToEditNotePage(singleNote)
+                            onDelete = {
+                                Log.d("TestPage", "Deleting note: ${singleNote.title}")
+                                viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
+                                // Log the current state after deletion
                             },
                         )
                     }

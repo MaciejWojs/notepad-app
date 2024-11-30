@@ -17,6 +17,8 @@ sealed interface NotesEvent {
     data class SaveNote(val note: Note) : NotesEvent
 
     data class UpdateNote(val note: Note) : NotesEvent
+
+    data class UpdateNoteTrash(val note: Note) : NotesEvent
 }
 
 sealed interface TagsEvent {
