@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "pl.maciejwojs.ar00k.bestnotepadevercreaated"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "pl.maciejwojs.ar00k.bestnotepadevercreaated"
@@ -65,6 +65,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    // biometric i fragment ktx
+    implementation(libs.androidx.biometric)
+    implementation(libs.androidx.fragment.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

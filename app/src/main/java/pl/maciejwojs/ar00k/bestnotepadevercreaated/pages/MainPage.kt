@@ -8,6 +8,7 @@
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -36,11 +37,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import kotlinx.coroutines.launch
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.BiometricPromptManager
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
@@ -54,7 +59,11 @@ fun MainPage(
     navigator: NavController,
     viewModel: NotesViewModel,
     navigateToEditNotePage: (Note) -> Unit,
+    biometricPromptManager: BiometricPromptManager,
+    context: android.content.Context,
 ) {
+    val coroutine = rememberCoroutineScope()
+    val isLoggedIn by viewModel.authenticated.collectAsState()
     val state = viewModel.state.collectAsState().value
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
@@ -75,8 +84,8 @@ fun MainPage(
                         .height(50.dp)
                         .fillMaxWidth()
                         .background(MaterialTheme.colorScheme.onSecondary)
-                        .padding(horizontal = 8.dp), // 1 Add some padding to the row
-                    horizontalArrangement = Arrangement.SpaceBetween, // Arrange items in row
+                        .padding(horizontal = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     GenerateIconButton { navigator.navigate("HamburgerPage") }
                     Row(
@@ -85,7 +94,6 @@ fun MainPage(
                             .align(Alignment.CenterVertically)
                             .fillMaxHeight(0.55f)
                             .fillMaxWidth(0.75f)
-//                                    .background(Color.Red)
                             .border(
                                 width = 2.dp,
                                 color = MaterialTheme.colorScheme.outline,
@@ -97,11 +105,7 @@ fun MainPage(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Text(
-                            text = "Search",
-                            Modifier.padding(start = 5.dp),
-//                                            .align(alignment = Alignment.CenterVertically)
-                        )
+                        Text(text = "Search", Modifier.padding(start = 5.dp))
                         GenerateIconButton(Icons.Default.Search, "Search menu") {}
                     }
                     GenerateIconButton(icon = Icons.Default.Settings, "Settings") {
@@ -116,15 +120,48 @@ fun MainPage(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     items(state.notes.filter { !it.isDeleted }, key = { it.noteID }) { singleNote ->
-                        if (singleNote.isPrivate) {
+                        if (singleNote.isPrivate && !isLoggedIn) {
+                            Log.d("TestPage", "MAINPAGE: Access authenticated: ${state.authenticated}")
                             GenerateNotePrivate(
                                 note = singleNote,
                                 onDelete = {
                                     Log.d("TestPage", "Deleting note: ${singleNote.title}")
                                 },
                                 onEdit = {
-                                    //TODO PRZEJŚCIE DO ODBLOKOWANIA NOTATKI
+                                    // Wykonaj akcje związane z biometrycznym promptem w kontekście kompozycji
+                                    coroutine.launch {
+                                        biometricPromptManager.showBiometricPrompt(
+                                            title = "Biometric Authentication",
+                                            description = "Authenticate to access the private note",
+                                        )
 
+                                        biometricPromptManager.promptResults.collect { result ->
+                                            when (result) {
+                                                is BiometricPromptManager.BiometricResult.AuthenticationSuccess -> {
+                                                    navigateToEditNotePage(singleNote)
+                                                    viewModel.setAuthenticated(true)
+//                                                    Log.d("TestPage", "Authentication success")
+                                                }
+
+                                                is BiometricPromptManager.BiometricResult.AuthenticationError -> {
+                                                    // Wyświetl Toast w kontekście kompozycji
+                                                    Toast.makeText(
+                                                        context,
+                                                        "Authentication error: ${result.error}",
+                                                        Toast.LENGTH_SHORT,
+                                                    ).show()
+                                                }
+
+                                                else -> {
+                                                    Toast.makeText(
+                                                        context,
+                                                        "Authentication failed",
+                                                        Toast.LENGTH_SHORT,
+                                                    ).show()
+                                                }
+                                            }
+                                        }
+                                    }
                                 },
                             )
                         } else {
@@ -132,13 +169,7 @@ fun MainPage(
                                 note = singleNote,
                                 onDelete = {
                                     Log.d("TestPage", "Deleting note: ${singleNote.title}")
-//                                viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
                                     viewModel.onEvent(NotesEvent.UpdateNoteTrash(singleNote))
-                                    // Log the current state after deletion
-                                    Log.d(
-                                        "TestPage",
-                                        "Current notes after deletion: ${state.notes.map { it.title }}",
-                                    )
                                 },
                                 onEdit = {
                                     navigateToEditNotePage(singleNote)

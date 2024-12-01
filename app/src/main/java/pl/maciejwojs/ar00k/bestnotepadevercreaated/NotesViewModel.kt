@@ -18,6 +18,9 @@ class NotesViewModel(
     private val _trashNotes = MutableStateFlow<List<Note>>(emptyList())
     val trashNotes: StateFlow<List<Note>> get() = _trashNotes
 
+    private val _authenticated = MutableStateFlow(false)
+    val authenticated: StateFlow<Boolean> get() = _authenticated
+
     init {
         // Load notes initially when the ViewModel is created
         viewModelScope.launch {
@@ -101,6 +104,15 @@ class NotesViewModel(
                     }
                 }
             }
+        }
+    }
+
+    fun setAuthenticated(logged: Boolean) {
+//        _authenticaded.value = logged
+        viewModelScope.launch {
+            _authenticated.update { logged }
+            Log.d("TestPage", "Logged: $logged")
+            Log.d("TestPage", "VIEWMODEL: Access authenticated: ${authenticated.value}")
         }
     }
 }
