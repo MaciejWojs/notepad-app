@@ -19,7 +19,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -142,22 +141,23 @@ class MainActivity : ComponentActivity() {
                     val tags = tagsViewModel.state.collectAsState().value.tags
                     CreateNotePage(
                         navigator = navController,
-                        onCreate = { title, content, map ->
-                            val note = Note(title, content)
-                            notesViewModel.viewModelScope.launch {
-                                val insertedNoteID = dao.insertNote(note)
-                                if (map.isNotEmpty()) {
-                                    map.forEach { entry ->
-                                        if (entry.value) {
-                                            dao.insertRelationBetweenNoteAndTag(
-                                                insertedNoteID,
-                                                entry.key.tagID,
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        },
+                        viewModel = notesViewModel,
+//                        onCreate = { title, content, map ->
+//                            val note = Note(title, content, isPrivate = )
+//                            notesViewModel.viewModelScope.launch {
+//                                val insertedNoteID = dao.insertNote(note)
+//                                if (map.isNotEmpty()) {
+//                                    map.forEach { entry ->
+//                                        if (entry.value) {
+//                                            dao.insertRelationBetweenNoteAndTag(
+//                                                insertedNoteID,
+//                                                entry.key.tagID,
+//                                            )
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        },
                         tags = tags,
                     )
                 }

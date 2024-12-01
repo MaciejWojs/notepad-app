@@ -12,6 +12,8 @@ sealed interface NotesEvent {
 //
 //    data class setModificationTime(val modificationTime: String) : NotesEvent
 
+    data class InsertNote(val note: Note, val map: Map<Tag, Boolean> = emptyMap()) : NotesEvent
+
     data class DeleteNote(val note: Note) : NotesEvent
 
     data class SaveNote(val note: Note) : NotesEvent
