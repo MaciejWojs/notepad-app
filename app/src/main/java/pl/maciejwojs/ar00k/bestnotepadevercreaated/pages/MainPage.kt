@@ -37,6 +37,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,9 +62,8 @@ fun MainPage(
     biometricPromptManager: BiometricPromptManager,
     context: android.content.Context,
 ) {
-
     val coroutine = rememberCoroutineScope()
-
+    val isLoggedIn by viewModel.authenticated.collectAsState()
     val state = viewModel.state.collectAsState().value
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
@@ -120,7 +120,8 @@ fun MainPage(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     items(state.notes.filter { !it.isDeleted }, key = { it.noteID }) { singleNote ->
-                        if (singleNote.isPrivate) {
+                        if (singleNote.isPrivate && !isLoggedIn) {
+                            Log.d("TestPage", "MAINPAGE: Access authenticated: ${state.authenticated}")
                             GenerateNotePrivate(
                                 note = singleNote,
                                 onDelete = {
@@ -138,7 +139,8 @@ fun MainPage(
                                             when (result) {
                                                 is BiometricPromptManager.BiometricResult.AuthenticationSuccess -> {
                                                     navigateToEditNotePage(singleNote)
-                                                    Log.d("TestPage", "Authentication success")
+                                                    viewModel.setAuthenticated(true)
+//                                                    Log.d("TestPage", "Authentication success")
                                                 }
 
                                                 is BiometricPromptManager.BiometricResult.AuthenticationError -> {
