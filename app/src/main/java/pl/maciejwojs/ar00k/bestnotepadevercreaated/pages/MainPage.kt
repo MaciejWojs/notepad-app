@@ -123,8 +123,7 @@ fun MainPage(
                                     Log.d("TestPage", "Deleting note: ${singleNote.title}")
                                 },
                                 onEdit = {
-                                    //TODO PRZEJŚCIE DO ODBLOKOWANIA NOTATKI
-
+                                    // TODO PRZEJŚCIE DO ODBLOKOWANIA NOTATKI
                                 },
                             )
                         } else {
