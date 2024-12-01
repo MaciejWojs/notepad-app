@@ -40,6 +40,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
@@ -97,6 +98,35 @@ fun EditNotePage(
     val context = LocalContext.current
     val isPrivate = remember { mutableStateOf(note.isPrivate) }
 
+    fun saveNote() {
+        if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
+            onEvent(
+                NotesEvent.UpdateNote(
+                    note.copy(
+                        title = noteTitle,
+                        content = noteContent,
+                        isPrivate = isPrivate.value,
+                    ),
+                ),
+            )
+            checkedMap.forEach { entry ->
+                Log.i("TAG", "id: ${entry.key} ${entry.value}")
+                onTagEdit(note, entry.key, entry.value)
+            }
+        } else {
+            Toast.makeText(
+                context,
+                "Title and content cannot be empty",
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            saveNote()
+        }
+    }
     // Update checkedMap based on the current note's tags when tags or currentNoteTags change
     LaunchedEffect(tags, currentNoteTags) {
         checkedMap.clear() // Clear any previous values
@@ -164,27 +194,7 @@ fun EditNotePage(
                         if (!navigator.popBackStack()) {
                             navigator.navigate("MainPage")
                         } else {
-                            if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
-                                onEvent(
-                                    NotesEvent.UpdateNote(
-                                        note.copy(
-                                            title = noteTitle,
-                                            content = noteContent,
-                                            isPrivate = isPrivate.value,
-                                        ),
-                                    ),
-                                )
-                                checkedMap.forEach { entry ->
-                                    Log.i("TAG", "id: ${entry.key} ${entry.value}")
-                                    onTagEdit(note, entry.key, entry.value)
-                                }
-                            } else {
-                                Toast.makeText(
-                                    context,
-                                    "Title and content cannot be empty",
-                                    Toast.LENGTH_SHORT,
-                                ).show()
-                            }
+                            saveNote()
                         }
                     }
 

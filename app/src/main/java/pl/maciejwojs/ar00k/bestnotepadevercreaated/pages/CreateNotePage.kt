@@ -40,6 +40,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -94,6 +95,26 @@ fun CreateNotePage(
         }
 
     Log.d("CreateNotePage", "Tags: ${tags.size}")
+
+    fun saveNote() {
+        if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
+            val note = Note(noteTitle, noteContent, isPrivate = isPrivate.value)
+            viewModel.onEvent(NotesEvent.InsertNote(note, checkedMap.filter { it.value }))
+//                                onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
+        } else {
+            Toast.makeText(
+                context,
+                "Title and content cannot be empty",
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            saveNote()
+        }
+    }
 
     BestNotepadEverCreatedTheme {
         Scaffold(bottomBar = {
@@ -150,17 +171,7 @@ fun CreateNotePage(
                         if (!navigator.popBackStack()) {
                             navigator.navigate("MainPage")
                         } else {
-                            if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
-                                val note = Note(noteTitle, noteContent, isPrivate = isPrivate.value)
-                                viewModel.onEvent(NotesEvent.InsertNote(note, checkedMap.filter { it.value }))
-//                                onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
-                            } else {
-                                Toast.makeText(
-                                    context,
-                                    "Title and content cannot be empty",
-                                    Toast.LENGTH_SHORT,
-                                ).show()
-                            }
+                            saveNote()
                         }
                     }
 
