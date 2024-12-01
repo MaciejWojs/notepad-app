@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -40,7 +41,10 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.TrashPage
  * This activity extends [ComponentActivity] and serves as the primary entry point for the application.
  * It uses Jetpack Compose for the UI and displays Toast messages during lifecycle changes.
  */
-class MainActivity : ComponentActivity() {
+// Possibly a big change, Zmieniłem z ComponentActivity na Framgent Activity bo wymagało tego biometricPromptManager
+class MainActivity : FragmentActivity() {
+    private lateinit var biometricPromptManager: BiometricPromptManager
+
     /**
      * Called when the activity is first created.
      *
@@ -53,9 +57,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Initialize BiometricPromptManager to handle biometric authentication
+        biometricPromptManager = BiometricPromptManager(this)
         // Initialize DAO to interact with the database
         val dao: NotesDao = NotesDatabase.getInstance(this).dao
 
+        val context = this
         enableEdgeToEdge()
 
         // Launch coroutine to set up default relations and tags in the database if not already present
@@ -95,6 +102,7 @@ class MainActivity : ComponentActivity() {
         // Set up the Jetpack Compose UI
         setContent {
             val navController = rememberNavController()
+
             NavHost(navController = navController, startDestination = "MainPage") {
                 composable("MainPage") {
                     MainPage(
@@ -104,6 +112,8 @@ class MainActivity : ComponentActivity() {
                             navController.currentBackStackEntry?.savedStateHandle?.set("note", note)
                             navController.navigate("EditNotePage")
                         },
+                        biometricPromptManager = biometricPromptManager,
+                        context = context,
                     )
                 }
 
