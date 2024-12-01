@@ -1,4 +1,4 @@
 var classMainActivity =
 [
-    [ "onCreate", "classMainActivity.html#a024eec4db327145e1dc81c27026988e7", null ]
+    [ "biometricPromptManager", "classMainActivity.html#a07effbafe3adbc019b07c518800c9ea7", null ]
 ];

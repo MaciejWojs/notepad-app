@@ -1,5 +1,5 @@
 <map id="MainActivity" name="MainActivity">
-<area shape="rect" id="Node000001" title="The main activity of the application BestNotepadEverCreated." alt="" coords="5,120,199,201"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="42,5,162,72"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,86,105,120,100,120,100,86"/>
+<area shape="rect" id="Node000001" title="The main activity of the application BestNotepadEverCreated." alt="" coords="5,120,182,201"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="40,5,148,72"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,86,96,120,91,120,91,86"/>
 </map>

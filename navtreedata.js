@@ -31,7 +31,6 @@ var NAVTREE =
       [ "Hierarchia klas", "hierarchy.html", "hierarchy" ],
       [ "Składowe klas", "functions.html", [
         [ "Wszystko", "functions.html", null ],
-        [ "Funkcje", "functions_func.html", null ],
         [ "Zmienne", "functions_vars.html", null ]
       ] ]
     ] ],

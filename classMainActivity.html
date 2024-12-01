@@ -99,7 +99,7 @@ $(function(){initNavTree('classMainActivity.html',''); initResizable(true); });
 
 <div class="header">
   <div class="summary">
-<a href="#pri-methods">Metody prywatne</a> &#124;
+<a href="#pri-attribs">Atrybuty prywatne</a> &#124;
 <a href="classMainActivity-members.html">Lista wszystkich składowych</a>  </div>
   <div class="headertitle"><div class="title">Dokumentacja klasy MainActivity</div></div>
 </div><!--header-->
@@ -110,26 +110,25 @@ $(function(){initNavTree('classMainActivity.html',''); initResizable(true); });
 <div class="dynheader">
 Diagram dziedziczenia dla MainActivity</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classMainActivity__inherit__graph.svg" width="206" height="207"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classMainActivity__inherit__graph.svg" width="188" height="207"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Diagram współpracy dla MainActivity:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classMainActivity__coll__graph.svg" width="206" height="207"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classMainActivity__coll__graph.svg" width="188" height="207"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
-Metody prywatne</h2></td></tr>
-<tr class="memitem:a024eec4db327145e1dc81c27026988e7" id="r_a024eec4db327145e1dc81c27026988e7"><td class="memItemLeft" align="right" valign="top">override fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a024eec4db327145e1dc81c27026988e7">onCreate</a> (savedInstanceState:Bundle?)</td></tr>
-<tr class="memdesc:a024eec4db327145e1dc81c27026988e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called when the activity is first created.  <br /></td></tr>
-<tr class="separator:a024eec4db327145e1dc81c27026988e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Atrybuty prywatne</h2></td></tr>
+<tr class="memitem:a07effbafe3adbc019b07c518800c9ea7" id="r_a07effbafe3adbc019b07c518800c9ea7"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07effbafe3adbc019b07c518800c9ea7">biometricPromptManager</a>: <a class="el" href="BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52">BiometricPromptManager</a> override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState) biometricPromptManager = <a class="el" href="BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52">BiometricPromptManager</a>(this) val dao: <a class="el" href="interfaceNotesDao.html">NotesDao</a> = NotesDatabase.getInstance(this).dao val context = this enableEdgeToEdge() lifecycleScope.launch { } val notesViewModel by viewModels&lt;<a class="el" href="NotesViewModel_8kt.html#aff6739272f2f4ac73819e6750c1fc4c8">NotesViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="NotesViewModel_8kt.html#aff6739272f2f4ac73819e6750c1fc4c8">NotesViewModel</a>(dao) as T } } }) val tagsViewModel by viewModels&lt;<a class="el" href="TagsViewModel_8kt.html#a5693ca525a0dfb73ff940b5b790edbaa">TagsViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="TagsViewModel_8kt.html#a5693ca525a0dfb73ff940b5b790edbaa">TagsViewModel</a>(dao) as T } } }) val notesWithTagPageViewModel by viewModels&lt;<a class="el" href="NotesTagsCrossRefViewModel_8kt.html#aae20beea6dd81ccc71fd6f16365af008">NotesTagsCrossRefViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="NotesTagsCrossRefViewModel_8kt.html#aae20beea6dd81ccc71fd6f16365af008">NotesTagsCrossRefViewModel</a>(dao) as T } } }) setContent { val navController = rememberNavController() NavHost(navController = navController</td></tr>
+<tr class="separator:a07effbafe3adbc019b07c518800c9ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
 <div class="textblock"><p>The main activity of the application BestNotepadEverCreated. </p>
 <p>This activity extends [ComponentActivity] and serves as the primary entry point for the application. It uses Jetpack Compose for the UI and displays Toast messages during lifecycle changes. </p>
-</div><h2 class="groupheader">Dokumentacja funkcji składowych</h2>
-<a id="a024eec4db327145e1dc81c27026988e7" name="a024eec4db327145e1dc81c27026988e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a024eec4db327145e1dc81c27026988e7">&#9670;&#160;</a></span>onCreate()</h2>
+</div><h2 class="groupheader">Dokumentacja atrybutów składowych</h2>
+<a id="a07effbafe3adbc019b07c518800c9ea7" name="a07effbafe3adbc019b07c518800c9ea7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07effbafe3adbc019b07c518800c9ea7">&#9670;&#160;</a></span>biometricPromptManager</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -138,10 +137,7 @@ Metody prywatne</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">override fun MainActivity.onCreate </td>
-          <td>(</td>
-          <td class="paramtype">savedInstanceState:Bundle?</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
+          <td class="memname">lateinit var MainActivity.biometricPromptManager</td>
         </tr>
       </table>
   </td>
@@ -150,16 +146,6 @@ Metody prywatne</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Called when the activity is first created. </p>
-<p>This method sets up the UI for the activity using Jetpack Compose and initializes database interactions and ViewModels required by the application.</p>
-<dl class="params"><dt>Parametry</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">savedInstanceState</td><td>A bundle containing the previously saved state of the activity. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>Zobacz również</dt><dd>ComponentActivity.onCreate </dd></dl>
 
 </div>
 </div>

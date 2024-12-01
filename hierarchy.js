@@ -1,6 +1,6 @@
 var hierarchy =
 [
-    [ "ComponentActivity", null, [
+    [ "FragmentActivity", null, [
       [ "MainActivity", "classMainActivity.html", null ]
     ] ],
     [ "NotesDao", "interfaceNotesDao.html", null ],
