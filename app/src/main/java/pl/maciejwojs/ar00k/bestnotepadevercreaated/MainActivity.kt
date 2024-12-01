@@ -11,6 +11,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.background
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -102,8 +109,39 @@ class MainActivity : FragmentActivity() {
         // Set up the Jetpack Compose UI
         setContent {
             val navController = rememberNavController()
-
-            NavHost(navController = navController, startDestination = "MainPage") {
+            NavHost(
+                modifier = Modifier.background(MaterialTheme.colorScheme.background),
+                navController = navController,
+                startDestination = "MainPage",
+                enterTransition = {
+                    slideInHorizontally { it } +
+                        fadeIn(
+                            initialAlpha = 0.75f,
+                            animationSpec = tween(1000),
+                        )
+                },
+                exitTransition = {
+                    slideOutHorizontally { -it } +
+                        fadeOut(
+                            targetAlpha = 0.75f,
+                            animationSpec = tween(1000),
+                        )
+                },
+                popEnterTransition = {
+                    slideInHorizontally { -it } +
+                        fadeIn(
+                            initialAlpha = 0.75f,
+                            animationSpec = tween(1000),
+                        )
+                },
+                popExitTransition = {
+                    slideOutHorizontally { it } +
+                        fadeOut(
+                            targetAlpha = 0.75f,
+                            animationSpec = tween(1000),
+                        )
+                },
+            ) {
                 composable("MainPage") {
                     MainPage(
                         navController,
