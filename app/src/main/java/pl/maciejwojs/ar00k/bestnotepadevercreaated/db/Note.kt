@@ -31,10 +31,10 @@ import java.time.format.DateTimeFormatter
 data class Note(
     val title: String,
     val content: String,
-    val modificationTime: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
+    val isPrivate: Boolean = false,
     val isDeleted: Boolean = false,
     val creationTime: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
-    val isPrivate: Boolean = false,
+    val modificationTime: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
     @PrimaryKey(autoGenerate = true) val noteID: Long = 0,
 ) : Parcelable
 // TODO zrobić pole na zablokowanie notatki i dostosować resztę kodu

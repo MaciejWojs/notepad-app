@@ -59,11 +59,13 @@ class NotesViewModel(
 
             is NotesEvent.UpdateNote -> {
                 if (event.note.content.isNotEmpty() && event.note.title.isNotEmpty()) {
+                    Log.d("isPrivate", "Updating note privacy -> ${event.note.isPrivate}")
                     viewModelScope.launch {
                         dao.updateNote(
                             id = event.note.noteID,
                             title = event.note.title,
                             content = event.note.content,
+                            isPrivate = event.note.isPrivate,
                         )
                     }
                 } else {
@@ -79,6 +81,23 @@ class NotesViewModel(
                         _trashNotes.update { it + event.note }
                     } else {
                         _trashNotes.update { it - event.note }
+                    }
+                }
+            }
+
+            is NotesEvent.InsertNote -> {
+                viewModelScope.launch {
+                    Log.d("BAZA", "Inserting note")
+                    val insertedNoteID = dao.insertNote(event.note)
+                    if (event.map.isNotEmpty()) {
+                        event.map.forEach { entry ->
+                            if (entry.value) {
+                                dao.insertRelationBetweenNoteAndTag(
+                                    insertedNoteID,
+                                    entry.key.tagID,
+                                )
+                            }
+                        }
                     }
                 }
             }

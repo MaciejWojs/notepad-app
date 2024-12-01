@@ -5,6 +5,7 @@
  */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -54,7 +55,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
@@ -69,7 +73,8 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreat
 @Composable
 fun CreateNotePage(
     navigator: NavController,
-    onCreate: (String, String, Map<Tag, Boolean>) -> Unit,
+    viewModel: NotesViewModel,
+//    onCreate: (String, String, Map<Tag, Boolean>) -> Unit,
     tags: List<Tag>,
 ) {
     var noteTitle by remember { mutableStateOf("") }
@@ -87,6 +92,8 @@ fun CreateNotePage(
                 tags.forEach { tag -> this[tag] = false }
             }
         }
+
+    Log.d("CreateNotePage", "Tags: ${tags.size}")
 
     BestNotepadEverCreatedTheme {
         Scaffold(bottomBar = {
@@ -114,10 +121,14 @@ fun CreateNotePage(
                 Button(
                     onClick = {
                         isPrivate.value = !isPrivate.value
-//                        Toast.makeText(context, "Privacy toggled", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            if (isPrivate.value) "Note is now private. Don't forget to save!" else "Note is no longer private. Don't forget to save!",
+                            Toast.LENGTH_SHORT,
+                        ).show()
                     },
                 ) {
-                    Text(text = "Toggle Privacy")
+                    Text(text = if (isPrivate.value) "Make public" else "Make private")
                 }
             }
         }, modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -140,7 +151,9 @@ fun CreateNotePage(
                             navigator.navigate("MainPage")
                         } else {
                             if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
-                                onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
+                                val note = Note(noteTitle, noteContent, isPrivate = isPrivate.value)
+                                viewModel.onEvent(NotesEvent.InsertNote(note, checkedMap.filter { it.value }))
+//                                onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
                             } else {
                                 Toast.makeText(
                                     context,

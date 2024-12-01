@@ -59,11 +59,12 @@ interface NotesDao {
      * @param modificationDate Data modyfikacji, domyślnie aktualny czas.
      */
 
-    @Query("UPDATE notes SET title=:title, content=:content,modificationTime=:modificationDate WHERE noteID = :id")
+    @Query("UPDATE notes SET title=:title, content=:content,modificationTime=:modificationDate, isPrivate=:isPrivate WHERE noteID = :id")
     suspend fun updateNote(
         id: Long,
         title: String,
         content: String,
+        isPrivate: Boolean,
         modificationDate: String =
             LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),

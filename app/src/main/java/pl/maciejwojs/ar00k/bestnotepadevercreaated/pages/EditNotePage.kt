@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.defaultMinSize
@@ -29,7 +28,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -137,10 +135,14 @@ fun EditNotePage(
                 Button(
                     onClick = {
                         isPrivate.value = !isPrivate.value
-//                        Toast.makeText(context, "Privacy toggled", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            if (isPrivate.value) "Note is now private. Don't forget to save!" else "Note is no longer private. Don't forget to save!",
+                            Toast.LENGTH_SHORT,
+                        ).show()
                     },
                 ) {
-                    Text(text = "Toggle Privacy")
+                    Text(text = if (isPrivate.value) "Make public" else "Make private")
                 }
             }
         }, modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -168,6 +170,7 @@ fun EditNotePage(
                                         note.copy(
                                             title = noteTitle,
                                             content = noteContent,
+                                            isPrivate = isPrivate.value,
                                         ),
                                     ),
                                 )
@@ -185,14 +188,12 @@ fun EditNotePage(
                         }
                     }
 
-                    // ZÓŁW
                     BasicTextField(
                         value = noteTitle,
                         onValueChange = { noteTitle = it },
                         singleLine = true,
                         modifier =
                             Modifier
-                                .fillMaxWidth()
                                 .padding(0.dp),
                         textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.onSurface),
                         cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
@@ -219,45 +220,8 @@ fun EditNotePage(
                             }
                         },
                     )
-
-                    GenerateIconButton(
-                        icon = Icons.Default.Check,
-                        "Save Note",
-                    ) {
-                        if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
-                            onEvent(
-                                NotesEvent.UpdateNote(
-                                    note.copy(
-                                        title = noteTitle,
-                                        content = noteContent,
-                                    ),
-                                ),
-                            )
-                            checkedMap.forEach { entry ->
-                                Log.i("TAG", "id: ${entry.key} ${entry.value}")
-                                onTagEdit(note, entry.key, entry.value)
-                            }
-                        } else {
-                            Toast.makeText(
-                                context,
-                                "Title and content cannot be empty",
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                        }
-                    }
                 }
 
-                Spacer(modifier = Modifier.height(20.dp))
-
-//                Column(
-//                    horizontalAlignment = Alignment.CenterHorizontally,
-//                    modifier =
-//                    Modifier
-//                        .fillMaxWidth()
-//                        .verticalScroll(
-//                            rememberScrollState(1),
-//                        ),
-//                ) {
                 // Note Content TextField
                 OutlinedTextField(
                     value = noteContent,

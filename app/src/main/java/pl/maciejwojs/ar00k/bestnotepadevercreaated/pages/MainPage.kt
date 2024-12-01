@@ -45,6 +45,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNotePrivate
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
@@ -115,22 +116,35 @@ fun MainPage(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     items(state.notes.filter { !it.isDeleted }, key = { it.noteID }) { singleNote ->
-                        GenerateNote(
-                            note = singleNote,
-                            onDelete = {
-                                Log.d("TestPage", "Deleting note: ${singleNote.title}")
+                        if (singleNote.isPrivate) {
+                            GenerateNotePrivate(
+                                note = singleNote,
+                                onDelete = {
+                                    Log.d("TestPage", "Deleting note: ${singleNote.title}")
+                                },
+                                onEdit = {
+                                    //TODO PRZEJŚCIE DO ODBLOKOWANIA NOTATKI
+
+                                },
+                            )
+                        } else {
+                            GenerateNote(
+                                note = singleNote,
+                                onDelete = {
+                                    Log.d("TestPage", "Deleting note: ${singleNote.title}")
 //                                viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
-                                viewModel.onEvent(NotesEvent.UpdateNoteTrash(singleNote))
-                                // Log the current state after deletion
-                                Log.d(
-                                    "TestPage",
-                                    "Current notes after deletion: ${state.notes.map { it.title }}",
-                                )
-                            },
-                            onEdit = {
-                                navigateToEditNotePage(singleNote)
-                            },
-                        )
+                                    viewModel.onEvent(NotesEvent.UpdateNoteTrash(singleNote))
+                                    // Log the current state after deletion
+                                    Log.d(
+                                        "TestPage",
+                                        "Current notes after deletion: ${state.notes.map { it.title }}",
+                                    )
+                                },
+                                onEdit = {
+                                    navigateToEditNotePage(singleNote)
+                                },
+                            )
+                        }
                     }
                 }
             }
