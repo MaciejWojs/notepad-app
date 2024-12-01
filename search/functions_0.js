@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['biometricpromptmanager_0',['BiometricPromptManager',['../BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52',1,'BiometricPromptManager.kt']]]
+  ['_5binstance_20initializer_5d_0',['[instance initializer]',['../classMainActivity.html#ab98e6e5a1073af1503b3bcda2b5e7655',1,'MainActivity']]]
 ];

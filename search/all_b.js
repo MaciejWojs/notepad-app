@@ -1,4 +1,24 @@
 var searchData=
 [
-  ['optiongeneration_2ekt_0',['optionGeneration.kt',['../optionGeneration_8kt.html',1,'']]]
+  ['navcontroller_0',['navController',['../classMainActivity.html#a74523275bb6b623a8131198722ac26c0',1,'MainActivity']]],
+  ['note_2ekt_1',['Note.kt',['../Note_8kt.html',1,'']]],
+  ['notegeneration_2ekt_2',['noteGeneration.kt',['../noteGeneration_8kt.html',1,'']]],
+  ['notegenerationprivate_2ekt_3',['noteGenerationPrivate.kt',['../noteGenerationPrivate_8kt.html',1,'']]],
+  ['notegenerationtrash_2ekt_4',['noteGenerationTrash.kt',['../noteGenerationTrash_8kt.html',1,'']]],
+  ['notesdao_5',['NotesDao',['../interfaceNotesDao.html',1,'']]],
+  ['notesdao_2ekt_6',['NotesDao.kt',['../NotesDao_8kt.html',1,'']]],
+  ['notesdatabase_2ekt_7',['NotesDatabase.kt',['../NotesDatabase_8kt.html',1,'']]],
+  ['notesevent_8',['NotesEvent',['../interfaceNotesEvent.html',1,'']]],
+  ['notesevent_2ekt_9',['NotesEvent.kt',['../NotesEvent_8kt.html',1,'']]],
+  ['notesstate_2ekt_10',['NotesState.kt',['../NotesState_8kt.html',1,'']]],
+  ['notestagscrossref_2ekt_11',['NotesTagsCrossRef.kt',['../NotesTagsCrossRef_8kt.html',1,'']]],
+  ['notestagscrossrefstate_2ekt_12',['NotesTagsCrossRefState.kt',['../NotesTagsCrossRefState_8kt.html',1,'']]],
+  ['notestagscrossrefviewmodel_13',['NotesTagsCrossRefViewModel',['../NotesTagsCrossRefViewModel_8kt.html#aae20beea6dd81ccc71fd6f16365af008',1,'NotesTagsCrossRefViewModel.kt']]],
+  ['notestagscrossrefviewmodel_2ekt_14',['NotesTagsCrossRefViewModel.kt',['../NotesTagsCrossRefViewModel_8kt.html',1,'']]],
+  ['notesviewmodel_15',['NotesViewModel',['../NotesViewModel_8kt.html#aff6739272f2f4ac73819e6750c1fc4c8',1,'NotesViewModel.kt']]],
+  ['notesviewmodel_2ekt_16',['NotesViewModel.kt',['../NotesViewModel_8kt.html',1,'']]],
+  ['noteswithaudiofiles_2ekt_17',['NotesWithAudioFiles.kt',['../NotesWithAudioFiles_8kt.html',1,'']]],
+  ['noteswithtagpage_18',['NotesWithTagPage',['../NotesWithTagPage_8kt.html#affd86d31cc540ea4a1dadb103d0e6113',1,'NotesWithTagPage.kt']]],
+  ['noteswithtagpage_2ekt_19',['NotesWithTagPage.kt',['../NotesWithTagPage_8kt.html',1,'']]],
+  ['noteswithtags_2ekt_20',['NotesWithTags.kt',['../NotesWithTags_8kt.html',1,'']]]
 ];

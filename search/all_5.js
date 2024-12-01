@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['generateiconbutton_0',['GenerateIconButton',['../IconButtonGeneration_8kt.html#a356c12dc61dfc92d8826634cb2469644',1,'IconButtonGeneration.kt']]],
-  ['generatenote_1',['GenerateNote',['../noteGeneration_8kt.html#aaf2aa1331e0cfd16cc40460f4724d6bc',1,'noteGeneration.kt']]],
-  ['generatenoteprivate_2',['GenerateNotePrivate',['../noteGenerationPrivate_8kt.html#a12921edcd162f2beb4561f19460ca5dd',1,'noteGenerationPrivate.kt']]],
-  ['generatenotetrash_3',['GenerateNoteTrash',['../noteGenerationTrash_8kt.html#aaeeb1244f279ac71083551ef58dbe0a6',1,'noteGenerationTrash.kt']]],
-  ['generateoption_4',['GenerateOption',['../optionGeneration_8kt.html#a0a1f1ec4857274c18143b4f4a8786d8d',1,'optionGeneration.kt']]],
-  ['get25firstwords_2ekt_5',['get25FirstWords.kt',['../get25FirstWords_8kt.html',1,'']]],
-  ['globalvalues_2ekt_6',['globalValues.kt',['../globalValues_8kt.html',1,'']]]
+  ['editnotepage_0',['EditNotePage',['../EditNotePage_8kt.html#aae2caa736e6a1b75ff2be1b472a00b18',1,'EditNotePage.kt']]],
+  ['editnotepage_2ekt_1',['EditNotePage.kt',['../EditNotePage_8kt.html',1,'']]],
+  ['entertransition_2',['enterTransition',['../classMainActivity.html#a17ec58fdafd9b2ad119908eb4ed66f1d',1,'MainActivity']]],
+  ['exampleinstrumentedtest_2ekt_3',['ExampleInstrumentedTest.kt',['../ExampleInstrumentedTest_8kt.html',1,'']]],
+  ['exittransition_4',['exitTransition',['../classMainActivity.html#aa812d9e8840cdc70c31c2a6579d2e844',1,'MainActivity']]]
 ];

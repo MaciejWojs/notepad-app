@@ -99,6 +99,7 @@ $(function(){initNavTree('classMainActivity.html',''); initResizable(true); });
 
 <div class="header">
   <div class="summary">
+<a href="#pri-methods">Metody prywatne</a> &#124;
 <a href="#pri-attribs">Atrybuty prywatne</a> &#124;
 <a href="classMainActivity-members.html">Lista wszystkich składowych</a>  </div>
   <div class="headertitle"><div class="title">Dokumentacja klasy MainActivity</div></div>
@@ -110,23 +111,63 @@ $(function(){initNavTree('classMainActivity.html',''); initResizable(true); });
 <div class="dynheader">
 Diagram dziedziczenia dla MainActivity</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classMainActivity__inherit__graph.svg" width="188" height="207"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classMainActivity__inherit__graph.svg" width="202" height="344"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Diagram współpracy dla MainActivity:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classMainActivity__coll__graph.svg" width="188" height="207"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classMainActivity__coll__graph.svg" width="202" height="344"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
+Metody prywatne</h2></td></tr>
+<tr class="memitem:ab98e6e5a1073af1503b3bcda2b5e7655" id="r_ab98e6e5a1073af1503b3bcda2b5e7655"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab98e6e5a1073af1503b3bcda2b5e7655">[instance initializer]</a></td></tr>
+<tr class="separator:ab98e6e5a1073af1503b3bcda2b5e7655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Atrybuty prywatne</h2></td></tr>
-<tr class="memitem:a07effbafe3adbc019b07c518800c9ea7" id="r_a07effbafe3adbc019b07c518800c9ea7"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07effbafe3adbc019b07c518800c9ea7">biometricPromptManager</a>: <a class="el" href="BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52">BiometricPromptManager</a> override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState) biometricPromptManager = <a class="el" href="BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52">BiometricPromptManager</a>(this) val dao: <a class="el" href="interfaceNotesDao.html">NotesDao</a> = NotesDatabase.getInstance(this).dao val context = this enableEdgeToEdge() lifecycleScope.launch { } val notesViewModel by viewModels&lt;<a class="el" href="NotesViewModel_8kt.html#aff6739272f2f4ac73819e6750c1fc4c8">NotesViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="NotesViewModel_8kt.html#aff6739272f2f4ac73819e6750c1fc4c8">NotesViewModel</a>(dao) as T } } }) val tagsViewModel by viewModels&lt;<a class="el" href="TagsViewModel_8kt.html#a5693ca525a0dfb73ff940b5b790edbaa">TagsViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="TagsViewModel_8kt.html#a5693ca525a0dfb73ff940b5b790edbaa">TagsViewModel</a>(dao) as T } } }) val notesWithTagPageViewModel by viewModels&lt;<a class="el" href="NotesTagsCrossRefViewModel_8kt.html#aae20beea6dd81ccc71fd6f16365af008">NotesTagsCrossRefViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="NotesTagsCrossRefViewModel_8kt.html#aae20beea6dd81ccc71fd6f16365af008">NotesTagsCrossRefViewModel</a>(dao) as T } } }) setContent { val navController = rememberNavController() NavHost(navController = navController</td></tr>
+<tr class="memitem:a07effbafe3adbc019b07c518800c9ea7" id="r_a07effbafe3adbc019b07c518800c9ea7"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07effbafe3adbc019b07c518800c9ea7">biometricPromptManager</a>: <a class="el" href="BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52">BiometricPromptManager</a> override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState) biometricPromptManager = <a class="el" href="BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52">BiometricPromptManager</a>(this) val dao: <a class="el" href="interfaceNotesDao.html">NotesDao</a> = NotesDatabase.getInstance(this).dao val context = this enableEdgeToEdge() lifecycleScope.launch { } val notesViewModel by viewModels&lt;<a class="el" href="NotesViewModel_8kt.html#aff6739272f2f4ac73819e6750c1fc4c8">NotesViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="NotesViewModel_8kt.html#aff6739272f2f4ac73819e6750c1fc4c8">NotesViewModel</a>(dao) as T } } }) val tagsViewModel by viewModels&lt;<a class="el" href="TagsViewModel_8kt.html#a5693ca525a0dfb73ff940b5b790edbaa">TagsViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="TagsViewModel_8kt.html#a5693ca525a0dfb73ff940b5b790edbaa">TagsViewModel</a>(dao) as T } } }) val notesWithTagPageViewModel by viewModels&lt;<a class="el" href="NotesTagsCrossRefViewModel_8kt.html#aae20beea6dd81ccc71fd6f16365af008">NotesTagsCrossRefViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="NotesTagsCrossRefViewModel_8kt.html#aae20beea6dd81ccc71fd6f16365af008">NotesTagsCrossRefViewModel</a>(dao) as T } } }) setContent { val <a class="el" href="#a74523275bb6b623a8131198722ac26c0">navController</a> = rememberNavController() NavHost( modifier = Modifier.background(MaterialTheme.colorScheme.background)</td></tr>
 <tr class="separator:a07effbafe3adbc019b07c518800c9ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74523275bb6b623a8131198722ac26c0" id="r_a74523275bb6b623a8131198722ac26c0"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a74523275bb6b623a8131198722ac26c0">navController</a> = navController</td></tr>
+<tr class="separator:a74523275bb6b623a8131198722ac26c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5da3291d6a2d1d7b253ed5a8c617928" id="r_aa5da3291d6a2d1d7b253ed5a8c617928"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5da3291d6a2d1d7b253ed5a8c617928">startDestination</a> = &quot;MainPage&quot;</td></tr>
+<tr class="separator:aa5da3291d6a2d1d7b253ed5a8c617928"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17ec58fdafd9b2ad119908eb4ed66f1d" id="r_a17ec58fdafd9b2ad119908eb4ed66f1d"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a17ec58fdafd9b2ad119908eb4ed66f1d">enterTransition</a></td></tr>
+<tr class="separator:a17ec58fdafd9b2ad119908eb4ed66f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa812d9e8840cdc70c31c2a6579d2e844" id="r_aa812d9e8840cdc70c31c2a6579d2e844"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa812d9e8840cdc70c31c2a6579d2e844">exitTransition</a></td></tr>
+<tr class="separator:aa812d9e8840cdc70c31c2a6579d2e844"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1202cd043f8e2709f0922be5c37f450c" id="r_a1202cd043f8e2709f0922be5c37f450c"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1202cd043f8e2709f0922be5c37f450c">popEnterTransition</a></td></tr>
+<tr class="separator:a1202cd043f8e2709f0922be5c37f450c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88d0482764962ad1b134abc77c48d688" id="r_a88d0482764962ad1b134abc77c48d688"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a88d0482764962ad1b134abc77c48d688">popExitTransition</a></td></tr>
+<tr class="separator:a88d0482764962ad1b134abc77c48d688"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
 <div class="textblock"><p>The main activity of the application BestNotepadEverCreated. </p>
 <p>This activity extends [ComponentActivity] and serves as the primary entry point for the application. It uses Jetpack Compose for the UI and displays Toast messages during lifecycle changes. </p>
-</div><h2 class="groupheader">Dokumentacja atrybutów składowych</h2>
+</div><h2 class="groupheader">Dokumentacja funkcji składowych</h2>
+<a id="ab98e6e5a1073af1503b3bcda2b5e7655" name="ab98e6e5a1073af1503b3bcda2b5e7655"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab98e6e5a1073af1503b3bcda2b5e7655">&#9670;&#160;</a></span>[instance initializer]()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">lateinit var MainActivity.[instance initializer]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Dokumentacja atrybutów składowych</h2>
 <a id="a07effbafe3adbc019b07c518800c9ea7" name="a07effbafe3adbc019b07c518800c9ea7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a07effbafe3adbc019b07c518800c9ea7">&#9670;&#160;</a></span>biometricPromptManager</h2>
 
@@ -138,6 +179,166 @@ Atrybuty prywatne</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">lateinit var MainActivity.biometricPromptManager</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a17ec58fdafd9b2ad119908eb4ed66f1d" name="a17ec58fdafd9b2ad119908eb4ed66f1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17ec58fdafd9b2ad119908eb4ed66f1d">&#9670;&#160;</a></span>enterTransition</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">lateinit var MainActivity.enterTransition</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Wartość początkowa:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">                    slideInHorizontally { it } +</div>
+<div class="line">                        fadeIn(</div>
+<div class="line">                            initialAlpha = 0.75f,</div>
+<div class="line">                            animationSpec = tween(1000),</div>
+<div class="line">                        )</div>
+<div class="line">                }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa812d9e8840cdc70c31c2a6579d2e844" name="aa812d9e8840cdc70c31c2a6579d2e844"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa812d9e8840cdc70c31c2a6579d2e844">&#9670;&#160;</a></span>exitTransition</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">lateinit var MainActivity.exitTransition</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Wartość początkowa:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">                    slideOutHorizontally { -it } +</div>
+<div class="line">                        fadeOut(</div>
+<div class="line">                            targetAlpha = 0.75f,</div>
+<div class="line">                            animationSpec = tween(1000),</div>
+<div class="line">                        )</div>
+<div class="line">                }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a74523275bb6b623a8131198722ac26c0" name="a74523275bb6b623a8131198722ac26c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74523275bb6b623a8131198722ac26c0">&#9670;&#160;</a></span>navController</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">lateinit var MainActivity.navController = navController</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1202cd043f8e2709f0922be5c37f450c" name="a1202cd043f8e2709f0922be5c37f450c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1202cd043f8e2709f0922be5c37f450c">&#9670;&#160;</a></span>popEnterTransition</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">lateinit var MainActivity.popEnterTransition</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Wartość początkowa:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">                    slideInHorizontally { -it } +</div>
+<div class="line">                        fadeIn(</div>
+<div class="line">                            initialAlpha = 0.75f,</div>
+<div class="line">                            animationSpec = tween(1000),</div>
+<div class="line">                        )</div>
+<div class="line">                }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a88d0482764962ad1b134abc77c48d688" name="a88d0482764962ad1b134abc77c48d688"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88d0482764962ad1b134abc77c48d688">&#9670;&#160;</a></span>popExitTransition</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">lateinit var MainActivity.popExitTransition</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Wartość początkowa:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">                    slideOutHorizontally { it } +</div>
+<div class="line">                        fadeOut(</div>
+<div class="line">                            targetAlpha = 0.75f,</div>
+<div class="line">                            animationSpec = tween(1000),</div>
+<div class="line">                        )</div>
+<div class="line">                }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa5da3291d6a2d1d7b253ed5a8c617928" name="aa5da3291d6a2d1d7b253ed5a8c617928"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5da3291d6a2d1d7b253ed5a8c617928">&#9670;&#160;</a></span>startDestination</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">lateinit var MainActivity.startDestination = &quot;MainPage&quot;</td>
         </tr>
       </table>
   </td>

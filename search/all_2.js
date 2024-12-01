@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['color_2ekt_0',['Color.kt',['../Color_8kt.html',1,'']]],
-  ['createnotepage_1',['CreateNotePage',['../CreateNotePage_8kt.html#a16857011ca54c0a50102dafbc6dddfdd',1,'CreateNotePage.kt']]],
-  ['createnotepage_2ekt_2',['CreateNotePage.kt',['../CreateNotePage_8kt.html',1,'']]],
-  ['createnotetitle_3',['CreateNoteTitle',['../MainActivity_8kt.html#a5928ad6b0dc606611ea8c87d89ead445',1,'MainActivity.kt']]]
+  ['biometricpromptmanager_0',['BiometricPromptManager',['../BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52',1,'BiometricPromptManager.kt']]],
+  ['biometricpromptmanager_1',['biometricPromptManager',['../classMainActivity.html#a07effbafe3adbc019b07c518800c9ea7',1,'MainActivity']]],
+  ['biometricpromptmanager_2ekt_2',['BiometricPromptManager.kt',['../BiometricPromptManager_8kt.html',1,'']]]
 ];
