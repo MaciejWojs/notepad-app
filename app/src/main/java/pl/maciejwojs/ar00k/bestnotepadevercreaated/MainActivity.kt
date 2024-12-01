@@ -33,6 +33,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.MainPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.NotesWithTagPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.SettingsPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.TrashPage
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.BiometricPromptManager
 
 /**
  * The main activity of the application BestNotepadEverCreated.
