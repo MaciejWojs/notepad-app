@@ -1,3 +1,10 @@
+/**
+ * @file BiometricPromptManager.kt
+ * @brief Plik zawiera implementację menedżera biometrycznego.
+ *
+ * Plik ten definiuje klasę BiometricPromptManager, która zarządza wyświetlaniem
+ * biometrycznego promptu autoryzacyjnego w aplikacji.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
 import android.os.Build
@@ -10,12 +17,23 @@ import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 
+/**
+ * Klasa zarządzająca wyświetlaniem biometrycznego promptu autoryzacyjnego.
+ *
+ * @param activity Aktywność, w której wyświetlany jest prompt.
+ */
 class BiometricPromptManager(
     private val activity: FragmentActivity,
 ) {
     private val resultChannel = Channel<BiometricResult>()
     val promptResults = resultChannel.receiveAsFlow()
 
+    /**
+     * Wyświetla biometryczny prompt autoryzacyjny.
+     *
+     * @param title Tytuł promptu.
+     * @param description Opis promptu.
+     */
     fun showBiometricPrompt(
         title: String,
         description: String,
@@ -58,6 +76,12 @@ class BiometricPromptManager(
             BiometricPrompt(
                 activity,
                 object : BiometricPrompt.AuthenticationCallback() {
+                    /**
+                     * Wywoływana, gdy wystąpi błąd autoryzacji.
+                     *
+                     * @param errorCode Kod błędu.
+                     * @param errString Opis błędu.
+                     */
                     override fun onAuthenticationError(
                         errorCode: Int,
                         errString: CharSequence,
@@ -66,11 +90,19 @@ class BiometricPromptManager(
                         resultChannel.trySend(BiometricResult.AuthenticationError(errString.toString()))
                     }
 
+                    /**
+                     * Wywoływana, gdy autoryzacja zakończy się sukcesem.
+                     *
+                     * @param result Wynik autoryzacji.
+                     */
                     override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                         super.onAuthenticationSucceeded(result)
                         resultChannel.trySend(BiometricResult.AuthenticationSuccess)
                     }
 
+                    /**
+                     * Wywoływana, gdy autoryzacja nie powiedzie się.
+                     */
                     override fun onAuthenticationFailed() {
                         super.onAuthenticationFailed()
                         resultChannel.trySend(BiometricResult.AuthenticationFailed)
@@ -80,17 +112,40 @@ class BiometricPromptManager(
         prompt.authenticate(promptInfo.build())
     }
 
+    /**
+     * Interfejs wyników biometrycznej autoryzacji.
+     */
     sealed interface BiometricResult {
+        /**
+         * Brak dostępnego sprzętu biometrycznego.
+         */
         data object HardwareUnavailable : BiometricResult
 
+        /**
+         * Funkcja biometryczna niedostępna.
+         */
         data object FeatureUnavailable : BiometricResult
 
+        /**
+         * Błąd autoryzacji biometrycznej.
+         *
+         * @param error Opis błędu.
+         */
         data class AuthenticationError(val error: String) : BiometricResult
 
+        /**
+         * Autoryzacja biometryczna nie powiodła się.
+         */
         data object AuthenticationFailed : BiometricResult
 
+        /**
+         * Autoryzacja biometryczna zakończona sukcesem.
+         */
         data object AuthenticationSuccess : BiometricResult
 
+        /**
+         * Brak ustawionej autoryzacji biometrycznej.
+         */
         data object AuthenticationNotSet : BiometricResult
     }
 }

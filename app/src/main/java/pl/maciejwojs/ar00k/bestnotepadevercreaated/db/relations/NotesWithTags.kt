@@ -13,6 +13,12 @@ import androidx.room.Relation
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 
+/**
+ * Klasa reprezentująca relację między tagami a notatkami.
+ *
+ * @property tag Obiekt tagu.
+ * @property notes Lista notatek powiązanych z tagiem.
+ */
 data class NotesWithTags(
     @Embedded val tag: Tag,
     @Relation(

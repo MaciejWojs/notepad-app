@@ -17,17 +17,32 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.AudioFilesNotesCrossRef
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.NotesTagsCrossRef
 
+/**
+ * Klasa abstrakcyjna reprezentująca bazę danych notatek.
+ *
+ * Klasa `NotesDatabase` zarządza tabelami notatek (`Note`), tagów (`Tag`) oraz relacji między nimi (`NotesTagsCrossRef`).
+ * Implementacja bazy danych jest realizowana przy użyciu biblioteki Room.
+ */
 @Database(
     entities = [Note::class, Tag::class, NotesTagsCrossRef::class, AudioFilesNotesCrossRef::class, Settings::class],
     version = 1,
 )
 abstract class NotesDatabase : RoomDatabase() {
+    /**
+     * Abstrakcyjna właściwość reprezentująca DAO (Data Access Object) do zarządzania operacjami na bazie danych.
+     */
     abstract val dao: NotesDao
 
     companion object {
         @Volatile
         private var INSTANCE: NotesDatabase? = null
 
+        /**
+         * Funkcja zwracająca instancję bazy danych.
+         *
+         * @param context Kontekst aplikacji.
+         * @return Instancja bazy danych `NotesDatabase`.
+         */
         fun getInstance(context: Context): NotesDatabase {
             synchronized(this) {
                 return INSTANCE ?: Room.databaseBuilder(

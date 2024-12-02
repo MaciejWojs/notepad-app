@@ -1,7 +1,7 @@
 /**
- * Plik zawiera funkcje generujące notatki.
+ * Plik zawiera funkcje generujące notatki prywatne.
  *
- * @file noteGeneration.kt
+ * @file noteGenerationPrivate.kt
  */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.content
 

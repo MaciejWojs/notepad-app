@@ -1,7 +1,7 @@
 /**
- * Plik zawiera funkcje generujące notatki.
+ * Plik zawiera funkcje generujące notatki w koszu.
  *
- * @file noteGeneration.kt
+ * @file noteGenerationTrash.kt
  */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.content
 
@@ -46,13 +46,13 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
 
 /**
- * Funkcja generująca notatkę w koszu.
+ * Komponent Compose generujący widok notatki w koszu.
  *
- * @param modifier Modyfikator do zastosowania do komponentu.
- * @param note Obiekt notatki.
- * @param onDelete Lambda do obsługi usuwania notatki.
- * @param onEdit Lambda do obsługi edycji notatki.
- * @param weight Opcjonalna waga czcionki.
+ * @param modifier Modyfikator do dostosowania wyglądu komponentu.
+ * @param note Obiekt notatki, który ma być wyświetlony.
+ * @param onDelete Funkcja wywoływana po kliknięciu przycisku usunięcia.
+ * @param onRestore Funkcja wywoływana po kliknięciu przycisku przywrócenia.
+ * @param weight Opcjonalna waga czcionki dla tytułu notatki.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

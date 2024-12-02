@@ -1,3 +1,9 @@
+/**
+ * @file TagsViewModel.kt
+ * @brief Plik definiujący ViewModel do zarządzania stanem tagów w aplikacji.
+ *
+ * Plik zawiera definicję klasy `TagsViewModel`, która zarządza stanem tagów oraz operacjami na tagach w aplikacji.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
 import android.util.Log
@@ -8,6 +14,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+/**
+ * Klasa ViewModel zarządzająca stanem tagów w aplikacji.
+ *
+ * @property dao Obiekt DAO do zarządzania operacjami na bazie danych.
+ */
 class TagsViewModel(
     private val dao: NotesDao,
 ) : ViewModel() {
@@ -22,6 +33,11 @@ class TagsViewModel(
         }
     }
 
+    /**
+     * Funkcja obsługująca zdarzenia związane z tagami.
+     *
+     * @param event Zdarzenie dotyczące tagu.
+     */
     fun onEvent(event: TagsEvent) {
         when (event) {
             is TagsEvent.DeleteTag -> {

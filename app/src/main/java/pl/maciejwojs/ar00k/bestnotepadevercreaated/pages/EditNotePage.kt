@@ -1,5 +1,5 @@
 /**
- * Plik zawiera funkcje i komponenty do edycji notatek.
+ * Plik zawiera implementację strony edycji notatki.
  *
  * @file EditNotePage.kt
  */
@@ -66,12 +66,12 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreat
 /**
  * Strona edycji notatki.
  *
- * @param navigator Kontroler nawigacji.
- * @param onEdit Funkcja wywoływana przy edycji notatki.
- * @param onTagEdit Funkcja wywoływana przy edycji tagów notatki.
- * @param note Notatka do edycji.
- * @param tags Lista dostępnych tagów.
- * @param currentNoteTags Lista tagów przypisanych do bieżącej notatki.
+ * @param navigator Nawigator do nawigacji między ekranami.
+ * @param onEvent Lambda do obsługi zdarzeń.
+ * @param onTagEdit Lambda do obsługi edycji tagów.
+ * @param note Obiekt notatki.
+ * @param tags Lista tagów.
+ * @param currentNoteTags Lista tagów przypisanych do notatki.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

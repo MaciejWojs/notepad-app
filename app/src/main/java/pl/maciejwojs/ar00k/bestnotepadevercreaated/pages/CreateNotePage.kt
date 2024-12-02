@@ -66,8 +66,8 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreat
 /**
  * Strona tworzenia notatki.
  *
- * @param navigator Kontroler nawigacji.
- * @param onCreate Funkcja wywoływana przy tworzeniu notatki.
+ * @param navigator Nawigator do nawigacji między stronami.
+ * @param viewModel [NotesViewModel] Obiekt ViewModel do obsługi notatek.
  * @param tags Lista tagów.
  */
 @OptIn(ExperimentalMaterial3Api::class)

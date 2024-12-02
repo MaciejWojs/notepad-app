@@ -57,8 +57,8 @@ interface NotesDao {
      * @param title Nowy tytuł notatki.
      * @param content Nowa treść notatki.
      * @param modificationDate Data modyfikacji, domyślnie aktualny czas.
+     * @param isPrivate Flaga określająca, czy notatka jest prywatna.
      */
-
     @Query("UPDATE notes SET title=:title, content=:content,modificationTime=:modificationDate, isPrivate=:isPrivate WHERE noteID = :id")
     suspend fun updateNote(
         id: Long,
@@ -100,23 +100,39 @@ interface NotesDao {
      * @param id Identyfikator notatki do pobrania.
      * @return Obiekt [Note] reprezentujący notatkę o podanym identyfikatorze.
      */
-
     @Transaction
     @Query("SELECT * FROM notes WHERE noteID=:id")
     suspend fun getNoteFromID(id: Long): Note
 
+    /**
+     * Aktualizuje flagę prywatności notatki.
+     *
+     * @param id Identyfikator notatki do zaktualizowania.
+     * @param isPrivate Nowa wartość flagi prywatności.
+     */
     @Query("UPDATE notes SET isPrivate = :isPrivate WHERE noteID = :id")
     suspend fun updateNotePrivacy(
         id: Long,
         isPrivate: Boolean,
     )
 
+    /**
+     * Aktualizuje flagę usunięcia notatki.
+     *
+     * @param id Identyfikator notatki do zaktualizowania.
+     * @param isDeleted Nowa wartość flagi usunięcia.
+     */
     @Query("UPDATE notes SET isDeleted = :isDeleted WHERE noteID = :id")
     suspend fun updateNoteDeleted(
         id: Long,
         isDeleted: Boolean,
     )
 
+    /**
+     * Pobiera listę notatek oznaczonych jako usunięte.
+     *
+     * @return [Flow] zawierający listę usuniętych notatek.
+     */
     @Query("SELECT * FROM notes WHERE isDeleted = 1")
     fun getTrashNotes(): Flow<List<Note>>
 
@@ -181,7 +197,7 @@ interface NotesDao {
      * Pobiera listę notatek przypisanych do danego tagu na podstawie identyfikatora tagu.
      *
      * @param tagId Identyfikator tagu, dla którego mają być pobrane notatki.
-     * @return Lista [NotesWithTags] zawierająca notatki powiązane z tagcheiem.
+     * @return Lista [NotesWithTags] zawierająca notatki powiązane z tagiem.
      */
     @Transaction
     @Query("SELECT * FROM tags WHERE tagID = :tagId")
@@ -197,34 +213,75 @@ interface NotesDao {
     @Query("SELECT * FROM notes WHERE noteID = :noteId")
     suspend fun getTagsWithNotes(noteId: Long): List<TagsWithNotes>
 
+    /**
+     * Dodaje relację między notatką a tagiem.
+     *
+     * @param noteID Identyfikator notatki.
+     * @param tagID Identyfikator tagu.
+     */
     @Query("INSERT INTO NotesTagsCrossRef VALUES (:noteID, :tagID)")
     suspend fun insertRelationBetweenNoteAndTag(
         noteID: Long,
         tagID: Long,
     )
 
+    /**
+     * Usuwa relację między notatką a tagiem.
+     *
+     * @param noteID Identyfikator notatki.
+     * @param tagID Identyfikator tagu.
+     */
     @Query("DElETE FROM notestagscrossref WHERE noteID=:noteID AND tagID=:tagID")
     suspend fun deleteRelationBetweenNoteAndTag(
         noteID: Long,
         tagID: Long,
     )
 
+    /**
+     * Sprawdza, czy relacja między notatką a tagiem istnieje.
+     *
+     * @param noteID Identyfikator notatki.
+     * @param tagID Identyfikator tagu.
+     * @return Liczba relacji między notatką a tagiem.
+     */
     @Query("SELECT COUNT(*) FROM notestagscrossref WHERE noteID = :noteID AND tagID=:tagID")
     suspend fun checkIfRelationBetweenNoteAndTagExist(
         noteID: Long,
         tagID: Long,
     ): Int
 
-    //    Kwerendy do Ustawień
+    // Kwerendy do Ustawień
+
+    /**
+     * Wstawia nowe ustawienia do bazy danych lub zastępuje istniejące.
+     *
+     * @param settings Obiekt [Settings] reprezentujący ustawienia do wstawienia.
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSettings(settings: Settings)
 
+    /**
+     * Pobiera listę wszystkich ustawień jako przepływ [Flow].
+     *
+     * @return [Flow] zawierający listę ustawień.
+     */
     @Query("SELECT * FROM settings")
     fun getSettings(): Flow<List<Settings>>
 
+    /**
+     * Zlicza liczbę ustawień w bazie danych.
+     *
+     * @return Liczba ustawień w bazie danych.
+     */
     @Query("SELECT COUNT(*) FROM settings")
     suspend fun getSettingsCount(): Long
 
+    /**
+     * Aktualizuje flagę ustawienia na podstawie identyfikatora.
+     *
+     * @param id Identyfikator ustawienia do zaktualizowania.
+     * @param isSet Nowa wartość flagi ustawienia.
+     */
     @Query("UPDATE settings SET isSet = :isSet WHERE settingsID = :id")
     suspend fun updateSettings(
         id: Long,

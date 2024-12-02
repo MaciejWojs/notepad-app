@@ -72,9 +72,6 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreat
  *
  * @param navigator Kontroler nawigacji.
  * @param viewModel Model widoku tagów.
- * @param onCreate Funkcja wywoływana przy tworzeniu nowego tagu.
- * @param onDelete Funkcja wywoływana przy usuwaniu tagu.
- * @param onEdit Funkcja wywoływana przy edycji tagu.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

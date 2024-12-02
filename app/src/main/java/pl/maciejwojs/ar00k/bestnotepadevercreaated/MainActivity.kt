@@ -2,12 +2,13 @@
  * @file MainActivity.kt
  * @brief Plik odpowiadający za stworzenie instancji view modeli i nawigację do odpowiednich stron
  *
+ *
+ *
  */
 
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -43,23 +44,25 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.SettingsPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.TrashPage
 
 /**
- * The main activity of the application BestNotepadEverCreated.
- *
- * This activity extends [ComponentActivity] and serves as the primary entry point for the application.
- * It uses Jetpack Compose for the UI and displays Toast messages during lifecycle changes.
- */
+* Główna aktywność aplikacji BestNotepadEverCreated.
+*
+* Ta aktywność rozszerza [FragmentActivity] i służy jako główny punkt wejścia do aplikacji.
+* Używa Jetpack Compose do interfejsu użytkownika i wyświetla komunikaty Toast podczas zmian cyklu życia.
+*/
 // Possibly a big change, Zmieniłem z ComponentActivity na Framgent Activity bo wymagało tego biometricPromptManager
 class MainActivity : FragmentActivity() {
     private lateinit var biometricPromptManager: BiometricPromptManager
 
     /**
-     * Called when the activity is first created.
+     * Wywoływana, gdy aktywność jest uruchamiana.
      *
-     * This method sets up the UI for the activity using Jetpack Compose and initializes database interactions
-     * and ViewModels required by the application.
+     * Tutaj powinno się odbywać większość inicjalizacji: wywołanie [setContentView] w celu nadmuchania UI aktywności,
+     * użycie [findViewById] do programatycznej interakcji z widżetami w UI, wywołanie [managedQuery] w celu pobrania
+     * dostawców treści, itp.
      *
-     * @param savedInstanceState A bundle containing the previously saved state of the activity.
-     * @see ComponentActivity.onCreate
+     * @param savedInstanceState Jeśli aktywność jest ponownie inicjalizowana po wcześniejszym zamknięciu, to ten Bundle
+     * zawiera dane, które dostarczyła ostatnio w [onSaveInstanceState].
+     * @note Uwaga: W przeciwnym razie jest null.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -280,14 +283,14 @@ class MainActivity : FragmentActivity() {
 }
 
 /**
- * A composable function that displays the title of a note.
- *
- * This function displays the title text of a note with a specified font weight.
- *
- * @param noteTitle The title of the note to be displayed.
- * @param modifier [Modifier] applied to the composable layout. Default is an empty modifier.
- * @param weight [FontWeight] applied to the font style of the note title text. Default is FontWeight(900).
- */
+* Kompozycyjna funkcja wyświetlająca tytuł notatki.
+*
+* Ta funkcja wyświetla tekst tytułu notatki z określoną grubością czcionki.
+*
+* @param noteTitle Tytuł notatki do wyświetlenia.
+* @param modifier [Modifier] zastosowany do kompozycyjnego układu. Domyślnie jest to pusty modyfikator.
+* @param weight [FontWeight] zastosowany do stylu czcionki tekstu tytułu notatki. Domyślnie jest to FontWeight(900).
+*/
 @Composable
 fun CreateNoteTitle(
     noteTitle: String,

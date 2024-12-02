@@ -10,6 +10,12 @@ package pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations
 import androidx.room.Entity
 import androidx.room.Index
 
+/**
+ * Encja reprezentująca relację między notatkami a tagami.
+ *
+ * @property noteID ID notatki
+ * @property tagID ID tagu
+ */
 @Entity(primaryKeys = ["noteID", "tagID"], indices = [Index("noteID"), Index("tagID")])
 data class NotesTagsCrossRef(
     val noteID: Long,

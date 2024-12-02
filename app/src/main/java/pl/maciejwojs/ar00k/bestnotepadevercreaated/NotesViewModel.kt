@@ -1,3 +1,9 @@
+/**
+ * @file NotesViewModel.kt
+ * @brief Plik definiujący ViewModel do zarządzania stanem notatek w aplikacji.
+ *
+ * Plik zawiera definicję klasy `NotesViewModel`, która zarządza stanem notatek, notatek w koszu oraz statusem uwierzytelnienia użytkownika w aplikacji.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
 import android.util.Log
@@ -9,6 +15,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 
+/**
+ * Klasa ViewModel zarządzająca stanem notatek w aplikacji.
+ *
+ * @property dao Obiekt DAO do zarządzania operacjami na bazie danych.
+ */
 class NotesViewModel(
     private val dao: NotesDao,
 ) : ViewModel() {
@@ -22,14 +33,14 @@ class NotesViewModel(
     val authenticated: StateFlow<Boolean> get() = _authenticated
 
     init {
-        // Load notes initially when the ViewModel is created
+        // Ładowanie notatek przy tworzeniu ViewModel
         viewModelScope.launch {
             dao.getNotes().collect { notes ->
                 _state.update { it.copy(notes = notes) }
                 Log.i("BAZA", "Liczba notatek przy uruchomieniu: ${notes.size}")
             }
         }
-        // Load notes initially when the ViewModel is created
+        // Ładowanie notatek w koszu przy tworzeniu ViewModel
         viewModelScope.launch {
             Log.i("BAZA", "Przed wywołaniem getTrashNotes")
             dao.getTrashNotes().collect { trashNotes ->
@@ -41,6 +52,11 @@ class NotesViewModel(
         }
     }
 
+    /**
+     * Funkcja obsługująca zdarzenia związane z notatkami.
+     *
+     * @param event Zdarzenie dotyczące notatki.
+     */
     fun onEvent(event: NotesEvent) {
         when (event) {
             is NotesEvent.DeleteNote -> {
@@ -107,6 +123,11 @@ class NotesViewModel(
         }
     }
 
+    /**
+     * Funkcja ustawiająca status uwierzytelnienia użytkownika.
+     *
+     * @param logged Flaga określająca, czy użytkownik jest zalogowany.
+     */
     fun setAuthenticated(logged: Boolean) {
 //        _authenticaded.value = logged
         viewModelScope.launch {

@@ -2,8 +2,7 @@
  * @file MainPage.kt
  * @brief Plik zawiera implementację głównej strony aplikacji.
  *
- * Plik ten definiuje kompozycje i funkcje związane z wyświetlaniem głównej strony
- * oraz obsługą nawigacji w aplikacji.
+ * Plik ten definiuje kompozycje i funkcje związane z wyświetlaniem głównej strony.
  */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 

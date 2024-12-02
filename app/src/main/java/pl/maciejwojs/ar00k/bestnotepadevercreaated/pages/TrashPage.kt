@@ -1,3 +1,10 @@
+/**
+ * @file TrashPage.kt
+ * @brief Plik zawiera implementację strony kosza.
+ *
+ * Plik ten definiuje kompozycje i funkcje związane z wyświetlaniem notatek
+ * znajdujących się w koszu w aplikacji.
+ */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
 import android.util.Log

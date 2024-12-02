@@ -10,6 +10,12 @@ package pl.maciejwojs.ar00k.bestnotepadevercreaated.db
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Encja reprezentująca tag w bazie danych.
+ *
+ * @property name Nazwa tagu.
+ * @property tagID Unikalny identyfikator tagu, generowany automatycznie.
+ */
 @Entity(tableName = "tags")
 data class Tag(
     val name: String,
