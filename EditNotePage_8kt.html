@@ -104,7 +104,7 @@ $(function(){initNavTree('EditNotePage_8kt.html',''); initResizable(true); });
 </div><!--header-->
 <div class="contents">
 
-<p>Plik zawiera funkcje i komponenty do edycji notatek.  
+<p>Plik zawiera implementację strony edycji notatki.  
 <a href="#details">Więcej...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -114,7 +114,7 @@ Funkcje</h2></td></tr>
 <tr class="separator:aae2caa736e6a1b75ff2be1b472a00b18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
-<div class="textblock"><p>Plik zawiera funkcje i komponenty do edycji notatek. </p>
+<div class="textblock"><p>Plik zawiera implementację strony edycji notatki. </p>
 </div><h2 class="groupheader">Dokumentacja funkcji</h2>
 <a id="aae2caa736e6a1b75ff2be1b472a00b18" name="aae2caa736e6a1b75ff2be1b472a00b18"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aae2caa736e6a1b75ff2be1b472a00b18">&#9670;&#160;</a></span>EditNotePage()</h2>
@@ -158,12 +158,12 @@ Funkcje</h2></td></tr>
 <p>Strona edycji notatki. </p>
 <dl class="params"><dt>Parametry</dt><dd>
   <table class="params">
-    <tr><td class="paramname">navigator</td><td>Kontroler nawigacji. </td></tr>
-    <tr><td class="paramname">onEdit</td><td>Funkcja wywoływana przy edycji notatki. </td></tr>
-    <tr><td class="paramname">onTagEdit</td><td>Funkcja wywoływana przy edycji tagów notatki. </td></tr>
-    <tr><td class="paramname">note</td><td>Notatka do edycji. </td></tr>
-    <tr><td class="paramname">tags</td><td>Lista dostępnych tagów. </td></tr>
-    <tr><td class="paramname">currentNoteTags</td><td>Lista tagów przypisanych do bieżącej notatki. </td></tr>
+    <tr><td class="paramname">navigator</td><td>Nawigator do nawigacji między ekranami. </td></tr>
+    <tr><td class="paramname">onEvent</td><td>Lambda do obsługi zdarzeń. </td></tr>
+    <tr><td class="paramname">onTagEdit</td><td>Lambda do obsługi edycji tagów. </td></tr>
+    <tr><td class="paramname">note</td><td>Obiekt notatki. </td></tr>
+    <tr><td class="paramname">tags</td><td>Lista tagów. </td></tr>
+    <tr><td class="paramname">currentNoteTags</td><td>Lista tagów przypisanych do notatki. </td></tr>
   </table>
   </dd>
 </dl>

@@ -103,13 +103,20 @@ $(function(){initNavTree('BiometricPromptManager_8kt.html',''); initResizable(tr
   <div class="headertitle"><div class="title">Dokumentacja pliku BiometricPromptManager.kt</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Plik zawiera implementację menedżera biometrycznego.  
+<a href="#details">Więcej...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Funkcje</h2></td></tr>
 <tr class="memitem:a1ce9860ad5388f9aef982faed7a9bc52" id="r_a1ce9860ad5388f9aef982faed7a9bc52"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1ce9860ad5388f9aef982faed7a9bc52">BiometricPromptManager</a> (private val activity:FragmentActivity,)</td></tr>
+<tr class="memdesc:a1ce9860ad5388f9aef982faed7a9bc52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Klasa zarządzająca wyświetlaniem biometrycznego promptu autoryzacyjnego.  <br /></td></tr>
 <tr class="separator:a1ce9860ad5388f9aef982faed7a9bc52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Dokumentacja funkcji</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
+<div class="textblock"><p>Plik zawiera implementację menedżera biometrycznego. </p>
+<p>Plik ten definiuje klasę BiometricPromptManager, która zarządza wyświetlaniem biometrycznego promptu autoryzacyjnego w aplikacji. </p>
+</div><h2 class="groupheader">Dokumentacja funkcji</h2>
 <a id="a1ce9860ad5388f9aef982faed7a9bc52" name="a1ce9860ad5388f9aef982faed7a9bc52"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1ce9860ad5388f9aef982faed7a9bc52">&#9670;&#160;</a></span>BiometricPromptManager()</h2>
 
@@ -124,6 +131,51 @@ Funkcje</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Klasa zarządzająca wyświetlaniem biometrycznego promptu autoryzacyjnego. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">activity</td><td>Aktywność, w której wyświetlany jest prompt. </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Wyświetla biometryczny prompt autoryzacyjny.</p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">title</td><td>Tytuł promptu. </td></tr>
+    <tr><td class="paramname">description</td><td>Opis promptu.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Wywoływana, gdy wystąpi błąd autoryzacji.</p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">errorCode</td><td>Kod błędu. </td></tr>
+    <tr><td class="paramname">errString</td><td>Opis błędu.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Wywoływana, gdy autoryzacja zakończy się sukcesem.</p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">result</td><td>Wynik autoryzacji.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Wywoływana, gdy autoryzacja nie powiedzie się.</p>
+<p>Interfejs wyników biometrycznej autoryzacji.</p>
+<p>Brak dostępnego sprzętu biometrycznego.</p>
+<p>Funkcja biometryczna niedostępna.</p>
+<p>Błąd autoryzacji biometrycznej.</p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">error</td><td>Opis błędu.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Autoryzacja biometryczna nie powiodła się.</p>
+<p>Autoryzacja biometryczna zakończona sukcesem.</p>
+<p>Brak ustawionej autoryzacji biometrycznej.</p>
 
 </div>
 </div>

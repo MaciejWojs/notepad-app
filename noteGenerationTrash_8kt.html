@@ -103,14 +103,19 @@ $(function(){initNavTree('noteGenerationTrash_8kt.html',''); initResizable(true)
   <div class="headertitle"><div class="title">Dokumentacja pliku noteGenerationTrash.kt</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Plik zawiera funkcje generujące notatki w koszu.  
+<a href="#details">Więcej...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Funkcje</h2></td></tr>
 <tr class="memitem:aaeeb1244f279ac71083551ef58dbe0a6" id="r_aaeeb1244f279ac71083551ef58dbe0a6"><td class="memItemLeft" align="right" valign="top">Composable fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaeeb1244f279ac71083551ef58dbe0a6">GenerateNoteTrash</a> (modifier:Modifier=Modifier, note:Note, onDelete:() -&gt; Unit, onRestore:() -&gt; Unit, weight:FontWeight?=null,)</td></tr>
-<tr class="memdesc:aaeeb1244f279ac71083551ef58dbe0a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja generująca notatkę w koszu.  <br /></td></tr>
+<tr class="memdesc:aaeeb1244f279ac71083551ef58dbe0a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Komponent Compose generujący widok notatki w koszu.  <br /></td></tr>
 <tr class="separator:aaeeb1244f279ac71083551ef58dbe0a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Dokumentacja funkcji</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
+<div class="textblock"><p>Plik zawiera funkcje generujące notatki w koszu. </p>
+</div><h2 class="groupheader">Dokumentacja funkcji</h2>
 <a id="aaeeb1244f279ac71083551ef58dbe0a6" name="aaeeb1244f279ac71083551ef58dbe0a6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aaeeb1244f279ac71083551ef58dbe0a6">&#9670;&#160;</a></span>GenerateNoteTrash()</h2>
 
@@ -145,14 +150,14 @@ Funkcje</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Funkcja generująca notatkę w koszu. </p>
+<p>Komponent Compose generujący widok notatki w koszu. </p>
 <dl class="params"><dt>Parametry</dt><dd>
   <table class="params">
-    <tr><td class="paramname">modifier</td><td>Modyfikator do zastosowania do komponentu. </td></tr>
-    <tr><td class="paramname">note</td><td>Obiekt notatki. </td></tr>
-    <tr><td class="paramname">onDelete</td><td>Lambda do obsługi usuwania notatki. </td></tr>
-    <tr><td class="paramname">onEdit</td><td>Lambda do obsługi edycji notatki. </td></tr>
-    <tr><td class="paramname">weight</td><td>Opcjonalna waga czcionki. </td></tr>
+    <tr><td class="paramname">modifier</td><td>Modyfikator do dostosowania wyglądu komponentu. </td></tr>
+    <tr><td class="paramname">note</td><td>Obiekt notatki, który ma być wyświetlony. </td></tr>
+    <tr><td class="paramname">onDelete</td><td>Funkcja wywoływana po kliknięciu przycisku usunięcia. </td></tr>
+    <tr><td class="paramname">onRestore</td><td>Funkcja wywoływana po kliknięciu przycisku przywrócenia. </td></tr>
+    <tr><td class="paramname">weight</td><td>Opcjonalna waga czcionki dla tytułu notatki. </td></tr>
   </table>
   </dd>
 </dl>

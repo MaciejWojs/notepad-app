@@ -110,6 +110,7 @@ $(function(){initNavTree('NotesDatabase_8kt.html',''); initResizable(true); });
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Funkcje</h2></td></tr>
 <tr class="memitem:a0494be654925cbd0e1a3533ca8764f4c" id="r_a0494be654925cbd0e1a3533ca8764f4c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0494be654925cbd0e1a3533ca8764f4c">Database</a> (entities=[Note::class, Tag::class, NotesTagsCrossRef::class, AudioFilesNotesCrossRef::class, Settings::class], version=1,) override class NotesDatabase</td></tr>
+<tr class="memdesc:a0494be654925cbd0e1a3533ca8764f4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Klasa abstrakcyjna reprezentująca bazę danych notatek.  <br /></td></tr>
 <tr class="separator:a0494be654925cbd0e1a3533ca8764f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
@@ -142,6 +143,18 @@ Funkcje</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Klasa abstrakcyjna reprezentująca bazę danych notatek. </p>
+<p>Klasa <code>NotesDatabase</code> zarządza tabelami notatek (<code>Note</code>), tagów (<code>Tag</code>) oraz relacji między nimi (<code>NotesTagsCrossRef</code>). Implementacja bazy danych jest realizowana przy użyciu biblioteki Room. </p>
+<p>Abstrakcyjna właściwość reprezentująca DAO (Data Access Object) do zarządzania operacjami na bazie danych.</p>
+<p>Funkcja zwracająca instancję bazy danych.</p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Kontekst aplikacji. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd>Instancja bazy danych <code>NotesDatabase</code>.</dd></dl>
 
 </div>
 </div>
