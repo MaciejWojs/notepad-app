@@ -1,0 +1,90 @@
+name: Manual Latex Documentation
+on:
+    push:
+        branches:
+            - main
+        tags:
+            - 'v*.*.*'
+
+env:
+    FILE_NAME: Latex-Documentation
+    REPO: ${{ secrets.OWNER }}/${{ secrets.REPO }}
+    PACKAGES: graphviz ghostscript inkscape python3
+    IS_TAG: ${{ startsWith(github.ref, 'refs/tags/') }}
+    OTHER_REPO_PATH: ./docs
+
+jobs:
+    create_cache:
+        runs-on: ubuntu-latest
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        steps:
+            - name: Cache Docker images
+              id: docker_cache
+              uses: ScribeMD/docker-cache@0.5.0
+              with:
+                key: docker-${{ runner.os }}-${{ hashFiles('Dockerfile') }}
+    
+            - name: Pull TeX Live Docker image if not cached
+              if: steps.docker_cache.outputs.cache-hit != 'true'
+              run: docker pull ghcr.io/xu-cheng/texlive-full:latest
+            
+            - name: check for cache
+              uses: awalsh128/cache-apt-pkgs-action@latest
+              id: cache-packages
+              with:
+                packages: ${{ env.PACKAGES }}
+                version: 1.0
+                execute_install_scripts: true
+    
+    build_pdf:
+        permissions:
+          contents: write
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        runs-on: ubuntu-latest
+        steps:
+          - name: Cache Docker images
+            id: docker_cache
+            uses: ScribeMD/docker-cache@0.5.0
+            with:
+              key: docker-${{ runner.os }}-${{ hashFiles('Dockerfile') }}
+        
+          - name: check for cache
+            uses: awalsh128/cache-apt-pkgs-action@latest
+            id: cache-packages
+            with:
+              packages: ${{ env.PACKAGES }}
+              version: 1.0
+              execute_install_scripts: true
+
+          - name: Checkout other repository
+            uses: actions/checkout@v4
+            with:
+              repository: ${{ env.REPO }}
+              path: ${{ env.OTHER_REPO_PATH }}
+              token: ${{ secrets.PAT }}
+          
+          - name: Display contents of OTHER_REPO_PATH
+            run: ls -la ${{ env.OTHER_REPO_PATH }}
+
+          - name: Compile LaTeX document
+            if: env.IS_TAG == 'true'
+            uses: xu-cheng/latex-action@3.2.0
+            with:
+              working_directory: ${{env.OTHER_REPO_PATH}} 
+              root_file: dokument.tex
+              latexmk_shell_escape: true
+              extra_system_packages: python3 inkscape
+
+          - name: Rename generated pdf file and compress PDF
+            if: env.IS_TAG == 'true'
+            working-directory: ${{env.OTHER_REPO_PATH}}
+            run: |
+              mv dokument.pdf ${{env.FILE_NAME}}.pdf
+              gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile="${{env.FILE_NAME}}-compressed.pdf" "${{env.FILE_NAME}}.pdf"
+
+          - name: Release the pdf
+            if: env.IS_TAG == 'true'
+            uses: ncipollo/release-action@v1
+            with:
+                artifacts: "./docs/${{env.FILE_NAME}}.pdf, ./docs/${{env.FILE_NAME}}-compressed.pdf"
+                allowUpdates: true
