@@ -10,6 +10,7 @@ package pl.maciejwojs.ar00k.bestnotepadevercreaated
 import android.os.Build
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
@@ -41,7 +42,7 @@ class BiometricPromptManager(
         val manager = BiometricManager.from(activity)
         val authenticators =
             if (Build.VERSION.SDK_INT >= 30) {
-                BIOMETRIC_STRONG or DEVICE_CREDENTIAL
+                BIOMETRIC_STRONG or DEVICE_CREDENTIAL or BIOMETRIC_WEAK
             } else {
                 BIOMETRIC_STRONG
             }
