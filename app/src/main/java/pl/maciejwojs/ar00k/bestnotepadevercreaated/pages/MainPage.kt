@@ -138,7 +138,7 @@ fun MainPage(
                                         biometricPromptManager.promptResults.collect { result ->
                                             when (result) {
                                                 is BiometricPromptManager.BiometricResult.AuthenticationSuccess -> {
-                                                    navigateToEditNotePage(singleNote)
+//                                                    navigateToEditNotePage(singleNote)
                                                     viewModel.setAuthenticated(true)
 //                                                    Log.d("TestPage", "Authentication success")
                                                 }
