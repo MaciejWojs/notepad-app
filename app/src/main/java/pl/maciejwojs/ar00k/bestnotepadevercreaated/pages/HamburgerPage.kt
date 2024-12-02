@@ -154,6 +154,7 @@ fun HamburgerPage(
                         onValueChange = { tagName = it },
                         label = { Text("Tag Name") },
                         placeholder = { Text("Enter your tag name here") },
+                        singleLine = true,
                         isError = tagName.isEmpty(),
                         modifier =
                             Modifier
