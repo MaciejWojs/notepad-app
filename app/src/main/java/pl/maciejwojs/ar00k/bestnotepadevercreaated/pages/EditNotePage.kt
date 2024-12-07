@@ -193,8 +193,6 @@ fun EditNotePage(
                     ) {
                         if (!navigator.popBackStack()) {
                             navigator.navigate("MainPage")
-                        } else {
-                            saveNote()
                         }
                     }
 
