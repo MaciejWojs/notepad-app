@@ -14,7 +14,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -109,12 +108,20 @@ fun TrashPage(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(20.dp))
-
                 LazyColumn(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
+                    item {
+                        Text(
+                            text = "Deleted Notes:",
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier =
+                            Modifier
+                                .padding(8.dp)
+                        )
+                    }
+
                     items(notes, key = { it.noteID }) { singleNote ->
                         GenerateNoteTrash(
                             note = singleNote,

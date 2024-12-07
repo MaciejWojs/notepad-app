@@ -15,7 +15,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -137,12 +136,20 @@ fun NotesWithTagPage(
                     ) {}
                 }
 
-                Spacer(modifier = Modifier.height(20.dp))
+//                Spacer(modifier = Modifier.height(20.dp))
 
                 LazyColumn(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
+                    item {
+                        Text(
+                            text = "Notes with tag: #${state.notesWithTag.firstOrNull()?.tag?.name}",
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(8.dp),
+//                                .align(Alignment.CenterHorizontally),
+                        )
+                    }
                     Log.d("NotesWithTagPage", "Loading notes for tagID: $tagID")
                     val notes = state.notesWithTag.flatMap { it.notes } // Flatten notes
                     items(notes.filter { !it.isDeleted }, key = { it.noteID }) { singleNote -> // Use flattened notes list

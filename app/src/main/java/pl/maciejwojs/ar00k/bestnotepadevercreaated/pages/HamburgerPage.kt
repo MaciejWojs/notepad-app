@@ -314,7 +314,7 @@ fun HamburgerPage(
 //                    ) {
 //                        Icon(Icons.Default.Delete, contentDescription = "Trash")
 //                        Text(modifier = Modifier.padding(vertical = 10.dp), text = "Kosz")
-                    Text(modifier = Modifier.padding(vertical = 10.dp), text = "Kosz")
+                    Text(modifier = Modifier.padding(vertical = 10.dp), text = "Trash")
                 }
                 Spacer(modifier = Modifier.height(25.dp))
 
