@@ -1,5 +1,6 @@
 var dir_3fb7f95d39b32f263e4fa3838122e97d =
 [
+    [ "cameraPage.kt", "cameraPage_8kt.html", "cameraPage_8kt" ],
     [ "CreateNotePage.kt", "CreateNotePage_8kt.html", "CreateNotePage_8kt" ],
     [ "EditNotePage.kt", "EditNotePage_8kt.html", "EditNotePage_8kt" ],
     [ "HamburgerPage.kt", "HamburgerPage_8kt.html", "HamburgerPage_8kt" ],

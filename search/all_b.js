@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['navcontroller_0',['navController',['../classMainActivity.html#a74523275bb6b623a8131198722ac26c0',1,'MainActivity']]],
+  ['navhost_0',['NavHost',['../classMainActivity.html#a787caba10ee3ec44821660d47d4f0809',1,'MainActivity']]],
   ['note_2ekt_1',['Note.kt',['../Note_8kt.html',1,'']]],
   ['notegeneration_2ekt_2',['noteGeneration.kt',['../noteGeneration_8kt.html',1,'']]],
   ['notegenerationprivate_2ekt_3',['noteGenerationPrivate.kt',['../noteGenerationPrivate_8kt.html',1,'']]],

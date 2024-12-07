@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['entertransition_0',['enterTransition',['../classMainActivity.html#a17ec58fdafd9b2ad119908eb4ed66f1d',1,'MainActivity']]],
-  ['exittransition_1',['exitTransition',['../classMainActivity.html#aa812d9e8840cdc70c31c2a6579d2e844',1,'MainActivity']]]
+  ['loadsettings_0',['LoadSettings',['../interfaceSettingsEvent.html#aac416b7a2e30b1b4528ef83f9c42db04',1,'SettingsEvent']]]
 ];
