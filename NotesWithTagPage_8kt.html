@@ -109,16 +109,16 @@ $(function(){initNavTree('NotesWithTagPage_8kt.html',''); initResizable(true); }
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Funkcje</h2></td></tr>
-<tr class="memitem:affd86d31cc540ea4a1dadb103d0e6113" id="r_affd86d31cc540ea4a1dadb103d0e6113"><td class="memItemLeft" align="right" valign="top">Composable fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#affd86d31cc540ea4a1dadb103d0e6113">NotesWithTagPage</a> (navigator:NavController, viewModel:NotesTagsCrossRefViewModel, tagID:Long, navigateToEditNotePage:(Note) -&gt; Unit,)</td></tr>
-<tr class="memdesc:affd86d31cc540ea4a1dadb103d0e6113"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strona notatek z wybranym tagiem.  <br /></td></tr>
-<tr class="separator:affd86d31cc540ea4a1dadb103d0e6113"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1615d1c5bd3c542b2bb216a2fe347033" id="r_a1615d1c5bd3c542b2bb216a2fe347033"><td class="memItemLeft" align="right" valign="top">Composable fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1615d1c5bd3c542b2bb216a2fe347033">NotesWithTagPage</a> (navigator:NavController, viewModel:NotesTagsCrossRefViewModel, notesViewModel:NotesViewModel, biometricPromptManager:BiometricPromptManager, tagID:Long, navigateToEditNotePage:(Note) -&gt; Unit,)</td></tr>
+<tr class="memdesc:a1615d1c5bd3c542b2bb216a2fe347033"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strona notatek z wybranym tagiem.  <br /></td></tr>
+<tr class="separator:a1615d1c5bd3c542b2bb216a2fe347033"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
 <div class="textblock"><p>Plik zawiera implementację strony notatek z wybranym tagiem. </p>
 <p>Plik ten definiuje kompozycje i funkcje związane z wyświetlaniem notatek przypisanych do konkretnego tagu w aplikacji. </p>
 </div><h2 class="groupheader">Dokumentacja funkcji</h2>
-<a id="affd86d31cc540ea4a1dadb103d0e6113" name="affd86d31cc540ea4a1dadb103d0e6113"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affd86d31cc540ea4a1dadb103d0e6113">&#9670;&#160;</a></span>NotesWithTagPage()</h2>
+<a id="a1615d1c5bd3c542b2bb216a2fe347033" name="a1615d1c5bd3c542b2bb216a2fe347033"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1615d1c5bd3c542b2bb216a2fe347033">&#9670;&#160;</a></span>NotesWithTagPage()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -136,6 +136,16 @@ Funkcje</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">notesViewModel:NotesViewModel</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">biometricPromptManager:BiometricPromptManager</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">tagID:Long</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
         </tr>
         <tr>
@@ -149,10 +159,12 @@ Funkcje</h2></td></tr>
 <p>Strona notatek z wybranym tagiem. </p>
 <dl class="params"><dt>Parametry</dt><dd>
   <table class="params">
-    <tr><td class="paramname">navigator</td><td>Kontroler nawigacji. </td></tr>
-    <tr><td class="paramname">viewModel</td><td>Model widoku notatek z tagami. </td></tr>
-    <tr><td class="paramname">tagID</td><td>Identyfikator tagu. </td></tr>
-    <tr><td class="paramname">navigateToEditNotePage</td><td>Funkcja nawigacji do strony edycji notatki. </td></tr>
+    <tr><td class="paramname">navigator</td><td>Nawigator do nawigacji między ekranami </td></tr>
+    <tr><td class="paramname">viewModel</td><td>ViewModel dla relacji między notatkami a tagami </td></tr>
+    <tr><td class="paramname">notesViewModel</td><td>ViewModel dla notatek </td></tr>
+    <tr><td class="paramname">biometricPromptManager</td><td>Manager biometrycznego promptu </td></tr>
+    <tr><td class="paramname">tagID</td><td>Identyfikator tagu </td></tr>
+    <tr><td class="paramname">navigateToEditNotePage</td><td>Funkcja nawigująca do edycji notatki </td></tr>
   </table>
   </dd>
 </dl>

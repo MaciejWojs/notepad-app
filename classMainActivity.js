@@ -1,6 +1,7 @@
 var classMainActivity =
 [
     [ "[instance initializer]", "classMainActivity.html#ab98e6e5a1073af1503b3bcda2b5e7655", null ],
+    [ "requestCameraPermission", "classMainActivity.html#ad6ad8e85a94c67db6d69aeeb06335844", null ],
     [ "biometricPromptManager", "classMainActivity.html#a07effbafe3adbc019b07c518800c9ea7", null ],
     [ "enterTransition", "classMainActivity.html#a17ec58fdafd9b2ad119908eb4ed66f1d", null ],
     [ "exitTransition", "classMainActivity.html#aa812d9e8840cdc70c31c2a6579d2e844", null ],

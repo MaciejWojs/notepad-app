@@ -18,7 +18,8 @@ var searchData=
   ['notesviewmodel_15',['NotesViewModel',['../NotesViewModel_8kt.html#aff6739272f2f4ac73819e6750c1fc4c8',1,'NotesViewModel.kt']]],
   ['notesviewmodel_2ekt_16',['NotesViewModel.kt',['../NotesViewModel_8kt.html',1,'']]],
   ['noteswithaudiofiles_2ekt_17',['NotesWithAudioFiles.kt',['../NotesWithAudioFiles_8kt.html',1,'']]],
-  ['noteswithtagpage_18',['NotesWithTagPage',['../NotesWithTagPage_8kt.html#affd86d31cc540ea4a1dadb103d0e6113',1,'NotesWithTagPage.kt']]],
+  ['noteswithtagpage_18',['NotesWithTagPage',['../NotesWithTagPage_8kt.html#a1615d1c5bd3c542b2bb216a2fe347033',1,'NotesWithTagPage.kt']]],
   ['noteswithtagpage_2ekt_19',['NotesWithTagPage.kt',['../NotesWithTagPage_8kt.html',1,'']]],
-  ['noteswithtags_2ekt_20',['NotesWithTags.kt',['../NotesWithTags_8kt.html',1,'']]]
+  ['noteswithtags_2ekt_20',['NotesWithTags.kt',['../NotesWithTags_8kt.html',1,'']]],
+  ['notetitlegeneration_2ekt_21',['noteTitleGeneration.kt',['../noteTitleGeneration_8kt.html',1,'']]]
 ];

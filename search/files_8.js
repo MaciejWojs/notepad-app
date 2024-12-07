@@ -14,5 +14,6 @@ var searchData=
   ['notesviewmodel_2ekt_11',['NotesViewModel.kt',['../NotesViewModel_8kt.html',1,'']]],
   ['noteswithaudiofiles_2ekt_12',['NotesWithAudioFiles.kt',['../NotesWithAudioFiles_8kt.html',1,'']]],
   ['noteswithtagpage_2ekt_13',['NotesWithTagPage.kt',['../NotesWithTagPage_8kt.html',1,'']]],
-  ['noteswithtags_2ekt_14',['NotesWithTags.kt',['../NotesWithTags_8kt.html',1,'']]]
+  ['noteswithtags_2ekt_14',['NotesWithTags.kt',['../NotesWithTags_8kt.html',1,'']]],
+  ['notetitlegeneration_2ekt_15',['noteTitleGeneration.kt',['../noteTitleGeneration_8kt.html',1,'']]]
 ];
