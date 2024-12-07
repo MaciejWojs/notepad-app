@@ -8,6 +8,7 @@
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -34,14 +35,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import kotlinx.coroutines.launch
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.BiometricPromptManager
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesTagsCrossRefViewModel
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNote
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNotePrivate
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
@@ -57,10 +65,15 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreat
 fun NotesWithTagPage(
     navigator: NavController,
     viewModel: NotesTagsCrossRefViewModel,
+    notesViewModel: NotesViewModel,
+    biometricPromptManager: BiometricPromptManager,
     tagID: Long,
     navigateToEditNotePage: (Note) -> Unit,
 ) {
     val state by viewModel.state.collectAsState()
+    val coroutine = rememberCoroutineScope()
+    val isLoggedIn by notesViewModel.authenticated.collectAsState()
+    val context = LocalContext.current
 
     LaunchedEffect(tagID) {
         Log.d("NotesWithTagPage", "Loading notes for tagID: $tagID")
@@ -130,14 +143,65 @@ fun NotesWithTagPage(
                 ) {
                     Log.d("NotesWithTagPage", "Loading notes for tagID: $tagID")
                     val notes = state.notesWithTag.flatMap { it.notes } // Flatten notes
-                    items(notes, key = { it.noteID }) { singleNote -> // Use flattened notes list
-                        GenerateNote(note = singleNote, onDelete = {
-                            Log.d("NotesWithTagPage", "Deleting note: ${singleNote.title}")
-                            // Uncomment and implement the deletion event
-                            // viewModel.onEvent(NotesEvent.DeleteNote(singleNote))
-                        }, onEdit = {
-                            navigateToEditNotePage(singleNote)
-                        })
+                    items(notes.filter { !it.isDeleted }, key = { it.noteID }) { singleNote -> // Use flattened notes list
+                        if (singleNote.isPrivate && !isLoggedIn) {
+                            GenerateNotePrivate(
+                                note = singleNote,
+                                onDelete = {
+                                    Log.d("TestPage", "Deleting note: ${singleNote.title}")
+                                },
+                                onEdit = {
+                                    // Wykonaj akcje związane z biometrycznym promptem w kontekście kompozycji
+                                    coroutine.launch {
+                                        biometricPromptManager.showBiometricPrompt(
+                                            title = "Biometric Authentication",
+                                            description = "Authenticate to access the private note",
+                                        )
+
+                                        biometricPromptManager.promptResults.collect { result ->
+                                            when (result) {
+                                                is BiometricPromptManager.BiometricResult.AuthenticationSuccess -> {
+//                                                    navigateToEditNotePage(singleNote)
+                                                    notesViewModel.setAuthenticated(true)
+//                                                    Log.d("TestPage", "Authentication success")
+                                                }
+
+                                                is BiometricPromptManager.BiometricResult.AuthenticationError -> {
+                                                    // Wyświetl Toast w kontekście kompozycji
+                                                    Toast.makeText(
+                                                        context,
+                                                        "Authentication error: ${result.error}",
+                                                        Toast.LENGTH_SHORT,
+                                                    ).show()
+                                                }
+
+                                                else -> {
+                                                    Toast.makeText(
+                                                        context,
+                                                        "Authentication failed",
+                                                        Toast.LENGTH_SHORT,
+                                                    ).show()
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                            )
+                        } else {
+                            GenerateNote(
+                                note = singleNote,
+                                onDelete = {
+                                    Log.d("TestPage", "Deleting note: ${singleNote.title}")
+                                    notesViewModel.onEvent(NotesEvent.UpdateNoteTrash(singleNote))
+                                    coroutine.launch {
+                                        viewModel.loadNotesByTag(tagID)
+                                    }
+                                },
+                                onEdit = {
+                                    navigateToEditNotePage(singleNote)
+                                },
+                            )
+                        }
                     }
                 }
             }

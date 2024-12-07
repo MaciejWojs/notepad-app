@@ -228,6 +228,8 @@ class MainActivity : FragmentActivity() {
                     NotesWithTagPage(
                         navigator = navController,
                         viewModel = notesWithTagPageViewModel,
+                        notesViewModel = notesViewModel,
+                        biometricPromptManager = biometricPromptManager,
                         tagID = tagID,
                         navigateToEditNotePage = { note ->
                             navController.currentBackStackEntry?.savedStateHandle?.set("note", note)
