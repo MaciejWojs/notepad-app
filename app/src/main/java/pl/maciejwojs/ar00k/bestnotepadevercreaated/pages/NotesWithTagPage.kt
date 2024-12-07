@@ -56,10 +56,12 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreat
 /**
  * Strona notatek z wybranym tagiem.
  *
- * @param navigator Kontroler nawigacji.
- * @param viewModel Model widoku notatek z tagami.
- * @param tagID Identyfikator tagu.
- * @param navigateToEditNotePage Funkcja nawigacji do strony edycji notatki.
+ * @param navigator Nawigator do nawigacji między ekranami
+ * @param viewModel ViewModel dla relacji między notatkami a tagami
+ * @param notesViewModel ViewModel dla notatek
+ * @param biometricPromptManager Manager biometrycznego promptu
+ * @param tagID Identyfikator tagu
+ * @param navigateToEditNotePage Funkcja nawigująca do edycji notatki
  */
 @Composable
 fun NotesWithTagPage(
