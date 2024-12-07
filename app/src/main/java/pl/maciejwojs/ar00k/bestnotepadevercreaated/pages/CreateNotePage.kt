@@ -80,6 +80,7 @@ fun CreateNotePage(
     viewModel: NotesViewModel,
 //    onCreate: (String, String, Map<Tag, Boolean>) -> Unit,
     tags: List<Tag>,
+    requestCameraPermission: () -> Unit,
 ) {
     var noteTitle by remember { mutableStateOf("") }
     var noteContent by remember { mutableStateOf("") }
@@ -145,6 +146,7 @@ fun CreateNotePage(
 
                 Button(
                     onClick = {
+                        requestCameraPermission()
                         Toast.makeText(
                             context,
                             "Not implemented yet",

@@ -8,7 +8,10 @@
 
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -21,6 +24,7 @@ import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -41,11 +45,11 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.SettingsPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.TrashPage
 
 /**
-* Główna aktywność aplikacji BestNotepadEverCreated.
-*
-* Ta aktywność rozszerza [FragmentActivity] i służy jako główny punkt wejścia do aplikacji.
-* Używa Jetpack Compose do interfejsu użytkownika i wyświetla komunikaty Toast podczas zmian cyklu życia.
-*/
+ * Główna aktywność aplikacji BestNotepadEverCreated.
+ *
+ * Ta aktywność rozszerza [FragmentActivity] i służy jako główny punkt wejścia do aplikacji.
+ * Używa Jetpack Compose do interfejsu użytkownika i wyświetla komunikaty Toast podczas zmian cyklu życia.
+ */
 // Possibly a big change, Zmieniłem z ComponentActivity na Framgent Activity bo wymagało tego biometricPromptManager
 class MainActivity : FragmentActivity() {
     private lateinit var biometricPromptManager: BiometricPromptManager
@@ -207,6 +211,7 @@ class MainActivity : FragmentActivity() {
 //                            }
 //                        },
                         tags = tags,
+                        requestCameraPermission = { if (!hasRequiredPermissions()) requestCameraPermission() else Unit },
                     )
                 }
                 composable(
@@ -278,5 +283,25 @@ class MainActivity : FragmentActivity() {
                 }
             }
         }
+    }
+
+    private fun requestCameraPermission() {
+        Log.d("MainActivity", "Camera permission requested")
+        if (!hasRequiredPermissions()) {
+            requestPermissions(arrayOf(CAMERA_PERMISSION), 0)
+        } else {
+            Log.d("MainActivity", "Camera permission granted")
+        }
+    }
+
+    private fun hasRequiredPermissions(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            CAMERA_PERMISSION,
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    companion object {
+        private const val CAMERA_PERMISSION = Manifest.permission.CAMERA
     }
 }
