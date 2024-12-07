@@ -52,12 +52,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.R
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
@@ -136,9 +139,22 @@ fun CreateNotePage(
                 Button(
                     onClick = { showBottomSheet = true },
                 ) {
-                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add tags")
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "tags")
                     Text(text = "Add tags")
                 }
+
+                Button(
+                    onClick = {
+                        Toast.makeText(
+                            context,
+                            "Not implemented yet",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    },
+                ) {
+                    Icon(imageVector = ImageVector.vectorResource(R.drawable.photo_camera), contentDescription = "add photo")
+                }
+
                 Button(
                     onClick = {
                         isPrivate.value = !isPrivate.value
