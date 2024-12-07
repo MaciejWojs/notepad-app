@@ -19,11 +19,8 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -282,26 +279,4 @@ class MainActivity : FragmentActivity() {
             }
         }
     }
-}
-
-/**
-* Kompozycyjna funkcja wyświetlająca tytuł notatki.
-*
-* Ta funkcja wyświetla tekst tytułu notatki z określoną grubością czcionki.
-*
-* @param noteTitle Tytuł notatki do wyświetlenia.
-* @param modifier [Modifier] zastosowany do kompozycyjnego układu. Domyślnie jest to pusty modyfikator.
-* @param weight [FontWeight] zastosowany do stylu czcionki tekstu tytułu notatki. Domyślnie jest to FontWeight(900).
-*/
-@Composable
-fun CreateNoteTitle(
-    noteTitle: String,
-    modifier: Modifier = Modifier,
-    weight: FontWeight? = FontWeight(weight = 900),
-) {
-    Text(
-        text = noteTitle,
-        modifier = modifier,
-        fontWeight = weight,
-    )
 }

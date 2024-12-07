@@ -40,7 +40,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.CreateNoteTitle
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.utils.GenerateNoteTitle
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.utils.getFirst25Words
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.roundness
@@ -91,7 +91,7 @@ fun GenerateNoteTrash(
                     .then(modifier),
         ) {
             Column {
-                CreateNoteTitle(
+                GenerateNoteTitle(
                     noteTitle = note.title,
                     weight = weight,
                     modifier = Modifier.padding(bottom = 20.dp),

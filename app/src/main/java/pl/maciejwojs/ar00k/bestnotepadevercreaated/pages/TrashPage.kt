@@ -116,9 +116,7 @@ fun TrashPage(
                         Text(
                             text = "Deleted Notes:",
                             style = MaterialTheme.typography.titleLarge,
-                            modifier =
-                            Modifier
-                                .padding(8.dp)
+                            modifier = Modifier.padding(8.dp),
                         )
                     }
 
