@@ -126,4 +126,16 @@ dependencies {
 
     // optional - Paging 3 Integration
     implementation(libs.androidx.room.paging)
+
+    // Biblioteka do kamery
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.extensions)
+
+    // Ikonki
+//    implementation(libs.androidx.material.extended.icons)
+    implementation(libs.material3)
+    implementation(libs.androidx.material.icons.extended)
 }

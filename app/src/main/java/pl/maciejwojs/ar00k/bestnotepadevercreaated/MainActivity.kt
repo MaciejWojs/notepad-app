@@ -10,20 +10,44 @@ package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture.OnImageCapturedCallback
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.ImageProxy
+import androidx.camera.view.LifecycleCameraController
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Camera
+import androidx.compose.material.icons.filled.Cameraswitch
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
@@ -65,6 +89,7 @@ class MainActivity : FragmentActivity() {
      * zawiera dane, które dostarczyła ostatnio w [onSaveInstanceState].
      * @note Uwaga: W przeciwnym razie jest null.
      */
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -112,7 +137,91 @@ class MainActivity : FragmentActivity() {
 
         // Set up the Jetpack Compose UI
         setContent {
+            val ctxImg = LocalContext.current
             val navController = rememberNavController()
+            val controller =
+                remember {
+                    LifecycleCameraController(ctxImg).apply {
+                        setEnabledUseCases(LifecycleCameraController.IMAGE_CAPTURE)
+                    }
+                }
+
+            @Composable
+            fun cameraScreen(exitCamera: () -> Unit) {
+                var scaffoldState = rememberBottomSheetScaffoldState()
+                BottomSheetScaffold(
+                    scaffoldState = scaffoldState,
+                    sheetPeekHeight = 0.dp,
+                    sheetContent = {
+                    },
+                ) { padding ->
+                    fun takePhoto(
+                        controller: LifecycleCameraController,
+                        onPhotoTaken: (Bitmap) -> Unit,
+                    ) {
+                        controller.takePicture(
+                            ContextCompat.getMainExecutor(ctxImg),
+                            object : OnImageCapturedCallback() {
+                                override fun onCaptureSuccess(image: ImageProxy) {
+                                    super.onCaptureSuccess(image)
+                                    onPhotoTaken(image.toBitmap())
+                                }
+
+                                override fun onError(exception: ImageCaptureException) {
+                                    Log.e("Camera", "Capture failed: ${exception.message}")
+                                }
+                            },
+                        )
+                    }
+                    Box(
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(padding),
+                    ) {
+                        CameraPreview(
+                            controller = controller,
+                            modifier =
+                                Modifier
+                                    .fillMaxSize(),
+                        )
+                        IconButton(onClick = { exitCamera() }) {
+                            Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
+                        }
+
+                        IconButton(
+                            modifier = Modifier.align(Alignment.TopEnd),
+                            onClick = {
+                                controller.cameraSelector =
+                                    if (controller.cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
+                                        CameraSelector.DEFAULT_FRONT_CAMERA
+                                    } else {
+                                        CameraSelector.DEFAULT_BACK_CAMERA
+                                    }
+                            },
+                        ) {
+                            Icon(Icons.Default.Cameraswitch, contentDescription = "Switch camera")
+                        }
+
+                        IconButton(
+                            modifier =
+                                Modifier
+                                    .align(Alignment.BottomCenter)
+                                    .size(100.dp),
+                            onClick = {
+                                val photo =
+                                    takePhoto(controller) { bitmap ->
+//                                    bitmap -> bitmap.
+                                        exitCamera()
+                                    }
+//                                exitCamera()
+                            },
+                        ) {
+                            Icon(Icons.Default.Camera, contentDescription = "Take picture")
+                        }
+                    }
+                }
+            }
             NavHost(
                 modifier = Modifier.background(MaterialTheme.colorScheme.background),
                 navController = navController,
@@ -212,6 +321,13 @@ class MainActivity : FragmentActivity() {
 //                        },
                         tags = tags,
                         requestCameraPermission = { if (!hasRequiredPermissions()) requestCameraPermission() else Unit },
+                        cameraPreview = { exit ->
+                            cameraScreen(
+                                exitCamera = {
+                                    exit()
+                                },
+                            )
+                        },
                     )
                 }
                 composable(
@@ -281,6 +397,11 @@ class MainActivity : FragmentActivity() {
                         )
                     }
                 }
+//                composable("CameraPage") {
+//                    CameraPage {
+//                        cameraScreen()
+//                    }
+//                }
             }
         }
     }
