@@ -131,20 +131,26 @@ fun CreateNotePage(
     var capturedImage by remember { mutableStateOf<Bitmap?>(null) }
 
     if (showCameraPreview) {
-        val photoDeferred = CompletableDeferred<Bitmap>()
-        cameraPreview(
-            { bitmap ->
-                photoDeferred.complete(bitmap)
-                showCameraPreview = false
-                Log.d("CreateNotePage", "Photo size: ${bitmap.byteCount}")
-            },
-            {
-                showCameraPreview = false
-            },
-        )
+        BestNotepadEverCreatedTheme {
+            Scaffold { innerPadding ->
+                Column(modifier = Modifier.padding(innerPadding)) {
+                    val photoDeferred = CompletableDeferred<Bitmap>()
+                    cameraPreview(
+                        { bitmap ->
+                            photoDeferred.complete(bitmap)
+                            showCameraPreview = false
+                            Log.d("CreateNotePage", "Photo size: ${bitmap.byteCount}")
+                        },
+                        {
+                            showCameraPreview = false
+                        },
+                    )
 
-        LaunchedEffect(Unit) {
-            capturedImage = photoDeferred.await()
+                    LaunchedEffect(Unit) {
+                        capturedImage = photoDeferred.await()
+                    }
+                }
+            }
         }
     } else {
         BestNotepadEverCreatedTheme {
@@ -174,11 +180,6 @@ fun CreateNotePage(
                     Button(
                         onClick = {
                             requestCameraPermission()
-                            Toast.makeText(
-                                context,
-                                "Not implemented yet",
-                                Toast.LENGTH_SHORT,
-                            ).show()
                             showCameraPreview = true
                         },
                     ) {
