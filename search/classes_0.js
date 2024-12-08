@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bitmapbytesarray_0',['bitmapBytesArray',['../classbitmapBytesArray.html',1,'']]]
+  ['bitmapbytesarray_0',['BitmapBytesArray',['../classBitmapBytesArray.html',1,'']]]
 ];
