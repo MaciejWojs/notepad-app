@@ -125,7 +125,7 @@ fun CreateNotePage(
             Column(modifier = Modifier.padding(innerPadding)) {
                 cameraPreview {
                     showCameraPreview = false
-                } 
+                }
             }
         }
     } else {
