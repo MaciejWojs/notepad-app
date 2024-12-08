@@ -12,6 +12,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +28,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -200,7 +203,15 @@ fun CreateNotePage(
                 }
             }, modifier = Modifier.fillMaxSize()) { innerPadding ->
 
-                Column(modifier = Modifier.padding(innerPadding)) {
+                Column(
+                    modifier =
+                        Modifier
+                            .padding(innerPadding)
+                            .scrollable(
+                                state = rememberScrollState(),
+                                orientation = Orientation.Vertical,
+                            ),
+                ) {
                     Row(
                         Modifier
                             .height(50.dp)
@@ -260,7 +271,10 @@ fun CreateNotePage(
                         label = { Text("Content") },
                         modifier =
                             Modifier
-//                                .fillMaxSize()
+//                                    .fillMaxSize()
+                                .weight(1f)
+//                                .height()
+                                .fillMaxWidth()
                                 .padding(8.dp)
                                 .defaultMinSize(minHeight = 300.dp),
                     )
