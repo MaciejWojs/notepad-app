@@ -70,7 +70,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.converters.bitmapBytesArray
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.converters.BitmapBytesArray
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 /**
@@ -118,7 +118,7 @@ fun CreateNotePage(
                     noteContent,
                     imageFile =
                         capturedImage?.let {
-                            bitmapBytesArray().toByteArray(
+                            BitmapBytesArray().toByteArray(
                                 it,
                             )
                         },

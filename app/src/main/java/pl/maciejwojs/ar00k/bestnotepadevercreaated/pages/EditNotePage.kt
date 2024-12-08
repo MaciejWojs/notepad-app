@@ -67,7 +67,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.converters.bitmapBytesArray
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.converters.BitmapBytesArray
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 /**
@@ -110,7 +110,7 @@ fun EditNotePage(
     var currentImage by remember {
         mutableStateOf(
             note.imageFile?.let {
-                bitmapBytesArray().fromByteArray(
+                BitmapBytesArray().fromByteArray(
                     it,
                 )
             },
@@ -120,7 +120,7 @@ fun EditNotePage(
     fun saveNote() {
         if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
             Log.d("EditNotePage", "Saving note, image size: ${currentImage?.byteCount}")
-            val temp = currentImage?.let { bitmapBytesArray().toByteArray(it) }
+            val temp = currentImage?.let { BitmapBytesArray().toByteArray(it) }
             Log.d("EditNotePageTemp", "Saving note, image size: ${temp?.size}")
             onEvent(
                 NotesEvent.UpdateNote(

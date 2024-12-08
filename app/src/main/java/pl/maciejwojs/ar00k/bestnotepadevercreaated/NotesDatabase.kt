@@ -15,7 +15,7 @@ import androidx.room.TypeConverters
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Settings
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.converters.bitmapBytesArray
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.converters.BitmapBytesArray
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.NotesTagsCrossRef
 
 /**
@@ -33,7 +33,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.NotesTagsCrossRe
     ],
     version = 1,
 )
-@TypeConverters(bitmapBytesArray::class)
+@TypeConverters(BitmapBytesArray::class)
 abstract class NotesDatabase : RoomDatabase() {
     /**
      * Abstrakcyjna właściwość reprezentująca DAO (Data Access Object) do zarządzania operacjami na bazie danych.
