@@ -61,15 +61,17 @@ interface NotesDao {
      * @param imageFile Plik obrazu powiązany z notatką.
      * @param audioFile Plik dźwiękowy powiązany z notatką.
      */
-    @Query("UPDATE notes SET title=:title, content=:content, modificationTime=:modificationDate, isPrivate=:isPrivate WHERE noteID = :id")
+    @Query(
+        "UPDATE notes SET title=:title, content=:content, modificationTime=:modificationDate, isPrivate=:isPrivate, imageFile=:imageFile, audioFile=:audioFile WHERE noteID = :id",
+    )
     suspend fun updateNote(
         id: Long,
         title: String,
         content: String,
         isPrivate: Boolean,
-        modificationDate: String =
-            LocalDateTime.now()
-                .format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
+        imageFile: ByteArray?,
+        audioFile: ByteArray?,
+        modificationDate: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
     )
 
     /**

@@ -45,6 +45,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -118,13 +119,16 @@ fun EditNotePage(
 
     fun saveNote() {
         if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
+            Log.d("EditNotePage", "Saving note, image size: ${currentImage?.byteCount}")
+            val temp = currentImage?.let { bitmapBytesArray().toByteArray(it) }
+            Log.d("EditNotePageTemp", "Saving note, image size: ${temp?.size}")
             onEvent(
                 NotesEvent.UpdateNote(
                     note.copy(
                         title = noteTitle,
                         content = noteContent,
                         isPrivate = isPrivate.value,
-                        imageFile = currentImage?.let { bitmapBytesArray().toByteArray(it) },
+                        imageFile = temp,
                     ),
                 ),
             )
@@ -161,20 +165,25 @@ fun EditNotePage(
         BestNotepadEverCreatedTheme {
             Scaffold { innerPadding ->
                 Column(modifier = Modifier.padding(innerPadding)) {
+                    Log.d("EditNotePage", "Old image size: ${currentImage?.byteCount}")
                     val photoDeferred = CompletableDeferred<Bitmap>()
                     cameraPreview(
                         { bitmap ->
                             photoDeferred.complete(bitmap)
                             showCameraPreview = false
-                            Log.d("CreateNotePage", "Photo size: ${bitmap.byteCount}")
+                            Log.d("EditNotePage", "Photo size: ${bitmap.byteCount}")
                         },
                         {
                             showCameraPreview = false
                         },
                     )
 
-                    LaunchedEffect(Unit) {
-                        currentImage = photoDeferred.await()
+//                    val latestBitmap by rememberUpdatedState()
+                    SideEffect {
+                        scope.launch {
+                            currentImage = photoDeferred.await()
+                            Log.d("EditNotePage", "New image size: ${currentImage?.byteCount}")
+                        }
                     }
                 }
             }

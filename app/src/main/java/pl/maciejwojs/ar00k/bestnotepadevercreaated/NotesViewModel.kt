@@ -80,11 +80,14 @@ class NotesViewModel(
                 if (event.note.content.isNotEmpty() && event.note.title.isNotEmpty()) {
                     Log.d("isPrivate", "Updating note privacy -> ${event.note.isPrivate}")
                     viewModelScope.launch {
+                        Log.d("EditNotePageTemp", "VM Saving note, image size: ${event.note.imageFile?.size}")
                         dao.updateNote(
                             id = event.note.noteID,
                             title = event.note.title,
                             content = event.note.content,
                             isPrivate = event.note.isPrivate,
+                            imageFile = event.note.imageFile,
+                            audioFile = event.note.audioFile,
                         )
                     }
                 } else {
