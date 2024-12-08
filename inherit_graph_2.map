@@ -1,3 +1,3 @@
 <map id="Graficzna hierarchia klas" name="Graficzna hierarchia klas">
-<area shape="rect" id="Node000000" href="$interfaceNotesEvent.html" title="Interfejs reprezentujący zdarzenia związane z notatkami." alt="" coords="5,5,95,31"/>
+<area shape="rect" id="Node000000" href="$interfaceNotesDao.html" title="Interfejs DAO (Data Access Object) do obsługi operacji związanych z notatkami i tagami w bazie danych..." alt="" coords="5,5,85,31"/>
 </map>

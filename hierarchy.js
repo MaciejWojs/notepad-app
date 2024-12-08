@@ -1,5 +1,6 @@
 var hierarchy =
 [
+    [ "bitmapBytesArray", "classbitmapBytesArray.html", null ],
     [ "FragmentActivity", null, [
       [ "MainActivity", "classMainActivity.html", null ]
     ] ],

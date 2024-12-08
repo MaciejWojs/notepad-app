@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['settingsevent_0',['SettingsEvent',['../interfaceSettingsEvent.html',1,'']]]
+  ['notesdao_0',['NotesDao',['../interfaceNotesDao.html',1,'']]],
+  ['notesevent_1',['NotesEvent',['../interfaceNotesEvent.html',1,'']]]
 ];

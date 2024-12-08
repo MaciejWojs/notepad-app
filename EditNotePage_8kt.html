@@ -109,15 +109,15 @@ $(function(){initNavTree('EditNotePage_8kt.html',''); initResizable(true); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Funkcje</h2></td></tr>
-<tr class="memitem:aae2caa736e6a1b75ff2be1b472a00b18" id="r_aae2caa736e6a1b75ff2be1b472a00b18"><td class="memItemLeft" align="right" valign="top">Composable fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae2caa736e6a1b75ff2be1b472a00b18">EditNotePage</a> (navigator:NavController, onEvent:(<a class="el" href="interfaceNotesEvent.html">NotesEvent</a>) -&gt; Unit, onTagEdit:(Note, Tag, Boolean) -&gt; Unit, note:Note, tags:List&lt; Tag &gt;, currentNoteTags:List&lt; Tag &gt;,)</td></tr>
-<tr class="memdesc:aae2caa736e6a1b75ff2be1b472a00b18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strona edycji notatki.  <br /></td></tr>
-<tr class="separator:aae2caa736e6a1b75ff2be1b472a00b18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcc12c77b8f4a45b74cade42f2c1a2d5" id="r_afcc12c77b8f4a45b74cade42f2c1a2d5"><td class="memItemLeft" align="right" valign="top">Composable fun&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afcc12c77b8f4a45b74cade42f2c1a2d5">EditNotePage</a> (navigator:NavController, onEvent:(<a class="el" href="interfaceNotesEvent.html">NotesEvent</a>) -&gt; Unit, onTagEdit:(Note, Tag, Boolean) -&gt; Unit, note:Note, tags:List&lt; Tag &gt;, currentNoteTags:List&lt; Tag &gt;, requestCameraPermission:() -&gt; Unit, cameraPreview:@Composable(onPhotoTaken:(Bitmap) -&gt; Unit, exitCamera:() -&gt; Unit) -&gt; Unit,)</td></tr>
+<tr class="memdesc:afcc12c77b8f4a45b74cade42f2c1a2d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strona edycji notatki.  <br /></td></tr>
+<tr class="separator:afcc12c77b8f4a45b74cade42f2c1a2d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
 <div class="textblock"><p>Plik zawiera implementację strony edycji notatki. </p>
 </div><h2 class="groupheader">Dokumentacja funkcji</h2>
-<a id="aae2caa736e6a1b75ff2be1b472a00b18" name="aae2caa736e6a1b75ff2be1b472a00b18"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae2caa736e6a1b75ff2be1b472a00b18">&#9670;&#160;</a></span>EditNotePage()</h2>
+<a id="afcc12c77b8f4a45b74cade42f2c1a2d5" name="afcc12c77b8f4a45b74cade42f2c1a2d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcc12c77b8f4a45b74cade42f2c1a2d5">&#9670;&#160;</a></span>EditNotePage()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -150,7 +150,17 @@ Funkcje</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">currentNoteTags:List&lt; Tag &gt;</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;)</td>
+          <td class="paramtype">currentNoteTags:List&lt; Tag &gt;</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">requestCameraPermission:() -&gt;</td>          <td class="paramname"><span class="paramname"><em>Unit</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cameraPreview:@Composable(onPhotoTaken:(Bitmap) -&gt; Unit, exitCamera:() -&gt; Unit) -&gt;</td>          <td class="paramname"><span class="paramname"><em>Unit</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
