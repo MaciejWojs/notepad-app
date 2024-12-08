@@ -5,8 +5,10 @@
  */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
+import android.graphics.Bitmap
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -28,6 +30,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -53,14 +56,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.launch
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.converters.bitmapBytesArray
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 /**
@@ -84,6 +90,8 @@ fun EditNotePage(
     note: Note,
     tags: List<Tag>,
     currentNoteTags: List<Tag>,
+    requestCameraPermission: () -> Unit,
+    cameraPreview: @Composable (onPhotoTaken: (Bitmap) -> Unit, exitCamera: () -> Unit) -> Unit,
 ) {
     var noteTitle by remember { mutableStateOf(note.title) }
     var noteContent by remember { mutableStateOf(note.content) }
@@ -97,6 +105,16 @@ fun EditNotePage(
     val checkedMap = remember { mutableStateMapOf<Tag, Boolean>() }
     val context = LocalContext.current
     val isPrivate = remember { mutableStateOf(note.isPrivate) }
+    var showCameraPreview by remember { mutableStateOf(false) }
+    var currentImage by remember {
+        mutableStateOf(
+            note.imageFile?.let {
+                bitmapBytesArray().fromByteArray(
+                    it,
+                )
+            },
+        )
+    }
 
     fun saveNote() {
         if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
@@ -106,6 +124,7 @@ fun EditNotePage(
                         title = noteTitle,
                         content = noteContent,
                         isPrivate = isPrivate.value,
+                        imageFile = currentImage?.let { bitmapBytesArray().toByteArray(it) },
                     ),
                 ),
             )
@@ -138,167 +157,214 @@ fun EditNotePage(
 
     Log.i("Liczba", "l tagow: ${currentNoteTags.size}")
 
-    // Use LaunchedEffect to load the note when the noteID changes
-    BestNotepadEverCreatedTheme {
-        Scaffold(bottomBar = {
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-//                        .height(50.dp)
-                        .background(MaterialTheme.colorScheme.onSecondary)
-//                        .padding(WindowInsets.systemBars.asPaddingValues())
-                        .padding(
-                            bottom =
-                                WindowInsets.systemBars
-                                    .asPaddingValues()
-                                    .calculateBottomPadding(),
-                        ),
-            ) {
-                Button(
-                    onClick = { showBottomSheet = true },
-                ) {
-                    Icon(imageVector = Icons.Default.Add, contentDescription = "Add tags")
-                    Text(text = "Add/modify tags")
-                }
-                Button(
-                    onClick = {
-                        isPrivate.value = !isPrivate.value
-                        Toast.makeText(
-                            context,
-                            if (isPrivate.value) "Note is now private. Don't forget to save!" else "Note is no longer private. Don't forget to save!",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    },
-                ) {
-                    Text(text = if (isPrivate.value) "Make public" else "Make private")
-                }
-            }
-        }, modifier = Modifier.fillMaxSize()) { innerPadding ->
-
-            Column(modifier = Modifier.padding(innerPadding)) {
-                Row(
-                    Modifier
-                        .height(50.dp)
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.onSecondary)
-                        .padding(horizontal = 8.dp), // 1 Add some padding to the row
-                    horizontalArrangement = Arrangement.SpaceBetween, // Arrange items in row
-                    verticalAlignment = Alignment.CenterVertically, // Center items vertically
-                ) {
-                    GenerateIconButton(
-                        icon = Icons.AutoMirrored.Filled.ArrowBack,
-                        "Back to main screen",
-                    ) {
-                        if (!navigator.popBackStack()) {
-                            navigator.navigate("MainPage")
-                        }
-                    }
-
-                    BasicTextField(
-                        value = noteTitle,
-                        onValueChange = { noteTitle = it },
-                        singleLine = true,
-                        modifier =
-                            Modifier
-                                .padding(0.dp),
-                        textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.onSurface),
-                        cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
-                        decorationBox = { innerTextField ->
-                            Box(
-                                modifier =
-                                    Modifier
-                                        .fillMaxWidth()
-                                        .padding(0.dp)
-                                        .border(
-                                            width = 1.dp,
-                                            color = Color.Gray,
-                                            shape = MaterialTheme.shapes.small,
-                                        )
-                                        .padding(horizontal = 4.dp, vertical = 8.dp),
-                            ) {
-                                if (noteTitle.isEmpty()) {
-                                    Text(
-                                        text = "Note title",
-                                        Modifier.alpha(0.5f),
-                                    )
-                                }
-                                innerTextField()
-                            }
+    if (showCameraPreview) {
+        BestNotepadEverCreatedTheme {
+            Scaffold { innerPadding ->
+                Column(modifier = Modifier.padding(innerPadding)) {
+                    val photoDeferred = CompletableDeferred<Bitmap>()
+                    cameraPreview(
+                        { bitmap ->
+                            photoDeferred.complete(bitmap)
+                            showCameraPreview = false
+                            Log.d("CreateNotePage", "Photo size: ${bitmap.byteCount}")
+                        },
+                        {
+                            showCameraPreview = false
                         },
                     )
-                }
 
-                // Note Content TextField
-                OutlinedTextField(
-                    value = noteContent,
-                    onValueChange = { noteContent = it },
-                    label = { Text("Content") },
-                    modifier =
-                        Modifier
-                            .fillMaxSize()
-//                            .fillMaxWidth()
-                            .padding(8.dp)
-                            .defaultMinSize(minHeight = 300.dp),
-                )
-            }
-
-            if (showBottomSheet) {
-                ModalBottomSheet(
-                    onDismissRequest = { showBottomSheet = false },
-                    sheetState = sheetState,
-                ) {
-                    if (tags.isEmpty()) {
-                        Text(
-                            modifier = Modifier.align(Alignment.CenterHorizontally),
-                            text = "No tags available",
-                        )
-                    } else {
-                        LazyColumn(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally, // Center all rows horizontally
-                        ) {
-                            items(tags, key = { it.tagID }) { tag ->
-                                Row(
-                                    modifier =
-                                        Modifier
-                                            .fillMaxWidth(0.8f) // Limit row width to 80% of available width for centering
-                                            .clickable {
-                                                if (checkedMap[tag] != null) {
-                                                    checkedMap[tag] = !checkedMap[tag]!!
-                                                } else {
-                                                    checkedMap[tag] = true
-                                                }
-                                            },
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween, // Space between Text and Switch
-                                ) {
-                                    Text(
-                                        text = tag.name,
-                                        modifier = Modifier.weight(1f), // Text takes remaining space
-                                    )
-                                    Switch(
-                                        checked = checkedMap[tag] ?: false,
-                                        onCheckedChange = { isChecked ->
-                                            checkedMap[tag] = isChecked
-                                        },
-                                    )
-                                }
-                            }
-                        }
-                    }
-
-                    Button(modifier = Modifier.align(Alignment.CenterHorizontally), onClick = {
-                        scope.launch { sheetState.hide() }.invokeOnCompletion {
-                            if (!sheetState.isVisible) showBottomSheet = false
-                        }
-                    }) {
-                        Text("Hide")
+                    LaunchedEffect(Unit) {
+                        currentImage = photoDeferred.await()
                     }
                 }
             }
         }
+    } else {
+        // Use LaunchedEffect to load the note when the noteID changes
+        BestNotepadEverCreatedTheme {
+            Scaffold(bottomBar = {
+                Row(
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+//                        .height(50.dp)
+                            .background(MaterialTheme.colorScheme.onSecondary)
+//                        .padding(WindowInsets.systemBars.asPaddingValues())
+                            .padding(
+                                bottom =
+                                    WindowInsets.systemBars
+                                        .asPaddingValues()
+                                        .calculateBottomPadding(),
+                            ),
+                ) {
+                    Button(
+                        onClick = { showBottomSheet = true },
+                    ) {
+                        Icon(imageVector = Icons.Default.Add, contentDescription = "Add tags")
+                        Text(text = "Add/modify tags")
+                    }
+
+                    Button(
+                        onClick = {
+                            requestCameraPermission()
+                            showCameraPreview = true
+                        },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.PhotoCamera,
+                            contentDescription = "add photo",
+                        )
+                        Text(text = "Take photo")
+                    }
+
+                    Button(
+                        onClick = {
+                            isPrivate.value = !isPrivate.value
+                            Toast.makeText(
+                                context,
+                                if (isPrivate.value) "Note is now private. Don't forget to save!" else "Note is no longer private. Don't forget to save!",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        },
+                    ) {
+                        Text(text = if (isPrivate.value) "Make public" else "Make private")
+                    }
+                }
+            }, modifier = Modifier.fillMaxSize()) { innerPadding ->
+
+                Column(modifier = Modifier.padding(innerPadding)) {
+                    Row(
+                        Modifier
+                            .height(50.dp)
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.onSecondary)
+                            .padding(horizontal = 8.dp), // 1 Add some padding to the row
+                        horizontalArrangement = Arrangement.SpaceBetween, // Arrange items in row
+                        verticalAlignment = Alignment.CenterVertically, // Center items vertically
+                    ) {
+                        GenerateIconButton(
+                            icon = Icons.AutoMirrored.Filled.ArrowBack,
+                            "Back to main screen",
+                        ) {
+                            if (!navigator.popBackStack()) {
+                                navigator.navigate("MainPage")
+                            }
+                        }
+
+                        BasicTextField(
+                            value = noteTitle,
+                            onValueChange = { noteTitle = it },
+                            singleLine = true,
+                            modifier =
+                                Modifier
+                                    .padding(0.dp),
+                            textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.onSurface),
+                            cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
+                            decorationBox = { innerTextField ->
+                                Box(
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(0.dp)
+                                            .border(
+                                                width = 1.dp,
+                                                color = Color.Gray,
+                                                shape = MaterialTheme.shapes.small,
+                                            )
+                                            .padding(horizontal = 4.dp, vertical = 8.dp),
+                                ) {
+                                    if (noteTitle.isEmpty()) {
+                                        Text(
+                                            text = "Note title",
+                                            Modifier.alpha(0.5f),
+                                        )
+                                    }
+                                    innerTextField()
+                                }
+                            },
+                        )
+                    }
+
+                    // Note Content TextField
+                    OutlinedTextField(
+                        value = noteContent,
+                        onValueChange = { noteContent = it },
+                        label = { Text("Content") },
+                        modifier =
+                            Modifier
+                                .weight(1f)
+//                            .fillMaxSize()
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                                .defaultMinSize(minHeight = 300.dp),
+                    )
+
+                    currentImage?.asImageBitmap()?.let {
+                        Image(
+                            bitmap = it,
+                            contentDescription = "Captured image",
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
+                }
+
+                if (showBottomSheet) {
+                    ModalBottomSheet(
+                        onDismissRequest = { showBottomSheet = false },
+                        sheetState = sheetState,
+                    ) {
+                        if (tags.isEmpty()) {
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                text = "No tags available",
+                            )
+                        } else {
+                            LazyColumn(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally, // Center all rows horizontally
+                            ) {
+                                items(tags, key = { it.tagID }) { tag ->
+                                    Row(
+                                        modifier =
+                                            Modifier
+                                                .fillMaxWidth(0.8f) // Limit row width to 80% of available width for centering
+                                                .clickable {
+                                                    if (checkedMap[tag] != null) {
+                                                        checkedMap[tag] = !checkedMap[tag]!!
+                                                    } else {
+                                                        checkedMap[tag] = true
+                                                    }
+                                                },
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.SpaceBetween, // Space between Text and Switch
+                                    ) {
+                                        Text(
+                                            text = tag.name,
+                                            modifier = Modifier.weight(1f), // Text takes remaining space
+                                        )
+                                        Switch(
+                                            checked = checkedMap[tag] ?: false,
+                                            onCheckedChange = { isChecked ->
+                                                checkedMap[tag] = isChecked
+                                            },
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
+                        Button(modifier = Modifier.align(Alignment.CenterHorizontally), onClick = {
+                            scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                if (!sheetState.isVisible) showBottomSheet = false
+                            }
+                        }) {
+                            Text("Hide")
+                        }
+                    }
+                }
+            }
 //        }
+        }
     }
 }

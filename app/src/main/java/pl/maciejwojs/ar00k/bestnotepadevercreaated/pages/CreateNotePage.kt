@@ -70,6 +70,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.converters.bitmapBytesArray
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
 /**
@@ -107,10 +108,22 @@ fun CreateNotePage(
         }
 
     Log.d("CreateNotePage", "Tags: ${tags.size}")
+    var capturedImage by remember { mutableStateOf<Bitmap?>(null) }
 
     fun saveNote() {
         if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
-            val note = Note(noteTitle, noteContent, isPrivate = isPrivate.value)
+            val note =
+                Note(
+                    noteTitle,
+                    noteContent,
+                    imageFile =
+                        capturedImage?.let {
+                            bitmapBytesArray().toByteArray(
+                                it,
+                            )
+                        },
+                    isPrivate = isPrivate.value,
+                )
             viewModel.onEvent(NotesEvent.InsertNote(note, checkedMap.filter { it.value }))
 //                                onCreate(noteTitle, noteContent, checkedMap.filter { it.value })
         } else {
@@ -127,8 +140,6 @@ fun CreateNotePage(
             saveNote()
         }
     }
-
-    var capturedImage by remember { mutableStateOf<Bitmap?>(null) }
 
     if (showCameraPreview) {
         BestNotepadEverCreatedTheme {
@@ -187,6 +198,7 @@ fun CreateNotePage(
                             imageVector = Icons.Default.PhotoCamera,
                             contentDescription = "add photo",
                         )
+                        Text(text = "Take photo")
                     }
 
                     Button(

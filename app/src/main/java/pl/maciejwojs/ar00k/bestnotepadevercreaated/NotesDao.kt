@@ -51,15 +51,17 @@ interface NotesDao {
     suspend fun insertNote(note: Note): Long
 
     /**
-     * Aktualizuje tytuł, treść oraz czas modyfikacji notatki.
+     * Aktualizuje tytuł, treść, czas modyfikacji, obraz oraz dźwięk notatki.
      *
      * @param id Identyfikator notatki do zaktualizowania.
      * @param title Nowy tytuł notatki.
      * @param content Nowa treść notatki.
      * @param modificationDate Data modyfikacji, domyślnie aktualny czas.
      * @param isPrivate Flaga określająca, czy notatka jest prywatna.
+     * @param imageFile Plik obrazu powiązany z notatką.
+     * @param audioFile Plik dźwiękowy powiązany z notatką.
      */
-    @Query("UPDATE notes SET title=:title, content=:content,modificationTime=:modificationDate, isPrivate=:isPrivate WHERE noteID = :id")
+    @Query("UPDATE notes SET title=:title, content=:content, modificationTime=:modificationDate, isPrivate=:isPrivate WHERE noteID = :id")
     suspend fun updateNote(
         id: Long,
         title: String,
@@ -135,6 +137,18 @@ interface NotesDao {
      */
     @Query("SELECT * FROM notes WHERE isDeleted = 1")
     fun getTrashNotes(): Flow<List<Note>>
+
+    @Query("Update notes SET imageFile=:imageFile WHERE noteID = :id")
+    suspend fun updateNoteImage(
+        id: Long,
+        imageFile: ByteArray,
+    )
+
+    @Query("Update notes SET audioFile=:audioFile WHERE noteID = :id")
+    suspend fun updateNoteAudio(
+        id: Long,
+        audioFile: ByteArray,
+    )
 
     // Kwerendy do Tagów
 

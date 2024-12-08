@@ -103,6 +103,19 @@ class MainActivity : FragmentActivity() {
 
         // Launch coroutine to set up default relations and tags in the database if not already present
         lifecycleScope.launch {
+//            dao.insertImageFile(
+//                ImageFile(
+// //                    imageID = 1,
+//                    name = "Dummy",
+//                    bitmapBytesArray().toByteArray(
+//                        Bitmap.createBitmap(
+//                            1,
+//                            1,
+//                            Bitmap.Config.ARGB_8888,
+//                        ),
+//                    ),
+//                ),
+//            )
 //            if (dao.isAddingRelations() == 0) {
 //                dao.insertRelation()
 //            }
@@ -198,7 +211,10 @@ class MainActivity : FragmentActivity() {
                                             super.onCaptureSuccess(image)
                                             val bitmap = image.toBitmap()
                                             onPhotoTaken(bitmap)
-                                            Log.d("CreateNotePage", "Photo size in cameraScreen: ${bitmap.byteCount}")
+                                            Log.d(
+                                                "CreateNotePage",
+                                                "Photo size in cameraScreen: ${bitmap.byteCount}",
+                                            )
                                             exitCamera()
                                         }
 
@@ -389,6 +405,18 @@ class MainActivity : FragmentActivity() {
                                     },
                                 )
                                 notesWithTagPageViewModel.loadTagsByNote(noteID = note.noteID)
+                            },
+                            requestCameraPermission = { if (!hasRequiredPermissions()) requestCameraPermission() else Unit },
+                            cameraPreview = { onPhotoTaken, exit ->
+                                cameraScreen(
+                                    exitCamera = {
+                                        exit()
+//                                    onPhotoTaken(Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)) // Dummy bitmap to exit camera
+                                    },
+                                    onPhotoTaken = { bitmap ->
+                                        onPhotoTaken(bitmap)
+                                    },
+                                )
                             },
                         )
                     }

@@ -11,10 +11,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Settings
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.AudioFilesNotesCrossRef
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.converters.bitmapBytesArray
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.NotesTagsCrossRef
 
 /**
@@ -24,9 +25,15 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.relations.NotesTagsCrossRe
  * Implementacja bazy danych jest realizowana przy użyciu biblioteki Room.
  */
 @Database(
-    entities = [Note::class, Tag::class, NotesTagsCrossRef::class, AudioFilesNotesCrossRef::class, Settings::class],
+    entities = [
+        Note::class,
+        Tag::class,
+        NotesTagsCrossRef::class,
+        Settings::class,
+    ],
     version = 1,
 )
+@TypeConverters(bitmapBytesArray::class)
 abstract class NotesDatabase : RoomDatabase() {
     /**
      * Abstrakcyjna właściwość reprezentująca DAO (Data Access Object) do zarządzania operacjami na bazie danych.
