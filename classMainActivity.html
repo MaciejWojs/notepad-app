@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.4.9</span>
+   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.4.8</span>
    </div>
   </td>
  </tr>
@@ -111,12 +111,12 @@ $(function(){initNavTree('classMainActivity.html',''); initResizable(true); });
 <div class="dynheader">
 Diagram dziedziczenia dla MainActivity</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classMainActivity__inherit__graph.svg" width="371" height="432"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classMainActivity__inherit__graph.svg" width="371" height="454"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <div class="dynheader">
 Diagram współpracy dla MainActivity:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classMainActivity__coll__graph.svg" width="371" height="432"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classMainActivity__coll__graph.svg" width="371" height="454"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
@@ -130,10 +130,12 @@ Metody prywatne</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Atrybuty prywatne</h2></td></tr>
-<tr class="memitem:a07effbafe3adbc019b07c518800c9ea7" id="r_a07effbafe3adbc019b07c518800c9ea7"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07effbafe3adbc019b07c518800c9ea7">biometricPromptManager</a>: <a class="el" href="BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52">BiometricPromptManager</a> override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState) biometricPromptManager = <a class="el" href="BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52">BiometricPromptManager</a>(this) val dao: <a class="el" href="interfaceNotesDao.html">NotesDao</a> = NotesDatabase.getInstance(this).dao val context = this enableEdgeToEdge() lifecycleScope.launch { } val notesViewModel by viewModels&lt;<a class="el" href="NotesViewModel_8kt.html#aff6739272f2f4ac73819e6750c1fc4c8">NotesViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="NotesViewModel_8kt.html#aff6739272f2f4ac73819e6750c1fc4c8">NotesViewModel</a>(dao) as T } } }) val tagsViewModel by viewModels&lt;<a class="el" href="TagsViewModel_8kt.html#a5693ca525a0dfb73ff940b5b790edbaa">TagsViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="TagsViewModel_8kt.html#a5693ca525a0dfb73ff940b5b790edbaa">TagsViewModel</a>(dao) as T } } }) val notesWithTagPageViewModel by viewModels&lt;<a class="el" href="NotesTagsCrossRefViewModel_8kt.html#aae20beea6dd81ccc71fd6f16365af008">NotesTagsCrossRefViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="NotesTagsCrossRefViewModel_8kt.html#aae20beea6dd81ccc71fd6f16365af008">NotesTagsCrossRefViewModel</a>(dao) as T } } }) setContent { val ctxImg = LocalContext.current val navController = rememberNavController() val controller = remember { LifecycleCameraController(ctxImg).apply { setEnabledUseCases(LifecycleCameraController.IMAGE_CAPTURE) } } @Composable fun cameraScreen( exitCamera: () -&gt; Unit</td></tr>
+<tr class="memitem:a07effbafe3adbc019b07c518800c9ea7" id="r_a07effbafe3adbc019b07c518800c9ea7"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07effbafe3adbc019b07c518800c9ea7">biometricPromptManager</a>: <a class="el" href="BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52">BiometricPromptManager</a> override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState) biometricPromptManager = <a class="el" href="BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52">BiometricPromptManager</a>(this) val dao: <a class="el" href="interfaceNotesDao.html">NotesDao</a> = NotesDatabase.getInstance(this).dao val context = this enableEdgeToEdge() lifecycleScope.launch { } val notesViewModel by viewModels&lt;<a class="el" href="NotesViewModel_8kt.html#aff6739272f2f4ac73819e6750c1fc4c8">NotesViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="NotesViewModel_8kt.html#aff6739272f2f4ac73819e6750c1fc4c8">NotesViewModel</a>(dao) as T } } }) val tagsViewModel by viewModels&lt;<a class="el" href="TagsViewModel_8kt.html#a5693ca525a0dfb73ff940b5b790edbaa">TagsViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="TagsViewModel_8kt.html#a5693ca525a0dfb73ff940b5b790edbaa">TagsViewModel</a>(dao) as T } } }) val notesWithTagPageViewModel by viewModels&lt;<a class="el" href="NotesTagsCrossRefViewModel_8kt.html#aae20beea6dd81ccc71fd6f16365af008">NotesTagsCrossRefViewModel</a>&gt;(factoryProducer = { object : ViewModelProvider.Factory { override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T { return <a class="el" href="NotesTagsCrossRefViewModel_8kt.html#aae20beea6dd81ccc71fd6f16365af008">NotesTagsCrossRefViewModel</a>(dao) as T } } }) setContent { val ctxImg = LocalContext.current val navController = rememberNavController() val controller = remember { LifecycleCameraController(ctxImg).apply { setEnabledUseCases(LifecycleCameraController.IMAGE_CAPTURE) } } @Composable fun cameraScreen(exitCamera: () -&gt; Unit) { var scaffoldState = rememberBottomSheetScaffoldState() BottomSheetScaffold( scaffoldState = scaffoldState</td></tr>
 <tr class="separator:a07effbafe3adbc019b07c518800c9ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4762a551f59feb98f2c1ce45c98ce35" id="r_ac4762a551f59feb98f2c1ce45c98ce35"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac4762a551f59feb98f2c1ce45c98ce35">onPhotoTaken</a>: (Bitmap) -&gt; Unit</td></tr>
-<tr class="separator:ac4762a551f59feb98f2c1ce45c98ce35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba9c12596dad401e9205302d825e8383" id="r_aba9c12596dad401e9205302d825e8383"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba9c12596dad401e9205302d825e8383">sheetPeekHeight</a> = 0.dp</td></tr>
+<tr class="separator:aba9c12596dad401e9205302d825e8383"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f655fa18dc837cfb7e9520dea263f3b" id="r_a5f655fa18dc837cfb7e9520dea263f3b"><td class="memItemLeft" align="right" valign="top">lateinit var&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f655fa18dc837cfb7e9520dea263f3b">sheetContent</a></td></tr>
+<tr class="separator:a5f655fa18dc837cfb7e9520dea263f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
 <div class="textblock"><p>Główna aktywność aplikacji BestNotepadEverCreated. </p>
@@ -263,8 +265,8 @@ Atrybuty prywatne</h2></td></tr>
 
 </div>
 </div>
-<a id="ac4762a551f59feb98f2c1ce45c98ce35" name="ac4762a551f59feb98f2c1ce45c98ce35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4762a551f59feb98f2c1ce45c98ce35">&#9670;&#160;</a></span>onPhotoTaken</h2>
+<a id="a5f655fa18dc837cfb7e9520dea263f3b" name="a5f655fa18dc837cfb7e9520dea263f3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f655fa18dc837cfb7e9520dea263f3b">&#9670;&#160;</a></span>sheetContent</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -273,7 +275,31 @@ Atrybuty prywatne</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">lateinit var MainActivity.onPhotoTaken</td>
+          <td class="memname">lateinit var MainActivity.sheetContent</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Wartość początkowa:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">                    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aba9c12596dad401e9205302d825e8383" name="aba9c12596dad401e9205302d825e8383"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba9c12596dad401e9205302d825e8383">&#9670;&#160;</a></span>sheetPeekHeight</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">lateinit var MainActivity.sheetPeekHeight = 0.dp</td>
         </tr>
       </table>
   </td>
