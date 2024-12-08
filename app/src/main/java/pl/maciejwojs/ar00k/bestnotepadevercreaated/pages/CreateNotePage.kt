@@ -5,8 +5,10 @@
  */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
+import android.graphics.Bitmap
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -42,6 +44,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
@@ -53,9 +56,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.launch
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
@@ -79,7 +84,7 @@ fun CreateNotePage(
 //    onCreate: (String, String, Map<Tag, Boolean>) -> Unit,
     tags: List<Tag>,
     requestCameraPermission: () -> Unit,
-    cameraPreview: @Composable (exit: () -> Unit) -> Unit,
+    cameraPreview: @Composable (onPhotoTaken: (Bitmap) -> Unit, exitCamera: () -> Unit) -> Unit,
 ) {
     var noteTitle by remember { mutableStateOf("") }
     var noteContent by remember { mutableStateOf("") }
@@ -120,13 +125,23 @@ fun CreateNotePage(
         }
     }
 
+    var capturedImage by remember { mutableStateOf<Bitmap?>(null) }
+
     if (showCameraPreview) {
-        Scaffold { innerPadding ->
-            Column(modifier = Modifier.padding(innerPadding)) {
-                cameraPreview {
-                    showCameraPreview = false
-                }
-            }
+        val photoDeferred = CompletableDeferred<Bitmap>()
+        cameraPreview(
+            { bitmap ->
+                photoDeferred.complete(bitmap)
+                showCameraPreview = false
+                Log.d("CreateNotePage", "Photo size: ${bitmap.byteCount}")
+            },
+            {
+                showCameraPreview = false
+            },
+        )
+
+        LaunchedEffect(Unit) {
+            capturedImage = photoDeferred.await()
         }
     } else {
         BestNotepadEverCreatedTheme {
@@ -245,10 +260,18 @@ fun CreateNotePage(
                         label = { Text("Content") },
                         modifier =
                             Modifier
-                                .fillMaxSize()
+//                                .fillMaxSize()
                                 .padding(8.dp)
                                 .defaultMinSize(minHeight = 300.dp),
                     )
+
+                    capturedImage?.asImageBitmap()?.let {
+                        Image(
+                            bitmap = it,
+                            contentDescription = "Captured image",
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
 
                     if (showBottomSheet) {
                         ModalBottomSheet(

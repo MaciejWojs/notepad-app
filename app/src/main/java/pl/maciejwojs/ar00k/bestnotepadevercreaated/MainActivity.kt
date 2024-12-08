@@ -147,32 +147,16 @@ class MainActivity : FragmentActivity() {
                 }
 
             @Composable
-            fun cameraScreen(exitCamera: () -> Unit) {
+            fun cameraScreen(
+                exitCamera: () -> Unit,
+                onPhotoTaken: (Bitmap) -> Unit,
+            ) {
                 var scaffoldState = rememberBottomSheetScaffoldState()
                 BottomSheetScaffold(
-                    scaffoldState = scaffoldState,
+                    scaffoldState = rememberBottomSheetScaffoldState(),
                     sheetPeekHeight = 0.dp,
-                    sheetContent = {
-                    },
+                    sheetContent = {},
                 ) { padding ->
-                    fun takePhoto(
-                        controller: LifecycleCameraController,
-                        onPhotoTaken: (Bitmap) -> Unit,
-                    ) {
-                        controller.takePicture(
-                            ContextCompat.getMainExecutor(ctxImg),
-                            object : OnImageCapturedCallback() {
-                                override fun onCaptureSuccess(image: ImageProxy) {
-                                    super.onCaptureSuccess(image)
-                                    onPhotoTaken(image.toBitmap())
-                                }
-
-                                override fun onError(exception: ImageCaptureException) {
-                                    Log.e("Camera", "Capture failed: ${exception.message}")
-                                }
-                            },
-                        )
-                    }
                     Box(
                         modifier =
                             Modifier
@@ -181,9 +165,7 @@ class MainActivity : FragmentActivity() {
                     ) {
                         CameraPreview(
                             controller = controller,
-                            modifier =
-                                Modifier
-                                    .fillMaxSize(),
+                            modifier = Modifier.fillMaxSize(),
                         )
                         IconButton(onClick = { exitCamera() }) {
                             Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
@@ -209,12 +191,22 @@ class MainActivity : FragmentActivity() {
                                     .align(Alignment.BottomCenter)
                                     .size(100.dp),
                             onClick = {
-                                val photo =
-                                    takePhoto(controller) { bitmap ->
-//                                    bitmap -> bitmap.
-                                        exitCamera()
-                                    }
-//                                exitCamera()
+                                controller.takePicture(
+                                    ContextCompat.getMainExecutor(context),
+                                    object : OnImageCapturedCallback() {
+                                        override fun onCaptureSuccess(image: ImageProxy) {
+                                            super.onCaptureSuccess(image)
+                                            val bitmap = image.toBitmap()
+                                            onPhotoTaken(bitmap)
+                                            Log.d("CreateNotePage", "Photo size in cameraScreen: ${bitmap.byteCount}")
+                                            exitCamera()
+                                        }
+
+                                        override fun onError(exception: ImageCaptureException) {
+                                            Log.e("Camera", "Capture failed: ${exception.message}")
+                                        }
+                                    },
+                                )
                             },
                         ) {
                             Icon(Icons.Default.Camera, contentDescription = "Take picture")
@@ -321,10 +313,14 @@ class MainActivity : FragmentActivity() {
 //                        },
                         tags = tags,
                         requestCameraPermission = { if (!hasRequiredPermissions()) requestCameraPermission() else Unit },
-                        cameraPreview = { exit ->
+                        cameraPreview = { onPhotoTaken, exit ->
                             cameraScreen(
                                 exitCamera = {
                                     exit()
+//                                    onPhotoTaken(Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)) // Dummy bitmap to exit camera
+                                },
+                                onPhotoTaken = { bitmap ->
+                                    onPhotoTaken(bitmap)
                                 },
                             )
                         },
