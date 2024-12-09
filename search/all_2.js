@@ -5,6 +5,6 @@ var searchData=
   ['camerapreview_2',['CameraPreview',['../CameraPreview_8kt.html#a0bce7a2283bd6bafb8cf1f281071aadd',1,'CameraPreview.kt']]],
   ['camerapreview_2ekt_3',['CameraPreview.kt',['../CameraPreview_8kt.html',1,'']]],
   ['color_2ekt_4',['Color.kt',['../Color_8kt.html',1,'']]],
-  ['createnotepage_5',['CreateNotePage',['../CreateNotePage_8kt.html#a7850c0d2f3da09ffe847b89dbcf92c04',1,'CreateNotePage.kt']]],
+  ['createnotepage_5',['CreateNotePage',['../CreateNotePage_8kt.html#a43079327fc7a4de69e47e3581fd79363',1,'CreateNotePage.kt']]],
   ['createnotepage_2ekt_6',['CreateNotePage.kt',['../CreateNotePage_8kt.html',1,'']]]
 ];
