@@ -110,9 +110,7 @@ fun EditNotePage(
     var showCameraPreview by remember { mutableStateOf(false) }
     var currentImage by remember {
         mutableStateOf(
-            URI(
-                note.imageFile,
-            ),
+            note.imageFile?.let { URI(it) } ?: URI(""),
         )
     }
 
@@ -181,6 +179,10 @@ fun EditNotePage(
                     SideEffect {
                         scope.launch {
                             val temp = photoDeferred.await()
+                            if (currentImage.path.isNotEmpty()) {
+                                val file = File(currentImage.path)
+                                file.delete()
+                            }
                             currentImage = temp
 //                            currentImage = photoDeferred.await()
 //                            Log.d("EditNotePage", "New image size: ${currentImage?.byteCount}")
@@ -308,14 +310,15 @@ fun EditNotePage(
                                 .defaultMinSize(minHeight = 300.dp),
                     )
 
-                    val file = File(currentImage.path)
-                    val bitmap = BitmapFactory.decodeFile(file.path).asImageBitmap()
-                    Image(
-                        bitmap = bitmap,
-                        contentDescription = "Captured image",
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-
+                    if (currentImage.path.isNotEmpty()) {
+                        val file = File(currentImage.path)
+                        val bitmap = BitmapFactory.decodeFile(file.path).asImageBitmap()
+                        Image(
+                            bitmap = bitmap,
+                            contentDescription = "Captured image",
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
                     if (showBottomSheet) {
                         ModalBottomSheet(
                             onDismissRequest = { showBottomSheet = false },

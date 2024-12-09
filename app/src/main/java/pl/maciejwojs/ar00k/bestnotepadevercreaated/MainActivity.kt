@@ -224,7 +224,7 @@ class MainActivity : FragmentActivity() {
                                             }
                                             val filename =
                                                 LocalDateTime.now()
-                                                    .format(DateTimeFormatter.ofPattern("HH_mm-dd_MM_yyyy")) + ".png"
+                                                    .format(DateTimeFormatter.ofPattern("HH_mm_ss-dd_MM_yyyy")) + ".png"
                                             val file = File(letDir, filename)
 
                                             Log.d("File", "Saving file to file system")
