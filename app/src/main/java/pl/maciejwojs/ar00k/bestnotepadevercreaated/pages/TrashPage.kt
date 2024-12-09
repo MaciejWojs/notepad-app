@@ -25,17 +25,21 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +59,7 @@ fun TrashPage(
 ) {
     val notes by viewModel.trashNotes.collectAsState(initial = emptyList())
     val scope = rememberCoroutineScope()
+    var deleteAllTagsDialog = remember { mutableStateOf(false) }
     BestNotepadEverCreatedTheme {
         Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
             FloatingActionButton(
@@ -103,9 +108,14 @@ fun TrashPage(
                         )
                         GenerateIconButton(Icons.Default.Search, "Search menu") {}
                     }
-                    GenerateIconButton(icon = Icons.Default.Settings, "Settings") {
-                        navigator.navigate("SettingsPage")
-                    }
+                    GenerateIconButton(
+                        icon = Icons.Default.Delete,
+                        "Delete all notes",
+                        onClick = {
+                            deleteAllTagsDialog.value = true
+                        },
+                        isEnabled = notes.any { it.isDeleted },
+                    )
                 }
 
                 LazyColumn(
@@ -140,6 +150,36 @@ fun TrashPage(
                             },
                         )
                     }
+                }
+                if (deleteAllTagsDialog.value) {
+                    AlertDialog(
+                        title = {
+                            Text(text = "Permanent Delete All Notes")
+                        },
+                        text = {
+                            Text("Are you sure you want to delete all notes?")
+                        },
+                        onDismissRequest = {
+                            deleteAllTagsDialog.value = false
+                        },
+                        confirmButton = {
+                            TextButton(onClick = {
+                                notes.filter { it.isDeleted }.forEach {
+                                    viewModel.onEvent(NotesEvent.DeleteNote(it))
+                                }
+                                deleteAllTagsDialog.value = false
+                            }) {
+                                Text("Confirm")
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = {
+                                deleteAllTagsDialog.value = false
+                            }) {
+                                Text("Dismiss")
+                            }
+                        },
+                    )
                 }
             }
         }
