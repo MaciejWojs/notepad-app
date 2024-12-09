@@ -30,7 +30,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Camera
@@ -43,6 +43,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -50,6 +51,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -62,7 +64,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.converters.BitmapBytesArray
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.CreateNotePage
@@ -175,6 +179,10 @@ class MainActivity : FragmentActivity() {
                 onPhotoTaken: (URI) -> Unit,
             ) {
                 val scaffoldState = rememberBottomSheetScaffoldState()
+                val capturedImageUri = remember { mutableStateOf<URI?>(null) }
+                val showText = remember { mutableStateOf(false) }
+                controller.isTapToFocusEnabled = true
+
                 BottomSheetScaffold(
                     scaffoldState = scaffoldState,
                     sheetPeekHeight = 0.dp,
@@ -190,6 +198,22 @@ class MainActivity : FragmentActivity() {
                             controller = controller,
                             modifier = Modifier.fillMaxSize(),
                         )
+
+                        if (showText.value) {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                            ) {
+                                Text(
+                                    text = "Processing captured image...",
+                                    style = MaterialTheme.typography.titleLarge,
+                                    modifier =
+                                        Modifier
+                                            .align(Alignment.Center)
+                                            .background(MaterialTheme.colorScheme.onSecondary),
+                                )
+                            }
+                        }
+
                         IconButton(onClick = { exitCamera() }) {
                             Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
                         }
@@ -239,57 +263,81 @@ class MainActivity : FragmentActivity() {
                         IconButton(
                             modifier =
                                 Modifier
-                                    .align(Alignment.BottomCenter)
-                                    .size(100.dp),
+                                    .clip(CircleShape)
+                                    .background(MaterialTheme.colorScheme.onSecondary)
+                                    .align(Alignment.BottomCenter),
                             onClick = {
+                                showText.value = true
                                 controller.takePicture(
                                     ContextCompat.getMainExecutor(context),
                                     object : OnImageCapturedCallback() {
                                         override fun onCaptureSuccess(image: ImageProxy) {
                                             super.onCaptureSuccess(image)
-                                            val bitmap = image.toBitmap()
-                                            val path = context.getExternalFilesDir(null)
-                                            val folder = "photos"
+                                            controller.unbind()
+                                            lifecycleScope.launch(Dispatchers.Default) {
+                                                val bitmap =
+                                                    withContext(Dispatchers.IO) {
+                                                        image.toBitmap()
+                                                    }
 
-                                            val letDir = File(path, folder)
-                                            if (!letDir.exists()) {
-                                                letDir.mkdirs()
-                                            }
-                                            val filename =
-                                                LocalDateTime.now()
-                                                    .format(DateTimeFormatter.ofPattern("HH_mm_ss-dd_MM_yyyy")) + ".png"
-                                            val file = File(letDir, filename)
+                                                val path = context.getExternalFilesDir(null)
+                                                val folder = "photos"
 
-                                            Log.d("File", "Saving file to file system")
-
-                                            try {
-                                                FileOutputStream(file).use {
-                                                    it.write(BitmapBytesArray().toByteArray(bitmap))
+                                                val letDir = File(path, folder)
+                                                if (!letDir.exists()) {
+                                                    letDir.mkdirs()
                                                 }
-                                                Log.d("File", "Saved file in file system")
-                                            } catch (e: Exception) {
-                                                Log.e("File", "Error saving file: ${e.message}")
+                                                val filename =
+                                                    LocalDateTime.now()
+                                                        .format(DateTimeFormatter.ofPattern("HH_mm_ss-dd_MM_yyyy")) + ".png"
+                                                val file = File(letDir, filename)
+
+                                                Log.d("File", "Saving file to file system")
+
+                                                try {
+                                                    withContext(Dispatchers.IO) {
+                                                        FileOutputStream(file).use {
+                                                            it.write(
+                                                                BitmapBytesArray().toByteArray(
+                                                                    bitmap,
+                                                                ),
+                                                            )
+                                                        }
+                                                    }
+                                                    Log.d("File", "Saved file in file system")
+                                                } catch (e: Exception) {
+                                                    Log.e("File", "Error saving file: ${e.message}")
+                                                }
+
+                                                val uri = file.toURI()
+                                                Log.d("File", "URI: $uri")
+
+                                                withContext(Dispatchers.Main) {
+                                                    capturedImageUri.value = uri
+                                                    onPhotoTaken(uri)
+                                                    Log.d(
+                                                        "CreateNotePage",
+                                                        "Photo size in cameraScreen: ${bitmap.byteCount}",
+                                                    )
+                                                    showText.value = false
+                                                    exitCamera()
+                                                }
                                             }
-
-                                            val uri = file.toURI()
-                                            Log.d("File", "URI: $uri")
-
-                                            onPhotoTaken(uri)
-                                            Log.d(
-                                                "CreateNotePage",
-                                                "Photo size in cameraScreen: ${bitmap.byteCount}",
-                                            )
-                                            exitCamera()
                                         }
 
                                         override fun onError(exception: ImageCaptureException) {
+                                            showText.value = false
                                             Log.e("Camera", "Capture failed: ${exception.message}")
                                         }
                                     },
                                 )
                             },
                         ) {
-                            Icon(Icons.Default.Camera, contentDescription = "Take picture")
+                            Icon(
+                                Icons.Default.Camera,
+                                contentDescription = "Take picture",
+                                modifier = Modifier.fillMaxSize(),
+                            )
                         }
                     }
                 }
