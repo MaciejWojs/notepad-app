@@ -5,7 +5,7 @@
  */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
-import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -67,8 +67,9 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.converters.BitmapBytesArray
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
+import java.io.File
+import java.net.URI
 
 /**
  * Strona edycji notatki.
@@ -92,7 +93,7 @@ fun EditNotePage(
     tags: List<Tag>,
     currentNoteTags: List<Tag>,
     requestCameraPermission: () -> Unit,
-    cameraPreview: @Composable (onPhotoTaken: (Bitmap) -> Unit, exitCamera: () -> Unit) -> Unit,
+    cameraPreview: @Composable (onPhotoTaken: (URI) -> Unit, exitCamera: () -> Unit) -> Unit,
 ) {
     var noteTitle by remember { mutableStateOf(note.title) }
     var noteContent by remember { mutableStateOf(note.content) }
@@ -109,26 +110,24 @@ fun EditNotePage(
     var showCameraPreview by remember { mutableStateOf(false) }
     var currentImage by remember {
         mutableStateOf(
-            note.imageFile?.let {
-                BitmapBytesArray().fromByteArray(
-                    it,
-                )
-            },
+            URI(
+                note.imageFile,
+            ),
         )
     }
 
     fun saveNote() {
         if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
-            Log.d("EditNotePage", "Saving note, image size: ${currentImage?.byteCount}")
-            val temp = currentImage?.let { BitmapBytesArray().toByteArray(it) }
-            Log.d("EditNotePageTemp", "Saving note, image size: ${temp?.size}")
+//            Log.d("EditNotePage", "Saving note, image size: ${currentImage?.byteCount}")
+            val temp = currentImage
+//            Log.d("EditNotePageTemp", "Saving note, image size: ${temp?.size}")
             onEvent(
                 NotesEvent.UpdateNote(
                     note.copy(
                         title = noteTitle,
                         content = noteContent,
                         isPrivate = isPrivate.value,
-                        imageFile = temp,
+                        imageFile = temp.path,
                     ),
                 ),
             )
@@ -165,13 +164,13 @@ fun EditNotePage(
         BestNotepadEverCreatedTheme {
             Scaffold { innerPadding ->
                 Column(modifier = Modifier.padding(innerPadding)) {
-                    Log.d("EditNotePage", "Old image size: ${currentImage?.byteCount}")
-                    val photoDeferred = CompletableDeferred<Bitmap>()
+//                    Log.d("EditNotePage", "Old image size: ${currentImage?.byteCount}")
+                    val photoDeferred = CompletableDeferred<URI>()
                     cameraPreview(
-                        { bitmap ->
-                            photoDeferred.complete(bitmap)
+                        { URI ->
+                            photoDeferred.complete(URI)
                             showCameraPreview = false
-                            Log.d("EditNotePage", "Photo size: ${bitmap.byteCount}")
+//                            Log.d("EditNotePage", "Photo size: ${bitmap.byteCount}")
                         },
                         {
                             showCameraPreview = false
@@ -181,8 +180,10 @@ fun EditNotePage(
 //                    val latestBitmap by rememberUpdatedState()
                     SideEffect {
                         scope.launch {
-                            currentImage = photoDeferred.await()
-                            Log.d("EditNotePage", "New image size: ${currentImage?.byteCount}")
+                            val temp = photoDeferred.await()
+                            currentImage = temp
+//                            currentImage = photoDeferred.await()
+//                            Log.d("EditNotePage", "New image size: ${currentImage?.byteCount}")
                         }
                     }
                 }
@@ -265,9 +266,7 @@ fun EditNotePage(
                             value = noteTitle,
                             onValueChange = { noteTitle = it },
                             singleLine = true,
-                            modifier =
-                                Modifier
-                                    .padding(0.dp),
+                            modifier = Modifier.padding(0.dp),
                             textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.onSurface),
                             cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
                             decorationBox = { innerTextField ->
@@ -309,71 +308,74 @@ fun EditNotePage(
                                 .defaultMinSize(minHeight = 300.dp),
                     )
 
-                    currentImage?.asImageBitmap()?.let {
-                        Image(
-                            bitmap = it,
-                            contentDescription = "Captured image",
-                            modifier = Modifier.fillMaxWidth(),
-                        )
-                    }
-                }
+                    val file = File(currentImage.path)
+                    val bitmap = BitmapFactory.decodeFile(file.path).asImageBitmap()
+                    Image(
+                        bitmap = bitmap,
+                        contentDescription = "Captured image",
+                        modifier = Modifier.fillMaxWidth(),
+                    )
 
-                if (showBottomSheet) {
-                    ModalBottomSheet(
-                        onDismissRequest = { showBottomSheet = false },
-                        sheetState = sheetState,
-                    ) {
-                        if (tags.isEmpty()) {
-                            Text(
-                                modifier = Modifier.align(Alignment.CenterHorizontally),
-                                text = "No tags available",
-                            )
-                        } else {
-                            LazyColumn(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalAlignment = Alignment.CenterHorizontally, // Center all rows horizontally
-                            ) {
-                                items(tags, key = { it.tagID }) { tag ->
-                                    Row(
-                                        modifier =
-                                            Modifier
-                                                .fillMaxWidth(0.8f) // Limit row width to 80% of available width for centering
-                                                .clickable {
-                                                    if (checkedMap[tag] != null) {
-                                                        checkedMap[tag] = !checkedMap[tag]!!
-                                                    } else {
-                                                        checkedMap[tag] = true
-                                                    }
+                    if (showBottomSheet) {
+                        ModalBottomSheet(
+                            onDismissRequest = { showBottomSheet = false },
+                            sheetState = sheetState,
+                        ) {
+                            if (tags.isEmpty()) {
+                                Text(
+                                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                                    text = "No tags available",
+                                )
+                            } else {
+                                LazyColumn(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalAlignment = Alignment.CenterHorizontally, // Center all rows horizontally
+                                ) {
+                                    items(tags, key = { it.tagID }) { tag ->
+                                        Row(
+                                            modifier =
+                                                Modifier
+                                                    .fillMaxWidth(0.8f) // Limit row width to 80% of available width for centering
+                                                    .clickable {
+                                                        if (checkedMap[tag] != null) {
+                                                            checkedMap[tag] = !checkedMap[tag]!!
+                                                        } else {
+                                                            checkedMap[tag] = true
+                                                        }
+                                                    },
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.SpaceBetween, // Space between Text and Switch
+                                        ) {
+                                            Text(
+                                                text = tag.name,
+                                                modifier = Modifier.weight(1f), // Text takes remaining space
+                                            )
+                                            Switch(
+                                                checked = checkedMap[tag] ?: false,
+                                                onCheckedChange = { isChecked ->
+                                                    checkedMap[tag] = isChecked
                                                 },
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween, // Space between Text and Switch
-                                    ) {
-                                        Text(
-                                            text = tag.name,
-                                            modifier = Modifier.weight(1f), // Text takes remaining space
-                                        )
-                                        Switch(
-                                            checked = checkedMap[tag] ?: false,
-                                            onCheckedChange = { isChecked ->
-                                                checkedMap[tag] = isChecked
-                                            },
-                                        )
+                                            )
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        Button(modifier = Modifier.align(Alignment.CenterHorizontally), onClick = {
-                            scope.launch { sheetState.hide() }.invokeOnCompletion {
-                                if (!sheetState.isVisible) showBottomSheet = false
+                            Button(
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                onClick = {
+                                    scope.launch { sheetState.hide() }.invokeOnCompletion {
+                                        if (!sheetState.isVisible) showBottomSheet = false
+                                    }
+                                },
+                            ) {
+                                Text("Hide")
                             }
-                        }) {
-                            Text("Hide")
                         }
                     }
                 }
-            }
 //        }
+            }
         }
     }
 }

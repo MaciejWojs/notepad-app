@@ -5,7 +5,7 @@
  */
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.pages
 
-import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -70,8 +70,9 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
-import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.converters.BitmapBytesArray
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
+import java.io.File
+import java.net.URI
 
 /**
  * Strona tworzenia notatki.
@@ -88,7 +89,7 @@ fun CreateNotePage(
 //    onCreate: (String, String, Map<Tag, Boolean>) -> Unit,
     tags: List<Tag>,
     requestCameraPermission: () -> Unit,
-    cameraPreview: @Composable (onPhotoTaken: (Bitmap) -> Unit, exitCamera: () -> Unit) -> Unit,
+    cameraPreview: @Composable (onPhotoTaken: (URI) -> Unit, exitCamera: () -> Unit) -> Unit,
 ) {
     var noteTitle by remember { mutableStateOf("") }
     var noteContent by remember { mutableStateOf("") }
@@ -108,7 +109,7 @@ fun CreateNotePage(
         }
 
     Log.d("CreateNotePage", "Tags: ${tags.size}")
-    var capturedImage by remember { mutableStateOf<Bitmap?>(null) }
+    var capturedImage by remember { mutableStateOf<URI?>(null) }
 
     fun saveNote() {
         if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
@@ -116,12 +117,7 @@ fun CreateNotePage(
                 Note(
                     noteTitle,
                     noteContent,
-                    imageFile =
-                        capturedImage?.let {
-                            BitmapBytesArray().toByteArray(
-                                it,
-                            )
-                        },
+                    imageFile = capturedImage?.path,
                     isPrivate = isPrivate.value,
                 )
             viewModel.onEvent(NotesEvent.InsertNote(note, checkedMap.filter { it.value }))
@@ -145,12 +141,12 @@ fun CreateNotePage(
         BestNotepadEverCreatedTheme {
             Scaffold { innerPadding ->
                 Column(modifier = Modifier.padding(innerPadding)) {
-                    val photoDeferred = CompletableDeferred<Bitmap>()
+                    val photoDeferred = CompletableDeferred<URI>()
                     cameraPreview(
-                        { bitmap ->
-                            photoDeferred.complete(bitmap)
+                        { uri ->
+                            photoDeferred.complete(uri)
                             showCameraPreview = false
-                            Log.d("CreateNotePage", "Photo size: ${bitmap.byteCount}")
+//                            Log.d("CreateNotePage", "Photo size: ${bitmap.byteCount}")
                         },
                         {
                             showCameraPreview = false
@@ -158,7 +154,8 @@ fun CreateNotePage(
                     )
 
                     LaunchedEffect(Unit) {
-                        capturedImage = photoDeferred.await()
+                        val temp = photoDeferred.await()
+                        capturedImage = temp
                     }
                 }
             }
@@ -292,9 +289,11 @@ fun CreateNotePage(
                                 .defaultMinSize(minHeight = 300.dp),
                     )
 
-                    capturedImage?.asImageBitmap()?.let {
+                    if (capturedImage != null) {
+                        val file = File(capturedImage!!.path)
+                        val bitmap = BitmapFactory.decodeFile(file.path).asImageBitmap()
                         Image(
-                            bitmap = it,
+                            bitmap = bitmap,
                             contentDescription = "Captured image",
                             modifier = Modifier.fillMaxWidth(),
                         )

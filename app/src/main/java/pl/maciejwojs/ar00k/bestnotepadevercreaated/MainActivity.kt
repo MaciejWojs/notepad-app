@@ -10,7 +10,6 @@ package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
@@ -60,6 +59,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import kotlinx.coroutines.launch
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.converters.BitmapBytesArray
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.CreateNotePage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.EditNotePage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.HamburgerPage
@@ -67,6 +67,11 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.MainPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.NotesWithTagPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.SettingsPage
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.TrashPage
+import java.io.File
+import java.io.FileOutputStream
+import java.net.URI
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * Główna aktywność aplikacji BestNotepadEverCreated.
@@ -162,11 +167,11 @@ class MainActivity : FragmentActivity() {
             @Composable
             fun cameraScreen(
                 exitCamera: () -> Unit,
-                onPhotoTaken: (Bitmap) -> Unit,
+                onPhotoTaken: (URI) -> Unit,
             ) {
-                var scaffoldState = rememberBottomSheetScaffoldState()
+                val scaffoldState = rememberBottomSheetScaffoldState()
                 BottomSheetScaffold(
-                    scaffoldState = rememberBottomSheetScaffoldState(),
+                    scaffoldState = scaffoldState,
                     sheetPeekHeight = 0.dp,
                     sheetContent = {},
                 ) { padding ->
@@ -210,7 +215,33 @@ class MainActivity : FragmentActivity() {
                                         override fun onCaptureSuccess(image: ImageProxy) {
                                             super.onCaptureSuccess(image)
                                             val bitmap = image.toBitmap()
-                                            onPhotoTaken(bitmap)
+                                            val path = context.getExternalFilesDir(null)
+                                            val folder = "photos"
+
+                                            val letDir = File(path, folder)
+                                            if (!letDir.exists()) {
+                                                letDir.mkdirs()
+                                            }
+                                            val filename =
+                                                LocalDateTime.now()
+                                                    .format(DateTimeFormatter.ofPattern("HH_mm-dd_MM_yyyy")) + ".png"
+                                            val file = File(letDir, filename)
+
+                                            Log.d("File", "Saving file to file system")
+
+                                            try {
+                                                FileOutputStream(file).use {
+                                                    it.write(BitmapBytesArray().toByteArray(bitmap))
+                                                }
+                                                Log.d("File", "Saved file in file system")
+                                            } catch (e: Exception) {
+                                                Log.e("File", "Error saving file: ${e.message}")
+                                            }
+
+                                            val uri = file.toURI()
+                                            Log.d("File", "URI: $uri")
+
+                                            onPhotoTaken(uri)
                                             Log.d(
                                                 "CreateNotePage",
                                                 "Photo size in cameraScreen: ${bitmap.byteCount}",
@@ -335,8 +366,8 @@ class MainActivity : FragmentActivity() {
                                     exit()
 //                                    onPhotoTaken(Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)) // Dummy bitmap to exit camera
                                 },
-                                onPhotoTaken = { bitmap ->
-                                    onPhotoTaken(bitmap)
+                                onPhotoTaken = { uri ->
+                                    onPhotoTaken(uri)
                                 },
                             )
                         },
@@ -413,8 +444,8 @@ class MainActivity : FragmentActivity() {
                                         exit()
 //                                    onPhotoTaken(Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)) // Dummy bitmap to exit camera
                                     },
-                                    onPhotoTaken = { bitmap ->
-                                        onPhotoTaken(bitmap)
+                                    onPhotoTaken = { uri ->
+                                        onPhotoTaken(uri)
                                     },
                                 )
                             },
