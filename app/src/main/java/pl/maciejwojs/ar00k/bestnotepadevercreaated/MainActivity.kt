@@ -16,6 +16,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCapture.OnImageCapturedCallback
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
@@ -34,6 +35,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Camera
 import androidx.compose.material.icons.filled.Cameraswitch
+import androidx.compose.material.icons.filled.FlashAuto
+import androidx.compose.material.icons.filled.FlashOff
+import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -42,6 +46,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -201,6 +206,34 @@ class MainActivity : FragmentActivity() {
                             },
                         ) {
                             Icon(Icons.Default.Cameraswitch, contentDescription = "Switch camera")
+                        }
+
+                        val flashIcon = remember { mutableStateOf(Icons.Default.FlashAuto) }
+                        IconButton(modifier = Modifier.align(Alignment.TopCenter), onClick = {
+                            controller.imageCaptureFlashMode =
+                                when (controller.imageCaptureFlashMode) {
+                                    ImageCapture.FLASH_MODE_AUTO -> {
+                                        flashIcon.value = Icons.Default.FlashOn
+                                        ImageCapture.FLASH_MODE_ON
+                                    }
+
+                                    ImageCapture.FLASH_MODE_ON -> {
+                                        flashIcon.value = Icons.Default.FlashOff
+                                        ImageCapture.FLASH_MODE_OFF
+                                    }
+
+                                    ImageCapture.FLASH_MODE_OFF -> {
+                                        flashIcon.value = Icons.Default.FlashAuto
+                                        ImageCapture.FLASH_MODE_AUTO
+                                    }
+
+                                    else -> {
+                                        flashIcon.value = Icons.Default.FlashAuto
+                                        ImageCapture.FLASH_MODE_AUTO
+                                    }
+                                }
+                        }) {
+                            Icon(flashIcon.value, contentDescription = "Switch flash")
                         }
 
                         IconButton(
