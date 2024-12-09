@@ -29,7 +29,6 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -38,7 +37,6 @@ import androidx.compose.material.icons.filled.Cameraswitch
 import androidx.compose.material.icons.filled.FlashAuto
 import androidx.compose.material.icons.filled.FlashOff
 import androidx.compose.material.icons.filled.FlashOn
-import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -53,7 +51,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
@@ -183,165 +180,155 @@ class MainActivity : FragmentActivity() {
                 val showText = remember { mutableStateOf(false) }
                 controller.isTapToFocusEnabled = true
 
-                BottomSheetScaffold(
-                    scaffoldState = scaffoldState,
-                    sheetPeekHeight = 0.dp,
-                    sheetContent = {},
-                ) { padding ->
-                    Box(
-                        modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .padding(padding),
-                    ) {
-                        CameraPreview(
-                            controller = controller,
+                Box {
+                    CameraPreview(
+                        controller = controller,
+                        modifier = Modifier.fillMaxSize(),
+                    )
+
+                    if (showText.value) {
+                        Box(
                             modifier = Modifier.fillMaxSize(),
-                        )
-
-                        if (showText.value) {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                            ) {
-                                Text(
-                                    text = "Processing captured image...",
-                                    style = MaterialTheme.typography.titleLarge,
-                                    modifier =
-                                        Modifier
-                                            .align(Alignment.Center)
-                                            .background(MaterialTheme.colorScheme.onSecondary),
-                                )
-                            }
-                        }
-
-                        IconButton(onClick = { exitCamera() }) {
-                            Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
-                        }
-
-                        IconButton(
-                            modifier = Modifier.align(Alignment.TopEnd),
-                            onClick = {
-                                controller.cameraSelector =
-                                    if (controller.cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
-                                        CameraSelector.DEFAULT_FRONT_CAMERA
-                                    } else {
-                                        CameraSelector.DEFAULT_BACK_CAMERA
-                                    }
-                            },
                         ) {
-                            Icon(Icons.Default.Cameraswitch, contentDescription = "Switch camera")
-                        }
-
-                        val flashIcon = remember { mutableStateOf(Icons.Default.FlashAuto) }
-                        IconButton(modifier = Modifier.align(Alignment.TopCenter), onClick = {
-                            controller.imageCaptureFlashMode =
-                                when (controller.imageCaptureFlashMode) {
-                                    ImageCapture.FLASH_MODE_AUTO -> {
-                                        flashIcon.value = Icons.Default.FlashOn
-                                        ImageCapture.FLASH_MODE_ON
-                                    }
-
-                                    ImageCapture.FLASH_MODE_ON -> {
-                                        flashIcon.value = Icons.Default.FlashOff
-                                        ImageCapture.FLASH_MODE_OFF
-                                    }
-
-                                    ImageCapture.FLASH_MODE_OFF -> {
-                                        flashIcon.value = Icons.Default.FlashAuto
-                                        ImageCapture.FLASH_MODE_AUTO
-                                    }
-
-                                    else -> {
-                                        flashIcon.value = Icons.Default.FlashAuto
-                                        ImageCapture.FLASH_MODE_AUTO
-                                    }
-                                }
-                        }) {
-                            Icon(flashIcon.value, contentDescription = "Switch flash")
-                        }
-
-                        IconButton(
-                            modifier =
-                                Modifier
-                                    .clip(CircleShape)
-                                    .background(MaterialTheme.colorScheme.onSecondary)
-                                    .align(Alignment.BottomCenter),
-                            onClick = {
-                                showText.value = true
-                                controller.takePicture(
-                                    ContextCompat.getMainExecutor(context),
-                                    object : OnImageCapturedCallback() {
-                                        override fun onCaptureSuccess(image: ImageProxy) {
-                                            super.onCaptureSuccess(image)
-                                            controller.unbind()
-                                            lifecycleScope.launch(Dispatchers.Default) {
-                                                val bitmap =
-                                                    withContext(Dispatchers.IO) {
-                                                        image.toBitmap()
-                                                    }
-
-                                                val path = context.getExternalFilesDir(null)
-                                                val folder = "photos"
-
-                                                val letDir = File(path, folder)
-                                                if (!letDir.exists()) {
-                                                    letDir.mkdirs()
-                                                }
-                                                val filename =
-                                                    LocalDateTime.now()
-                                                        .format(DateTimeFormatter.ofPattern("HH_mm_ss-dd_MM_yyyy")) + ".png"
-                                                val file = File(letDir, filename)
-
-                                                Log.d("File", "Saving file to file system")
-
-                                                try {
-                                                    withContext(Dispatchers.IO) {
-                                                        FileOutputStream(file).use {
-                                                            it.write(
-                                                                BitmapBytesArray().toByteArray(
-                                                                    bitmap,
-                                                                ),
-                                                            )
-                                                        }
-                                                    }
-                                                    Log.d("File", "Saved file in file system")
-                                                } catch (e: Exception) {
-                                                    Log.e("File", "Error saving file: ${e.message}")
-                                                }
-
-                                                val uri = file.toURI()
-                                                Log.d("File", "URI: $uri")
-
-                                                withContext(Dispatchers.Main) {
-                                                    capturedImageUri.value = uri
-                                                    onPhotoTaken(uri)
-                                                    Log.d(
-                                                        "CreateNotePage",
-                                                        "Photo size in cameraScreen: ${bitmap.byteCount}",
-                                                    )
-                                                    showText.value = false
-                                                    exitCamera()
-                                                }
-                                            }
-                                        }
-
-                                        override fun onError(exception: ImageCaptureException) {
-                                            showText.value = false
-                                            Log.e("Camera", "Capture failed: ${exception.message}")
-                                        }
-                                    },
-                                )
-                            },
-                        ) {
-                            Icon(
-                                Icons.Default.Camera,
-                                contentDescription = "Take picture",
-                                modifier = Modifier.fillMaxSize(),
+                            Text(
+                                text = "Processing captured image...",
+                                style = MaterialTheme.typography.titleLarge,
+                                modifier =
+                                    Modifier
+                                        .align(Alignment.Center)
+                                        .background(MaterialTheme.colorScheme.onSecondary),
                             )
                         }
                     }
+
+                    IconButton(onClick = { exitCamera() }) {
+                        Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
+                    }
+
+                    IconButton(
+                        modifier = Modifier.align(Alignment.TopEnd),
+                        onClick = {
+                            controller.cameraSelector =
+                                if (controller.cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
+                                    CameraSelector.DEFAULT_FRONT_CAMERA
+                                } else {
+                                    CameraSelector.DEFAULT_BACK_CAMERA
+                                }
+                        },
+                    ) {
+                        Icon(Icons.Default.Cameraswitch, contentDescription = "Switch camera")
+                    }
+
+                    val flashIcon = remember { mutableStateOf(Icons.Default.FlashAuto) }
+                    IconButton(modifier = Modifier.align(Alignment.TopCenter), onClick = {
+                        controller.imageCaptureFlashMode =
+                            when (controller.imageCaptureFlashMode) {
+                                ImageCapture.FLASH_MODE_AUTO -> {
+                                    flashIcon.value = Icons.Default.FlashOn
+                                    ImageCapture.FLASH_MODE_ON
+                                }
+
+                                ImageCapture.FLASH_MODE_ON -> {
+                                    flashIcon.value = Icons.Default.FlashOff
+                                    ImageCapture.FLASH_MODE_OFF
+                                }
+
+                                ImageCapture.FLASH_MODE_OFF -> {
+                                    flashIcon.value = Icons.Default.FlashAuto
+                                    ImageCapture.FLASH_MODE_AUTO
+                                }
+
+                                else -> {
+                                    flashIcon.value = Icons.Default.FlashAuto
+                                    ImageCapture.FLASH_MODE_AUTO
+                                }
+                            }
+                    }) {
+                        Icon(flashIcon.value, contentDescription = "Switch flash")
+                    }
+
+                    IconButton(
+                        modifier =
+                            Modifier
+                                .clip(CircleShape)
+                                .background(MaterialTheme.colorScheme.onSecondary)
+                                .align(Alignment.BottomCenter),
+                        onClick = {
+                            showText.value = true
+                            controller.takePicture(
+                                ContextCompat.getMainExecutor(context),
+                                object : OnImageCapturedCallback() {
+                                    override fun onCaptureSuccess(image: ImageProxy) {
+                                        super.onCaptureSuccess(image)
+                                        controller.unbind()
+                                        lifecycleScope.launch(Dispatchers.Default) {
+                                            val bitmap =
+                                                withContext(Dispatchers.IO) {
+                                                    image.toBitmap()
+                                                }
+
+                                            val path = context.getExternalFilesDir(null)
+                                            val folder = "photos"
+
+                                            val letDir = File(path, folder)
+                                            if (!letDir.exists()) {
+                                                letDir.mkdirs()
+                                            }
+                                            val filename =
+                                                LocalDateTime.now()
+                                                    .format(DateTimeFormatter.ofPattern("HH_mm_ss-dd_MM_yyyy")) + ".png"
+                                            val file = File(letDir, filename)
+
+                                            Log.d("File", "Saving file to file system")
+
+                                            try {
+                                                withContext(Dispatchers.IO) {
+                                                    FileOutputStream(file).use {
+                                                        it.write(
+                                                            BitmapBytesArray().toByteArray(
+                                                                bitmap,
+                                                            ),
+                                                        )
+                                                    }
+                                                }
+                                                Log.d("File", "Saved file in file system")
+                                            } catch (e: Exception) {
+                                                Log.e("File", "Error saving file: ${e.message}")
+                                            }
+
+                                            val uri = file.toURI()
+                                            Log.d("File", "URI: $uri")
+
+                                            withContext(Dispatchers.Main) {
+                                                capturedImageUri.value = uri
+                                                onPhotoTaken(uri)
+                                                Log.d(
+                                                    "CreateNotePage",
+                                                    "Photo size in cameraScreen: ${bitmap.byteCount}",
+                                                )
+                                                showText.value = false
+                                                exitCamera()
+                                            }
+                                        }
+                                    }
+
+                                    override fun onError(exception: ImageCaptureException) {
+                                        showText.value = false
+                                        Log.e("Camera", "Capture failed: ${exception.message}")
+                                    }
+                                },
+                            )
+                        },
+                    ) {
+                        Icon(
+                            Icons.Default.Camera,
+                            contentDescription = "Take picture",
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
                 }
             }
+
             NavHost(
                 modifier = Modifier.background(MaterialTheme.colorScheme.background),
                 navController = navController,
