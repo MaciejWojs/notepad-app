@@ -36,6 +36,7 @@ import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.MicOff
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -77,6 +78,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.playback.AndroidAudioPlayer
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.record.AndroidAudioRecorder
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.iconModifier
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.iconWeightRatio
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.io.File
 import java.net.URI
@@ -149,14 +151,28 @@ fun CreateNotePage(
 
     DisposableEffect(Unit) {
         onDispose {
+            showMicrophoneRecordComposable = false
+            Log.d("CreateNotePage", "Disposing( UNIT ) $showMicrophoneRecordComposable")
             saveNote()
+        }
+    }
+    DisposableEffect(showMicrophoneRecordComposable) {
+        onDispose {
+            Log.d("CreateNotePage", "Disposing( Record ) $showMicrophoneRecordComposable")
+            audioPlayer.stop()
+            audioRecorder.stop()
         }
     }
 
     if (showMicrophoneRecordComposable) {
         BestNotepadEverCreatedTheme {
             Scaffold { innerPadding ->
-                Column(modifier = Modifier.padding(innerPadding)) {
+                Row(
+                    modifier =
+                        Modifier
+                            .padding(innerPadding),
+                ) {
+                    var isBeingRecorded by remember { mutableStateOf(false) }
                     currentAudioFile.value = LocalDateTime.now()
                         .format(DateTimeFormatter.ofPattern("HH_mm_ss-dd_MM_yyyy")) + ".mp3"
                     val file =
@@ -165,16 +181,28 @@ fun CreateNotePage(
                             currentAudioFile.value!!,
                         )
                     file.parentFile?.mkdirs()
-                    Button(onClick = { audioRecorder.start(file) }) {
-                        Text("Start recording")
+                    IconButton(onClick = {
+                        if (!isBeingRecorded) {
+                            audioRecorder.start(file)
+                            isBeingRecorded = true
+                        } else {
+                            audioRecorder.stop()
+                            isBeingRecorded = false
+                            showMicrophoneRecordComposable = false
+                        }
+                    }) {
+                        Icon(
+                            imageVector = if (isBeingRecorded) Icons.Default.MicOff else Icons.Default.Mic,
+                            contentDescription = if (isBeingRecorded) "Stop recording" else "Start recording",
+                        )
                     }
 
-                    Button(onClick = {
-                        audioRecorder.stop()
-                        showMicrophoneRecordComposable = false
-                    }) {
-                        Text("Start recording")
-                    }
+//                    Button(onClick = {
+//                        audioRecorder.stop()
+//                        showMicrophoneRecordComposable = false
+//                    }) {
+//                        Text("Stop recording")
+//                    }
 //                    val audioFileDeferred = CompletableDeferred<File>()
 //                    audioRecorder(
 //                        { file ->
@@ -236,7 +264,10 @@ fun CreateNotePage(
                             ),
                 ) {
                     IconButton(
-                        modifier = Modifier.weight(1f).then(iconModifier),
+                        modifier =
+                            Modifier
+                                .weight(iconWeightRatio)
+                                .then(iconModifier),
                         onClick = { showBottomSheet = true },
                     ) {
                         Icon(imageVector = Icons.Default.Bookmarks, contentDescription = "Add tag")
@@ -244,7 +275,10 @@ fun CreateNotePage(
                     }
 
                     IconButton(
-                        modifier = Modifier.weight(1f).then(iconModifier),
+                        modifier =
+                            Modifier
+                                .weight(iconWeightRatio)
+                                .then(iconModifier),
                         onClick = {
                             requestCameraPermission()
                             showCameraPreview = true
@@ -257,7 +291,10 @@ fun CreateNotePage(
 //                        Text(text = "Take photo")
                     }
                     IconButton(
-                        modifier = Modifier.weight(1f).then(iconModifier),
+                        modifier =
+                            Modifier
+                                .weight(iconWeightRatio)
+                                .then(iconModifier),
                         onClick = {
                             requestMicrophonePermission()
                             showMicrophoneRecordComposable = true
@@ -271,7 +308,10 @@ fun CreateNotePage(
                     }
 
                     IconButton(
-                        modifier = Modifier.weight(1f).then(iconModifier),
+                        modifier =
+                            Modifier
+                                .weight(iconWeightRatio)
+                                .then(iconModifier),
                         onClick = {
                             isPrivate.value = !isPrivate.value
                             Toast.makeText(
