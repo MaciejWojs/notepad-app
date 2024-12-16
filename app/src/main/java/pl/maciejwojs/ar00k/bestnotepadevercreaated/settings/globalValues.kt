@@ -9,7 +9,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 
 const val roundness = 10
-
+const val iconWeightRatio = 0.8f
 val iconModifier =
     Modifier
         .padding(8.dp)

@@ -71,6 +71,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.iconModifier
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.iconWeightRatio
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.io.File
 import java.net.URI
@@ -216,7 +217,7 @@ fun EditNotePage(
                             ),
                 ) {
                     IconButton(
-                        modifier = Modifier.weight(1f).then(iconModifier),
+                        modifier = Modifier.weight(iconWeightRatio).then(iconModifier),
                         onClick = { showBottomSheet = true },
                     ) {
                         Icon(imageVector = Icons.Default.Bookmarks, contentDescription = "Add tag")
@@ -224,7 +225,7 @@ fun EditNotePage(
                     }
 
                     IconButton(
-                        modifier = Modifier.weight(1f).then(iconModifier),
+                        modifier = Modifier.weight(iconWeightRatio).then(iconModifier),
                         onClick = {
                             requestCameraPermission()
                             showCameraPreview = true
@@ -238,7 +239,7 @@ fun EditNotePage(
                     }
 
                     IconButton(
-                        modifier = Modifier.weight(1f).then(iconModifier),
+                        modifier = Modifier.weight(iconWeightRatio).then(iconModifier),
                         onClick = {
                             isPrivate.value = !isPrivate.value
                             Toast.makeText(
