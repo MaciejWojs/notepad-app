@@ -206,22 +206,23 @@ fun EditNotePage(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
+                        Modifier
+                            .fillMaxWidth()
 //                        .height(50.dp)
-                        .background(MaterialTheme.colorScheme.onSecondary)
+                            .background(MaterialTheme.colorScheme.onSecondary)
 //                        .padding(WindowInsets.systemBars.asPaddingValues())
-                        .padding(
-                            bottom =
-                            WindowInsets.systemBars
-                                .asPaddingValues()
-                                .calculateBottomPadding(),
-                        ),
+                            .padding(
+                                bottom =
+                                    WindowInsets.systemBars
+                                        .asPaddingValues()
+                                        .calculateBottomPadding(),
+                            ),
                 ) {
                     IconButton(
-                        modifier = Modifier
-                            .weight(iconWeightRatio)
-                            .then(iconModifier),
+                        modifier =
+                            Modifier
+                                .weight(iconWeightRatio)
+                                .then(iconModifier),
                         onClick = { showBottomSheet = true },
                     ) {
                         Icon(imageVector = Icons.Default.Bookmarks, contentDescription = "Add tag")
@@ -229,9 +230,10 @@ fun EditNotePage(
                     }
 
                     IconButton(
-                        modifier = Modifier
-                            .weight(iconWeightRatio)
-                            .then(iconModifier),
+                        modifier =
+                            Modifier
+                                .weight(iconWeightRatio)
+                                .then(iconModifier),
                         onClick = {
                             requestCameraPermission()
                             showCameraPreview = true
@@ -245,9 +247,10 @@ fun EditNotePage(
                     }
 
                     IconButton(
-                        modifier = Modifier
-                            .weight(iconWeightRatio)
-                            .then(iconModifier),
+                        modifier =
+                            Modifier
+                                .weight(iconWeightRatio)
+                                .then(iconModifier),
                         onClick = {
                             isPrivate.value = !isPrivate.value
                             Toast.makeText(
@@ -294,15 +297,15 @@ fun EditNotePage(
                             decorationBox = { innerTextField ->
                                 Box(
                                     modifier =
-                                    Modifier
-                                        .fillMaxWidth()
-                                        .padding(0.dp)
-                                        .border(
-                                            width = 1.dp,
-                                            color = Color.Gray,
-                                            shape = MaterialTheme.shapes.small,
-                                        )
-                                        .padding(horizontal = 4.dp, vertical = 8.dp),
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(0.dp)
+                                            .border(
+                                                width = 1.dp,
+                                                color = Color.Gray,
+                                                shape = MaterialTheme.shapes.small,
+                                            )
+                                            .padding(horizontal = 4.dp, vertical = 8.dp),
                                 ) {
                                     if (noteTitle.isEmpty()) {
                                         Text(
@@ -318,19 +321,18 @@ fun EditNotePage(
                     Column(
                         modifier = Modifier.verticalScroll(rememberScrollState()),
                     ) {
-
                         // Note Content TextField
                         OutlinedTextField(
                             value = noteContent,
                             onValueChange = { noteContent = it },
                             label = { Text("Content") },
                             modifier =
-                            Modifier
-                                .weight(1f)
+                                Modifier
+                                    .weight(1f)
 //                            .fillMaxSize()
-                                .fillMaxWidth()
-                                .padding(8.dp)
-                                .defaultMinSize(minHeight = 300.dp),
+                                    .fillMaxWidth()
+                                    .padding(8.dp)
+                                    .defaultMinSize(minHeight = 300.dp),
                         )
 
                         if (currentImage.path.isNotEmpty()) {
@@ -361,15 +363,15 @@ fun EditNotePage(
                                     items(tags, key = { it.tagID }) { tag ->
                                         Row(
                                             modifier =
-                                            Modifier
-                                                .fillMaxWidth(0.8f) // Limit row width to 80% of available width for centering
-                                                .clickable {
-                                                    if (checkedMap[tag] != null) {
-                                                        checkedMap[tag] = !checkedMap[tag]!!
-                                                    } else {
-                                                        checkedMap[tag] = true
-                                                    }
-                                                },
+                                                Modifier
+                                                    .fillMaxWidth(0.8f) // Limit row width to 80% of available width for centering
+                                                    .clickable {
+                                                        if (checkedMap[tag] != null) {
+                                                            checkedMap[tag] = !checkedMap[tag]!!
+                                                        } else {
+                                                            checkedMap[tag] = true
+                                                        }
+                                                    },
                                             verticalAlignment = Alignment.CenterVertically,
                                             horizontalArrangement = Arrangement.SpaceBetween, // Space between Text and Switch
                                         ) {

@@ -37,6 +37,8 @@ import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MicOff
 import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -113,7 +115,7 @@ fun CreateNotePage(
     val isPrivate = remember { mutableStateOf(false) }
     var showCameraPreview by remember { mutableStateOf(false) }
 
-    var showMicrophoneRecordComposable by remember { mutableStateOf(false) }
+    var showMicrophoneRecordDialog by remember { mutableStateOf(false) }
     val audioRecorder = AndroidAudioRecorder(context)
     val audioPlayer = AndroidAudioPlayer(context)
     var currentAudioFile = remember { mutableStateOf<String?>(null) }
@@ -154,7 +156,7 @@ fun CreateNotePage(
     DisposableEffect(Unit) {
         onDispose {
 //            showMicrophoneRecordComposable = false
-            Log.d("CreateNotePage", "Disposing( UNIT ) $showMicrophoneRecordComposable")
+            Log.d("CreateNotePage", "Disposing( UNIT ) $showMicrophoneRecordDialog")
             saveNote()
         }
     }
@@ -228,6 +230,37 @@ fun CreateNotePage(
                         )
 //                        Text(text = "Take photo")
                     }
+                    var isPlaying by remember { mutableStateOf(false) }
+
+                    if (isRecorded && currentAudioFile.value != null) {
+                        Log.d("CreateNotePage", "Playing audio: ${currentAudioFile.value}")
+                        IconButton(
+                            modifier =
+                                Modifier
+                                    .weight(iconWeightRatio)
+                                    .then(iconModifier),
+                            onClick = {
+                                // TODO po zakończeniu odtwarzania zmienić ikonę na play
+                                if (isPlaying) {
+                                    audioPlayer.stop()
+                                } else {
+                                    audioPlayer.play(
+                                        File(
+                                            context.getExternalFilesDir("recordings"),
+                                            currentAudioFile.value!!,
+                                        ),
+                                    )
+                                }
+                                isPlaying = !isPlaying
+                            },
+                        ) {
+                            Icon(
+                                imageVector = if (isPlaying) Icons.Default.Stop else Icons.Default.PlayArrow,
+                                contentDescription = if (isPlaying) "Stop audio" else "Play audio",
+                            )
+                        }
+                    }
+
                     IconButton(
                         modifier =
                             Modifier
@@ -235,7 +268,7 @@ fun CreateNotePage(
                                 .then(iconModifier),
                         onClick = {
                             requestMicrophonePermission()
-                            showMicrophoneRecordComposable = true
+                            showMicrophoneRecordDialog = true
                         },
                     ) {
                         Icon(
@@ -327,7 +360,9 @@ fun CreateNotePage(
                     }
                     Column(
                         modifier =
-                            Modifier.verticalScroll(rememberScrollState()),
+                            Modifier
+//                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState()),
                     ) {
                         OutlinedTextField(
                             value = noteContent,
@@ -336,37 +371,13 @@ fun CreateNotePage(
                             modifier =
                                 Modifier
 //                                    .fillMaxSize()
-//                                    .weight(1f)
+//                                    .weight(0.9f)
 //                                .height()
                                     .fillMaxWidth()
+//                                    .fillMaxHeight()
                                     .padding(8.dp)
                                     .defaultMinSize(minHeight = 300.dp),
                         )
-
-                        if (isRecorded && currentAudioFile.value != null) {
-                            Row {
-                                Button(
-                                    onClick = {
-                                        audioPlayer.play(
-                                            File(
-                                                context.getExternalFilesDir("recordings"),
-                                                currentAudioFile.value!!,
-                                            ),
-                                        )
-                                    },
-                                ) {
-                                    Text("Play audio")
-                                }
-
-                                Button(
-                                    onClick = {
-                                        audioPlayer.stop()
-                                    },
-                                ) {
-                                    Text("Stop audio")
-                                }
-                            }
-                        }
 
                         if (capturedImage != null) {
                             val file = File(capturedImage!!.path)
@@ -381,8 +392,9 @@ fun CreateNotePage(
                             )
                         }
 
-                        if (showMicrophoneRecordComposable) {
+                        if (showMicrophoneRecordDialog) {
                             var isBeingRecorded by remember { mutableStateOf(false) }
+                            var recorded = false
                             val temp =
                                 LocalDateTime.now()
                                     .format(DateTimeFormatter.ofPattern("HH_mm_ss-dd_MM_yyyy")) + ".mp3"
@@ -404,7 +416,7 @@ fun CreateNotePage(
                                     }
                                 }
                                 currentAudioFile.value = null
-                                showMicrophoneRecordComposable = false
+                                showMicrophoneRecordDialog = false
                                 isRecorded = false
                             }
 
@@ -430,6 +442,7 @@ fun CreateNotePage(
                                                 if (!isBeingRecorded) {
                                                     audioRecorder.start(file)
                                                     isBeingRecorded = true
+                                                    recorded = true
                                                 } else {
                                                     audioRecorder.stop()
                                                     isBeingRecorded = false
@@ -448,8 +461,8 @@ fun CreateNotePage(
                                 confirmButton = {
                                     TextButton(onClick = {
                                         audioRecorder.stop()
-                                        showMicrophoneRecordComposable = false
-                                        if (isBeingRecorded) {
+                                        showMicrophoneRecordDialog = false
+                                        if (recorded) {
                                             currentAudioFile.value = temp
                                             isRecorded = true
                                         }
