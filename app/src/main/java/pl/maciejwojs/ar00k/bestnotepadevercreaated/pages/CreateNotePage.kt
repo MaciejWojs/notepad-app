@@ -38,6 +38,7 @@ import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MicOff
 import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -49,6 +50,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -116,6 +118,7 @@ fun CreateNotePage(
     val audioRecorder = AndroidAudioRecorder(context)
     val audioPlayer = AndroidAudioPlayer(context)
     var currentAudioFile = remember { mutableStateOf<String?>(null) }
+    var isRecorded by remember { mutableStateOf(false) }
 //    var recordedAudio by remember { mutableStateOf<>(null) }
 
     // Initialize checkedMap to keep track of each tag’s selection state
@@ -151,77 +154,13 @@ fun CreateNotePage(
 
     DisposableEffect(Unit) {
         onDispose {
-            showMicrophoneRecordComposable = false
+//            showMicrophoneRecordComposable = false
             Log.d("CreateNotePage", "Disposing( UNIT ) $showMicrophoneRecordComposable")
             saveNote()
         }
     }
-    DisposableEffect(showMicrophoneRecordComposable) {
-        onDispose {
-            Log.d("CreateNotePage", "Disposing( Record ) $showMicrophoneRecordComposable")
-            audioPlayer.stop()
-            audioRecorder.stop()
-        }
-    }
 
-    if (showMicrophoneRecordComposable) {
-        BestNotepadEverCreatedTheme {
-            Scaffold { innerPadding ->
-                Row(
-                    modifier =
-                        Modifier
-                            .padding(innerPadding),
-                ) {
-                    var isBeingRecorded by remember { mutableStateOf(false) }
-                    currentAudioFile.value = LocalDateTime.now()
-                        .format(DateTimeFormatter.ofPattern("HH_mm_ss-dd_MM_yyyy")) + ".mp3"
-                    val file =
-                        File(
-                            context.getExternalFilesDir("recordings"),
-                            currentAudioFile.value!!,
-                        )
-                    file.parentFile?.mkdirs()
-                    IconButton(onClick = {
-                        if (!isBeingRecorded) {
-                            audioRecorder.start(file)
-                            isBeingRecorded = true
-                        } else {
-                            audioRecorder.stop()
-                            isBeingRecorded = false
-                            showMicrophoneRecordComposable = false
-                        }
-                    }) {
-                        Icon(
-                            imageVector = if (isBeingRecorded) Icons.Default.MicOff else Icons.Default.Mic,
-                            contentDescription = if (isBeingRecorded) "Stop recording" else "Start recording",
-                        )
-                    }
-
-//                    Button(onClick = {
-//                        audioRecorder.stop()
-//                        showMicrophoneRecordComposable = false
-//                    }) {
-//                        Text("Stop recording")
-//                    }
-//                    val audioFileDeferred = CompletableDeferred<File>()
-//                    audioRecorder(
-//                        { file ->
-//                            audioFileDeferred.complete(file)
-//                            showMicrophoneRecordComposable = false
-//                        },
-//                        {
-//                            showMicrophoneRecordComposable = false
-//                        },
-//                    )
-//
-//                    LaunchedEffect(Unit) {
-//                        val temp = audioFileDeferred.await()
-//                        Log.d("CreateNotePage", "Audio file: ${temp.path}")
-//                    }
-                }
-            }
-        }
-    } else if (showCameraPreview) {
+    if (showCameraPreview) {
         BestNotepadEverCreatedTheme {
             Scaffold { innerPadding ->
                 Column(modifier = Modifier.padding(innerPadding)) {
@@ -333,11 +272,7 @@ fun CreateNotePage(
                 Column(
                     modifier =
                         Modifier
-                            .padding(innerPadding)
-                            .scrollable(
-                                state = rememberScrollState(),
-                                orientation = Orientation.Vertical,
-                            ),
+                            .padding(innerPadding),
                 ) {
                     Row(
                         Modifier
@@ -391,52 +326,150 @@ fun CreateNotePage(
                             },
                         )
                     }
-
-                    OutlinedTextField(
-                        value = noteContent,
-                        onValueChange = { noteContent = it },
-                        label = { Text("Content") },
+                    Column(
                         modifier =
-                            Modifier
+                            Modifier.scrollable(
+                                state = rememberScrollState(),
+                                orientation = Orientation.Vertical,
+                                enabled = true,
+                            ),
+                    ) {
+                        OutlinedTextField(
+                            value = noteContent,
+                            onValueChange = { noteContent = it },
+                            label = { Text("Content") },
+                            modifier =
+                                Modifier
 //                                    .fillMaxSize()
-                                .weight(1f)
+//                                    .weight(1f)
 //                                .height()
-                                .fillMaxWidth()
-                                .padding(8.dp)
-                                .defaultMinSize(minHeight = 300.dp),
-                    )
-
-                    if (currentAudioFile.value != null) {
-                        Button(
-                            onClick = {
-                                audioPlayer.play(
-                                    File(
-                                        context.getExternalFilesDir("recordings"),
-                                        currentAudioFile.value!!,
-                                    ),
-                                )
-                            },
-                        ) {
-                            Text("Play audio")
-                        }
-
-                        Button(
-                            onClick = {
-                                audioPlayer.stop()
-                            },
-                        ) {
-                            Text("Stop audio")
-                        }
-                    }
-
-                    if (capturedImage != null) {
-                        val file = File(capturedImage!!.path)
-                        val bitmap = BitmapFactory.decodeFile(file.path).asImageBitmap()
-                        Image(
-                            bitmap = bitmap,
-                            contentDescription = "Captured image",
-                            modifier = Modifier.fillMaxWidth(),
+                                    .fillMaxWidth()
+                                    .padding(8.dp)
+                                    .defaultMinSize(minHeight = 300.dp),
                         )
+
+                        if (isRecorded && currentAudioFile.value != null) {
+                            Row {
+                                Button(
+                                    onClick = {
+                                        audioPlayer.play(
+                                            File(
+                                                context.getExternalFilesDir("recordings"),
+                                                currentAudioFile.value!!,
+                                            ),
+                                        )
+                                    },
+                                ) {
+                                    Text("Play audio")
+                                }
+
+                                Button(
+                                    onClick = {
+                                        audioPlayer.stop()
+                                    },
+                                ) {
+                                    Text("Stop audio")
+                                }
+                            }
+                        }
+
+                        if (capturedImage != null) {
+                            val file = File(capturedImage!!.path)
+                            val bitmap = BitmapFactory.decodeFile(file.path).asImageBitmap()
+                            Image(
+                                bitmap = bitmap,
+                                contentDescription = "Captured image",
+                                modifier =
+                                    Modifier
+//                                        .weight(1f)
+                                        .fillMaxWidth(),
+                            )
+                        }
+
+                        if (showMicrophoneRecordComposable) {
+                            var isBeingRecorded by remember { mutableStateOf(false) }
+                            val temp =
+                                LocalDateTime.now()
+                                    .format(DateTimeFormatter.ofPattern("HH_mm_ss-dd_MM_yyyy")) + ".mp3"
+                            val file =
+                                File(
+                                    context.getExternalFilesDir("recordings"),
+                                    temp,
+                                ).apply { parentFile?.mkdirs() }
+
+                            fun rejectRecording() {
+                                audioRecorder.stop()
+                                if (currentAudioFile.value == temp) {
+                                    // TODO fix this (usuwa już zapisany plik w przypadku odrzucenia na grania)
+                                    if (file.exists() && !file.delete()) {
+                                        Log.e(
+                                            "CreateNotePage",
+                                            "Failed to delete file: ${file.path}",
+                                        )
+                                    }
+                                }
+                                currentAudioFile.value = null
+                                showMicrophoneRecordComposable = false
+                                isRecorded = false
+                            }
+
+                            AlertDialog(
+                                title = {
+                                    Box(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        Text(
+                                            text = "Record audio",
+                                        )
+                                    }
+                                },
+                                text = {
+                                    Box(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        IconButton(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            onClick = {
+                                                if (!isBeingRecorded) {
+                                                    audioRecorder.start(file)
+                                                    isBeingRecorded = true
+                                                } else {
+                                                    audioRecorder.stop()
+                                                    isBeingRecorded = false
+                                                }
+                                            },
+                                        ) {
+                                            Icon(
+                                                modifier = Modifier.fillMaxSize(),
+                                                imageVector = if (isBeingRecorded) Icons.Default.MicOff else Icons.Default.Mic,
+                                                contentDescription = if (isBeingRecorded) "Stop recording" else "Start recording",
+                                            )
+                                        }
+                                    }
+                                },
+                                onDismissRequest = { rejectRecording() },
+                                confirmButton = {
+                                    TextButton(onClick = {
+                                        audioRecorder.stop()
+                                        showMicrophoneRecordComposable = false
+                                        if (isBeingRecorded) {
+                                            currentAudioFile.value = temp
+                                            isRecorded = true
+                                        }
+                                    }) { Text(color = Color.Green, text = "Confirm") }
+                                },
+                                dismissButton = {
+                                    TextButton(onClick = { rejectRecording() }) {
+                                        Text(
+                                            color = Color.Red,
+                                            text = "Dismiss",
+                                        )
+                                    }
+                                },
+                            )
+                        }
                     }
 
                     if (showBottomSheet) {

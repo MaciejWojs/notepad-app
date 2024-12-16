@@ -9,6 +9,8 @@ class AndroidAudioRecorder(
     private val context: Context,
 ) : AudioRecorder {
     private var recorder: MediaRecorder? = null
+    private var isRecording: Boolean = false
+        get() = recorder != null
 
     private fun createRecorder(): MediaRecorder {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -27,13 +29,18 @@ class AndroidAudioRecorder(
             prepare()
             start()
             recorder = this
+            isRecording = true
         }
     }
 
     override fun stop() {
-        recorder?.apply {
-            stop()
-            release()
+        if (isRecording) {
+            recorder?.apply {
+                stop()
+                release()
+            }
+            recorder = null
+            isRecording = false
         }
     }
 }
