@@ -70,9 +70,13 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesViewModel
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.playback.AndroidAudioPlayer
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.record.AndroidAudioRecorder
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.io.File
 import java.net.URI
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * Strona tworzenia notatki.
@@ -90,6 +94,7 @@ fun CreateNotePage(
     tags: List<Tag>,
     requestCameraPermission: () -> Unit,
     cameraPreview: @Composable (onPhotoTaken: (URI) -> Unit, exitCamera: () -> Unit) -> Unit,
+    requestMicrophonePermission: () -> Unit,
 ) {
     var noteTitle by remember { mutableStateOf("") }
     var noteContent by remember { mutableStateOf("") }
@@ -99,6 +104,12 @@ fun CreateNotePage(
     val context = LocalContext.current
     val isPrivate = remember { mutableStateOf(false) }
     var showCameraPreview by remember { mutableStateOf(false) }
+
+    var showMicrophoneRecordComposable by remember { mutableStateOf(false) }
+    val audioRecorder = AndroidAudioRecorder(context)
+    val audioPlayer = AndroidAudioPlayer(context)
+    var currentAudioFile = remember { mutableStateOf<String?>(null) }
+//    var recordedAudio by remember { mutableStateOf<>(null) }
 
     // Initialize checkedMap to keep track of each tag’s selection state
     val checkedMap =
@@ -137,7 +148,47 @@ fun CreateNotePage(
         }
     }
 
-    if (showCameraPreview) {
+    if (showMicrophoneRecordComposable) {
+        BestNotepadEverCreatedTheme {
+            Scaffold { innerPadding ->
+                Column(modifier = Modifier.padding(innerPadding)) {
+                    currentAudioFile.value = LocalDateTime.now()
+                        .format(DateTimeFormatter.ofPattern("HH_mm_ss-dd_MM_yyyy")) + ".mp3"
+                    val file =
+                        File(
+                            context.getExternalFilesDir("recordings"),
+                            currentAudioFile.value!!,
+                        )
+                    file.parentFile?.mkdirs()
+                    Button(onClick = { audioRecorder.start(file) }) {
+                        Text("Start recording")
+                    }
+
+                    Button(onClick = {
+                        audioRecorder.stop()
+                        showMicrophoneRecordComposable = false
+                    }) {
+                        Text("Start recording")
+                    }
+//                    val audioFileDeferred = CompletableDeferred<File>()
+//                    audioRecorder(
+//                        { file ->
+//                            audioFileDeferred.complete(file)
+//                            showMicrophoneRecordComposable = false
+//                        },
+//                        {
+//                            showMicrophoneRecordComposable = false
+//                        },
+//                    )
+//
+//                    LaunchedEffect(Unit) {
+//                        val temp = audioFileDeferred.await()
+//                        Log.d("CreateNotePage", "Audio file: ${temp.path}")
+//                    }
+                }
+            }
+        }
+    } else if (showCameraPreview) {
         BestNotepadEverCreatedTheme {
             Scaffold { innerPadding ->
                 Column(modifier = Modifier.padding(innerPadding)) {
@@ -196,6 +247,19 @@ fun CreateNotePage(
                             contentDescription = "add photo",
                         )
                         Text(text = "Take photo")
+                    }
+
+                    Button(
+                        onClick = {
+                            requestMicrophonePermission()
+                            showMicrophoneRecordComposable = true
+                        },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.PhotoCamera,
+                            contentDescription = "add photo",
+                        )
+                        Text(text = "Record note")
                     }
 
                     Button(
@@ -288,6 +352,29 @@ fun CreateNotePage(
                                 .padding(8.dp)
                                 .defaultMinSize(minHeight = 300.dp),
                     )
+
+                    if (currentAudioFile.value != null) {
+                        Button(
+                            onClick = {
+                                audioPlayer.play(
+                                    File(
+                                        context.getExternalFilesDir("recordings"),
+                                        currentAudioFile.value!!,
+                                    ),
+                                )
+                            },
+                        ) {
+                            Text("Play audio")
+                        }
+
+                        Button(
+                            onClick = {
+                                audioPlayer.stop()
+                            },
+                        ) {
+                            Text("Stop audio")
+                        }
+                    }
 
                     if (capturedImage != null) {
                         val file = File(capturedImage!!.path)
