@@ -32,11 +32,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Bookmarks
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -72,6 +76,7 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.playback.AndroidAudioPlayer
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.record.AndroidAudioRecorder
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.iconModifier
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.io.File
 import java.net.URI
@@ -215,7 +220,8 @@ fun CreateNotePage(
         BestNotepadEverCreatedTheme {
             Scaffold(bottomBar = {
                 Row(
-                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier =
                         Modifier
                             .fillMaxWidth()
@@ -229,14 +235,16 @@ fun CreateNotePage(
                                         .calculateBottomPadding(),
                             ),
                 ) {
-                    Button(
+                    IconButton(
+                        modifier = Modifier.weight(1f).then(iconModifier),
                         onClick = { showBottomSheet = true },
                     ) {
-                        Icon(imageVector = Icons.Default.Add, contentDescription = "tags")
-                        Text(text = "Add tags")
+                        Icon(imageVector = Icons.Default.Bookmarks, contentDescription = "Add tag")
+//                        Text(text = "Add/modify tags")
                     }
 
-                    Button(
+                    IconButton(
+                        modifier = Modifier.weight(1f).then(iconModifier),
                         onClick = {
                             requestCameraPermission()
                             showCameraPreview = true
@@ -246,23 +254,24 @@ fun CreateNotePage(
                             imageVector = Icons.Default.PhotoCamera,
                             contentDescription = "add photo",
                         )
-                        Text(text = "Take photo")
+//                        Text(text = "Take photo")
                     }
-
-                    Button(
+                    IconButton(
+                        modifier = Modifier.weight(1f).then(iconModifier),
                         onClick = {
                             requestMicrophonePermission()
                             showMicrophoneRecordComposable = true
                         },
                     ) {
                         Icon(
-                            imageVector = Icons.Default.PhotoCamera,
-                            contentDescription = "add photo",
+                            imageVector = Icons.Default.Mic,
+                            contentDescription = "Record note",
                         )
-                        Text(text = "Record note")
+//                        Text(text = "Record note")
                     }
 
-                    Button(
+                    IconButton(
+                        modifier = Modifier.weight(1f).then(iconModifier),
                         onClick = {
                             isPrivate.value = !isPrivate.value
                             Toast.makeText(
@@ -272,7 +281,11 @@ fun CreateNotePage(
                             ).show()
                         },
                     ) {
-                        Text(text = if (isPrivate.value) "Make public" else "Make private")
+//                        Text(text = if (isPrivate.value) "Make public" else "Make private")
+                        Icon(
+                            imageVector = if (isPrivate.value) Icons.Default.Lock else Icons.Default.LockOpen,
+                            contentDescription = "Notes Privacy",
+                        )
                     }
                 }
             }, modifier = Modifier.fillMaxSize()) { innerPadding ->
