@@ -427,7 +427,7 @@ class MainActivity : FragmentActivity() {
 //                            }
 //                        },
                         tags = tags,
-                        requestCameraPermission = { if (!hasRequiredPermissions()) requestCameraPermission() else Unit },
+                        requestCameraPermission = { if (!hasRequiredCameraPermissions()) requestCameraPermission() else Unit },
                         cameraPreview = { onPhotoTaken, exit ->
                             cameraScreen(
                                 exitCamera = {
@@ -439,6 +439,7 @@ class MainActivity : FragmentActivity() {
                                 },
                             )
                         },
+                        requestMicrophonePermission = { if (!hasRequiredMicrophonePermissions()) requestMicrophonePermission() else Unit },
                     )
                 }
                 composable(
@@ -505,7 +506,7 @@ class MainActivity : FragmentActivity() {
                                 )
                                 notesWithTagPageViewModel.loadTagsByNote(noteID = note.noteID)
                             },
-                            requestCameraPermission = { if (!hasRequiredPermissions()) requestCameraPermission() else Unit },
+                            requestCameraPermission = { if (!hasRequiredCameraPermissions()) requestCameraPermission() else Unit },
                             cameraPreview = { onPhotoTaken, exit ->
                                 cameraScreen(
                                     exitCamera = {
@@ -531,21 +532,38 @@ class MainActivity : FragmentActivity() {
 
     private fun requestCameraPermission() {
         Log.d("MainActivity", "Camera permission requested")
-        if (!hasRequiredPermissions()) {
+        if (!hasRequiredCameraPermissions()) {
             requestPermissions(arrayOf(CAMERA_PERMISSION), 0)
         } else {
             Log.d("MainActivity", "Camera permission granted")
         }
     }
 
-    private fun hasRequiredPermissions(): Boolean {
+    private fun hasRequiredCameraPermissions(): Boolean {
         return ContextCompat.checkSelfPermission(
             this,
             CAMERA_PERMISSION,
         ) == PackageManager.PERMISSION_GRANTED
     }
 
+    private fun requestMicrophonePermission() {
+        Log.d("MainActivity", "Microphone permission requested")
+        if (!hasRequiredMicrophonePermissions()) {
+            requestPermissions(arrayOf(MICROPHONE_PERMISSION), 0)
+        } else {
+            Log.d("MainActivity", "Microphone permission granted")
+        }
+    }
+
+    private fun hasRequiredMicrophonePermissions(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            MICROPHONE_PERMISSION,
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
     companion object {
+        private const val MICROPHONE_PERMISSION = Manifest.permission.RECORD_AUDIO
         private const val CAMERA_PERMISSION = Manifest.permission.CAMERA
     }
 }
