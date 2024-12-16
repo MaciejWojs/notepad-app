@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['settings_2ekt_0',['Settings.kt',['../Settings_8kt.html',1,'']]],
-  ['settingsevent_1',['SettingsEvent',['../interfaceSettingsEvent.html',1,'']]],
-  ['settingspage_2',['SettingsPage',['../settingsPage_8kt.html#a8cb96b4f61ddc98d870efa239721db35',1,'settingsPage.kt']]],
-  ['settingspage_2ekt_3',['settingsPage.kt',['../settingsPage_8kt.html',1,'']]]
+  ['requestcamerapermission_0',['requestCameraPermission',['../classMainActivity.html#ad6ad8e85a94c67db6d69aeeb06335844',1,'MainActivity']]],
+  ['runwith_1',['RunWith',['../ExampleInstrumentedTest_8kt.html#a45a9c332c4bed39c4df1a2a57d14b89d',1,'ExampleInstrumentedTest.kt']]]
 ];

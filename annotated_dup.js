@@ -1,5 +1,7 @@
 var annotated_dup =
 [
+    [ "AudioPlayer", "interfaceAudioPlayer.html", null ],
+    [ "AudioRecorder", "interfaceAudioRecorder.html", null ],
     [ "BitmapBytesArray", "classBitmapBytesArray.html", null ],
     [ "MainActivity", "classMainActivity.html", "classMainActivity" ],
     [ "NotesDao", "interfaceNotesDao.html", null ],

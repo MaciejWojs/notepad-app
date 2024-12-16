@@ -47,7 +47,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"BiometricPromptManager_8kt.html"
+"AndroidAudioPlayer_8kt.html"
 ];
 
 var SYNCONMSG = 'kliknij żeby wyłączyć pokazywanie otwartego elementu w drzewie zawartości';

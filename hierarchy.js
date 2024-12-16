@@ -1,5 +1,7 @@
 var hierarchy =
 [
+    [ "AudioPlayer", "interfaceAudioPlayer.html", null ],
+    [ "AudioRecorder", "interfaceAudioRecorder.html", null ],
     [ "BitmapBytesArray", "classBitmapBytesArray.html", null ],
     [ "FragmentActivity", null, [
       [ "MainActivity", "classMainActivity.html", null ]

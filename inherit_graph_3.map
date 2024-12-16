@@ -1,3 +1,5 @@
 <map id="Graficzna hierarchia klas" name="Graficzna hierarchia klas">
-<area shape="rect" id="Node000000" href="$interfaceNotesEvent.html" title="Interfejs reprezentujący zdarzenia związane z notatkami." alt="" coords="5,5,95,31"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,125,31"/>
+<area shape="rect" id="Node000001" href="$classMainActivity.html" title="Główna aktywność aplikacji BestNotepadEverCreated." alt="" coords="173,5,265,31"/>
+<area shape="poly" id="edge1_Node000000_Node000001" title=" " alt="" coords="140,16,172,16,172,21,140,21"/>
 </map>

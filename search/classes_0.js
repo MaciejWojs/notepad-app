@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['bitmapbytesarray_0',['BitmapBytesArray',['../classBitmapBytesArray.html',1,'']]]
+  ['audioplayer_0',['AudioPlayer',['../interfaceAudioPlayer.html',1,'']]],
+  ['audiorecorder_1',['AudioRecorder',['../interfaceAudioRecorder.html',1,'']]]
 ];
