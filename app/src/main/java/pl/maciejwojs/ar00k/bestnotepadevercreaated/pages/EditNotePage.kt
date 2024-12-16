@@ -26,7 +26,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Bookmarks
@@ -204,20 +206,22 @@ fun EditNotePage(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
+                    Modifier
+                        .fillMaxWidth()
 //                        .height(50.dp)
-                            .background(MaterialTheme.colorScheme.onSecondary)
+                        .background(MaterialTheme.colorScheme.onSecondary)
 //                        .padding(WindowInsets.systemBars.asPaddingValues())
-                            .padding(
-                                bottom =
-                                    WindowInsets.systemBars
-                                        .asPaddingValues()
-                                        .calculateBottomPadding(),
-                            ),
+                        .padding(
+                            bottom =
+                            WindowInsets.systemBars
+                                .asPaddingValues()
+                                .calculateBottomPadding(),
+                        ),
                 ) {
                     IconButton(
-                        modifier = Modifier.weight(iconWeightRatio).then(iconModifier),
+                        modifier = Modifier
+                            .weight(iconWeightRatio)
+                            .then(iconModifier),
                         onClick = { showBottomSheet = true },
                     ) {
                         Icon(imageVector = Icons.Default.Bookmarks, contentDescription = "Add tag")
@@ -225,7 +229,9 @@ fun EditNotePage(
                     }
 
                     IconButton(
-                        modifier = Modifier.weight(iconWeightRatio).then(iconModifier),
+                        modifier = Modifier
+                            .weight(iconWeightRatio)
+                            .then(iconModifier),
                         onClick = {
                             requestCameraPermission()
                             showCameraPreview = true
@@ -239,7 +245,9 @@ fun EditNotePage(
                     }
 
                     IconButton(
-                        modifier = Modifier.weight(iconWeightRatio).then(iconModifier),
+                        modifier = Modifier
+                            .weight(iconWeightRatio)
+                            .then(iconModifier),
                         onClick = {
                             isPrivate.value = !isPrivate.value
                             Toast.makeText(
@@ -276,7 +284,6 @@ fun EditNotePage(
                                 navigator.navigate("MainPage")
                             }
                         }
-
                         BasicTextField(
                             value = noteTitle,
                             onValueChange = { noteTitle = it },
@@ -287,15 +294,15 @@ fun EditNotePage(
                             decorationBox = { innerTextField ->
                                 Box(
                                     modifier =
-                                        Modifier
-                                            .fillMaxWidth()
-                                            .padding(0.dp)
-                                            .border(
-                                                width = 1.dp,
-                                                color = Color.Gray,
-                                                shape = MaterialTheme.shapes.small,
-                                            )
-                                            .padding(horizontal = 4.dp, vertical = 8.dp),
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(0.dp)
+                                        .border(
+                                            width = 1.dp,
+                                            color = Color.Gray,
+                                            shape = MaterialTheme.shapes.small,
+                                        )
+                                        .padding(horizontal = 4.dp, vertical = 8.dp),
                                 ) {
                                     if (noteTitle.isEmpty()) {
                                         Text(
@@ -308,29 +315,33 @@ fun EditNotePage(
                             },
                         )
                     }
+                    Column(
+                        modifier = Modifier.verticalScroll(rememberScrollState()),
+                    ) {
 
-                    // Note Content TextField
-                    OutlinedTextField(
-                        value = noteContent,
-                        onValueChange = { noteContent = it },
-                        label = { Text("Content") },
-                        modifier =
+                        // Note Content TextField
+                        OutlinedTextField(
+                            value = noteContent,
+                            onValueChange = { noteContent = it },
+                            label = { Text("Content") },
+                            modifier =
                             Modifier
                                 .weight(1f)
 //                            .fillMaxSize()
                                 .fillMaxWidth()
                                 .padding(8.dp)
                                 .defaultMinSize(minHeight = 300.dp),
-                    )
-
-                    if (currentImage.path.isNotEmpty()) {
-                        val file = File(currentImage.path)
-                        val bitmap = BitmapFactory.decodeFile(file.path).asImageBitmap()
-                        Image(
-                            bitmap = bitmap,
-                            contentDescription = "Captured image",
-                            modifier = Modifier.fillMaxWidth(),
                         )
+
+                        if (currentImage.path.isNotEmpty()) {
+                            val file = File(currentImage.path)
+                            val bitmap = BitmapFactory.decodeFile(file.path).asImageBitmap()
+                            Image(
+                                bitmap = bitmap,
+                                contentDescription = "Captured image",
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
                     }
                     if (showBottomSheet) {
                         ModalBottomSheet(
@@ -350,15 +361,15 @@ fun EditNotePage(
                                     items(tags, key = { it.tagID }) { tag ->
                                         Row(
                                             modifier =
-                                                Modifier
-                                                    .fillMaxWidth(0.8f) // Limit row width to 80% of available width for centering
-                                                    .clickable {
-                                                        if (checkedMap[tag] != null) {
-                                                            checkedMap[tag] = !checkedMap[tag]!!
-                                                        } else {
-                                                            checkedMap[tag] = true
-                                                        }
-                                                    },
+                                            Modifier
+                                                .fillMaxWidth(0.8f) // Limit row width to 80% of available width for centering
+                                                .clickable {
+                                                    if (checkedMap[tag] != null) {
+                                                        checkedMap[tag] = !checkedMap[tag]!!
+                                                    } else {
+                                                        checkedMap[tag] = true
+                                                    }
+                                                },
                                             verticalAlignment = Alignment.CenterVertically,
                                             horizontalArrangement = Arrangement.SpaceBetween, // Space between Text and Switch
                                         ) {
