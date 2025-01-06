@@ -359,7 +359,10 @@ fun EditNotePage(
                             value = noteTitle,
                             onValueChange = { noteTitle = it },
                             singleLine = true,
-                            modifier = Modifier.padding(0.dp),
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(0.dp),
                             textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.onSurface),
                             cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
                             decorationBox = { innerTextField ->
@@ -387,18 +390,22 @@ fun EditNotePage(
                         )
                     }
                     Column(
-                        modifier = Modifier.verticalScroll(rememberScrollState()),
+                        modifier =
+                            Modifier
+//                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState()),
                     ) {
-                        // Note Content TextField
                         OutlinedTextField(
                             value = noteContent,
                             onValueChange = { noteContent = it },
                             label = { Text("Content") },
                             modifier =
                                 Modifier
-                                    .weight(1f)
-//                            .fillMaxSize()
+//                                    .fillMaxSize()
+//                                    .weight(0.9f)
+//                                .height()
                                     .fillMaxWidth()
+//                                    .fillMaxHeight()
                                     .padding(8.dp)
                                     .defaultMinSize(minHeight = 300.dp),
                         )
