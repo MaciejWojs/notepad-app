@@ -144,6 +144,13 @@ fun EditNotePage(
         if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
 //            Log.d("EditNotePage", "Saving note, image size: ${currentImage?.byteCount}")
             val temp = currentImage
+            var audiofile: String? = null
+            if (currentAudioFile != URI("")) {
+                audiofile =
+                    File(
+                        currentAudioFile.path,
+                    ).path
+            }
 //            Log.d("EditNotePageTemp", "Saving note, image size: ${temp?.size}")
             onEvent(
                 NotesEvent.UpdateNote(
@@ -152,6 +159,7 @@ fun EditNotePage(
                         content = noteContent,
                         isPrivate = isPrivate.value,
                         imageFile = temp.path,
+                        audioFile = audiofile,
                     ),
                 ),
             )
