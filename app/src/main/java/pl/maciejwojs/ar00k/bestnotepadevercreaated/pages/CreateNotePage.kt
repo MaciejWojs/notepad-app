@@ -135,12 +135,21 @@ fun CreateNotePage(
 
     fun saveNote() {
         if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
+            var audiofile: String? = null
+            if (currentAudioFile.value != null) {
+                audiofile =
+                    File(
+                        context.getExternalFilesDir("recordings"),
+                        URI(currentAudioFile.value).path,
+                    ).path
+            }
             val note =
                 Note(
                     noteTitle,
                     noteContent,
                     imageFile = capturedImage?.path,
                     isPrivate = isPrivate.value,
+                    audioFile = audiofile,
                 )
             viewModel.onEvent(NotesEvent.InsertNote(note, checkedMap.filter { it.value }))
 //                                onCreate(noteTitle, noteContent, checkedMap.filter { it.value })

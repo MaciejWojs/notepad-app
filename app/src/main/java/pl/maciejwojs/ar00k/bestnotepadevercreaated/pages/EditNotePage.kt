@@ -34,7 +34,12 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.MicOff
 import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Stop
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -46,6 +51,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -72,11 +78,15 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.NotesEvent
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.playback.AndroidAudioPlayer
+import pl.maciejwojs.ar00k.bestnotepadevercreaated.record.AndroidAudioRecorder
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.iconModifier
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.settings.iconWeightRatio
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 import java.io.File
 import java.net.URI
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * Strona edycji notatki.
@@ -101,6 +111,7 @@ fun EditNotePage(
     currentNoteTags: List<Tag>,
     requestCameraPermission: () -> Unit,
     cameraPreview: @Composable (onPhotoTaken: (URI) -> Unit, exitCamera: () -> Unit) -> Unit,
+    requestMicrophonePermission: () -> Unit,
 ) {
     var noteTitle by remember { mutableStateOf(note.title) }
     var noteContent by remember { mutableStateOf(note.content) }
@@ -120,6 +131,14 @@ fun EditNotePage(
             note.imageFile?.let { URI(it) } ?: URI(""),
         )
     }
+
+    var showMicrophoneRecordDialog by remember { mutableStateOf(false) }
+    val audioRecorder = AndroidAudioRecorder(context)
+    val audioPlayer = AndroidAudioPlayer(context)
+    var currentAudioFile by remember { mutableStateOf(note.audioFile?.let { URI(it) } ?: URI("")) }
+    Log.d("EditNotePage", "Current audio file: $currentAudioFile")
+    var condition: Boolean = currentAudioFile != URI("")
+    var isRecorded by remember { mutableStateOf(condition) }
 
     fun saveNote() {
         if (noteTitle.isNotEmpty() && noteContent.isNotEmpty()) {
@@ -245,6 +264,55 @@ fun EditNotePage(
                         )
 //                        Text(text = "Take photo")
                     }
+                    var isPlaying by remember { mutableStateOf(false) }
+
+                    if (isRecorded && currentAudioFile != URI("")) {
+                        Log.d("CreateNotePage", "Playing audio: $currentAudioFile")
+                        IconButton(
+                            modifier =
+                                Modifier
+                                    .weight(iconWeightRatio)
+                                    .then(iconModifier),
+                            onClick = {
+                                // TODO po zakończeniu odtwarzania zmienić ikonę na play
+                                if (isPlaying) {
+                                    audioPlayer.stop()
+                                } else {
+                                    val file =
+                                        File(
+                                            currentAudioFile.path,
+                                        )
+                                    Log.d("EditNotePage", "Playing audio: ${file.path}")
+                                    audioPlayer.play(
+                                        file,
+                                    )
+                                }
+                                isPlaying = !isPlaying
+                            },
+                        ) {
+                            Icon(
+                                imageVector = if (isPlaying) Icons.Default.Stop else Icons.Default.PlayArrow,
+                                contentDescription = if (isPlaying) "Stop audio" else "Play audio",
+                            )
+                        }
+                    }
+
+                    IconButton(
+                        modifier =
+                            Modifier
+                                .weight(iconWeightRatio)
+                                .then(iconModifier),
+                        onClick = {
+                            requestMicrophonePermission()
+                            showMicrophoneRecordDialog = true
+                        },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Mic,
+                            contentDescription = "Record note",
+                        )
+//                        Text(text = "Record note")
+                    }
 
                     IconButton(
                         modifier =
@@ -342,6 +410,95 @@ fun EditNotePage(
                                 bitmap = bitmap,
                                 contentDescription = "Captured image",
                                 modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
+
+                        if (showMicrophoneRecordDialog) {
+                            var isBeingRecorded by remember { mutableStateOf(false) }
+                            var recorded = false
+                            val temp =
+                                LocalDateTime.now()
+                                    .format(DateTimeFormatter.ofPattern("HH_mm_ss-dd_MM_yyyy")) + ".mp3"
+                            var audiofile =
+                                URI(File(context.getExternalFilesDir("recordings"), temp).path)
+                            val file =
+                                File(
+                                    context.getExternalFilesDir("recordings"),
+                                    temp,
+                                ).apply { parentFile?.mkdirs() }
+
+                            fun rejectRecording() {
+                                audioRecorder.stop()
+                                if (currentAudioFile == audiofile) {
+                                    // TODO fix this (usuwa już zapisany plik w przypadku odrzucenia na grania)
+                                    if (file.exists() && !file.delete()) {
+                                        Log.e(
+                                            "CreateNotePage",
+                                            "Failed to delete file: ${file.path}",
+                                        )
+                                    }
+                                }
+                                currentAudioFile = URI("")
+                                showMicrophoneRecordDialog = false
+                                isRecorded = false
+                            }
+
+                            AlertDialog(
+                                title = {
+                                    Box(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        Text(
+                                            text = "Record audio",
+                                        )
+                                    }
+                                },
+                                text = {
+                                    Box(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        IconButton(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            onClick = {
+                                                if (!isBeingRecorded) {
+                                                    audioRecorder.start(file)
+                                                    isBeingRecorded = true
+                                                    recorded = true
+                                                } else {
+                                                    audioRecorder.stop()
+                                                    isBeingRecorded = false
+                                                }
+                                            },
+                                        ) {
+                                            Icon(
+                                                modifier = Modifier.fillMaxSize(),
+                                                imageVector = if (isBeingRecorded) Icons.Default.MicOff else Icons.Default.Mic,
+                                                contentDescription = if (isBeingRecorded) "Stop recording" else "Start recording",
+                                            )
+                                        }
+                                    }
+                                },
+                                onDismissRequest = { rejectRecording() },
+                                confirmButton = {
+                                    TextButton(onClick = {
+                                        audioRecorder.stop()
+                                        showMicrophoneRecordDialog = false
+                                        if (recorded) {
+                                            currentAudioFile = audiofile
+                                            isRecorded = true
+                                        }
+                                    }) { Text(color = Color.Green, text = "Confirm") }
+                                },
+                                dismissButton = {
+                                    TextButton(onClick = { rejectRecording() }) {
+                                        Text(
+                                            color = Color.Red,
+                                            text = "Dismiss",
+                                        )
+                                    }
+                                },
                             )
                         }
                     }

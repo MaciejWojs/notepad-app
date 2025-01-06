@@ -33,7 +33,7 @@ data class Note(
     val isPrivate: Boolean = false,
     val isDeleted: Boolean = false,
     val imageFile: String? = null,
-    val audioFile: ByteArray? = null,
+    val audioFile: String? = null,
     val creationTime: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
     val modificationTime: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
     @PrimaryKey(autoGenerate = true) val noteID: Long = 0,

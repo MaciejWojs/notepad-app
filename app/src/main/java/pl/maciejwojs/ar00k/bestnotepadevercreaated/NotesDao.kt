@@ -70,7 +70,7 @@ interface NotesDao {
         content: String,
         isPrivate: Boolean,
         imageFile: String?,
-        audioFile: ByteArray?,
+        audioFile: String?,
         modificationDate: String = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")),
     )
 

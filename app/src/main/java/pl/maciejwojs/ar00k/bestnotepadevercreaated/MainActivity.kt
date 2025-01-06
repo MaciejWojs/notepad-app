@@ -518,6 +518,7 @@ class MainActivity : FragmentActivity() {
                                     },
                                 )
                             },
+                            requestMicrophonePermission = { if (!hasRequiredMicrophonePermissions()) requestMicrophonePermission() else Unit },
                         )
                     }
                 }
