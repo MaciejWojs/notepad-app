@@ -17,7 +17,14 @@ jobs:
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v4
-      
+
+      - name: Decode Keystore
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'keystore/AndroidKey.jks'
+          encodedString: ${{ secrets.KEY_FILE }}
+
       - name: Set up JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v4
         with:
@@ -29,13 +36,17 @@ jobs:
         run: |
           chmod 777 ./gradlew 
           ./gradlew build
+        env:
+          SIGNING_KEY_ALIAS: ${{ secrets.ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASS }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASS }}
 
       - name: release the apk
         if: env.IS_TAG == 'true'
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
-          artifacts: "./app/build/outputs/apk/debug/app-debug.apk,./app/build/outputs/apk/release/app-release-unsigned.apk"
+          artifacts: "./app/build/outputs/apk/debug/app-debug.apk,./app/release/app-release.apk"
 
 
       - name: Webhook DC notification

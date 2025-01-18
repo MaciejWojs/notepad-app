@@ -19,3 +19,7 @@ local.properties
 docs/*
 .vscode/*
 .kotlin/*
+
+# App build output
+/app/debug
+/app/release
