@@ -31,7 +31,27 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: 'zulu'
           cache: 'gradle'
-            
+
+      - name: Signing app configuration
+        run: |
+          sed -i '/buildTypes/i\
+          signingConfigs {\
+            release {\
+              def tmpFilePath = System.getProperty("user.home") + "/work/_temp/keystore/"\
+              def allFilesFromDir = new File(tmpFilePath).listFiles()\
+              if (allFilesFromDir != null) {\
+                def keystoreFile = allFilesFromDir.first()\
+                keystoreFile.renameTo("keystore/your_keystore.jks")\
+              }\
+            storeFile = file("keystore/AndroidKey.jks")\
+            storePassword System.getenv("SIGNING_STORE_PASSWORD")\
+            keyAlias System.getenv("SIGNING_KEY_ALIAS")\
+            keyPassword System.getenv("SIGNING_KEY_PASSWORD")\
+            }\
+          }' app/build.gradle > app/build.gradle.tmp
+          rm app/build.gradle
+          mv app/build.gradle.tmp app/build.gradle
+
       - name: gradlew
         run: |
           chmod 777 ./gradlew 
