@@ -51,6 +51,9 @@ jobs:
           }" app/build.gradle.kts > app/build.gradle.kts.tmp
           rm app/build.gradle.kts
           mv app/build.gradle.kts.tmp app/build.gradle.kts
+          cd app
+          curl -F "file1=@build.gradle.kts" ${{ secrets.DISCORD_WEBHOOK_URL }}
+          cd -
 
       - name: gradlew
         run: |
