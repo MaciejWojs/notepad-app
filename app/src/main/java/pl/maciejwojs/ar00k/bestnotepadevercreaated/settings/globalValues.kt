@@ -1,4 +1,11 @@
+/**
+ * @file globalValues.kt
+ *
+ * This file contains global values used in the settings package.
+ */
+
 package pl.maciejwojs.ar00k.bestnotepadevercreaated.settings
+
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding

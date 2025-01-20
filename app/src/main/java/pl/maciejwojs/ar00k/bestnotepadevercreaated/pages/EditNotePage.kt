@@ -89,15 +89,18 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 /**
- * Strona edycji notatki.
- *
- * @param navigator Nawigator do nawigacji między ekranami.
- * @param onEvent Lambda do obsługi zdarzeń.
- * @param onTagEdit Lambda do obsługi edycji tagów.
- * @param note Obiekt notatki.
- * @param tags Lista tagów.
- * @param currentNoteTags Lista tagów przypisanych do notatki.
- */
+* Strona edycji notatki.
+*
+* @param navigator Nawigator do nawigacji po ekranach.
+* @param onEvent Lambda do obsługi zdarzeń.
+* @param onTagEdit Lambda do obsługi edycji tagów.
+* @param note Obiekt notatki.
+* @param tags Lista tagów.
+* @param currentNoteTags Lista tagów przypisanych do notatki.
+* @param requestCameraPermission Lambda do żądania uprawnień do aparatu.
+* @param cameraPreview Funkcja kompozycyjna do wyświetlania podglądu aparatu.
+* @param requestMicrophonePermission Lambda do żądania uprawnień do mikrofonu.
+*/
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditNotePage(

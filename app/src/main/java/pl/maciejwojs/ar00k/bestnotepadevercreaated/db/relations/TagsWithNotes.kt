@@ -13,8 +13,8 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Tag
 /**
  * Klasa reprezentująca relację między notatkami a tagami.
  *
- * @property note Notatka, do której przypisane są tagi.
- * @property tags Lista tagów przypisanych do notatki.
+ * @property noteID Notatka, do której przypisane są tagi.
+ * @property tagID Lista tagów przypisanych do notatki.
  */
 data class TagsWithNotes(
     @Embedded val note: Note,

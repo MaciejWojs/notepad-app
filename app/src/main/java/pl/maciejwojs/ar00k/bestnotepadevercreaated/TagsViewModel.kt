@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
- * Klasa ViewModel zarządzająca stanem tagów w aplikacji.
+ * Klasa `ViewModel` zarządzająca stanem tagów w aplikacji.
  *
- * @property dao Obiekt DAO do zarządzania operacjami na bazie danych.
+ * @property dao Obiekt `DAO` do zarządzania operacjami na bazie danych.
  */
 class TagsViewModel(
     private val dao: NotesDao,

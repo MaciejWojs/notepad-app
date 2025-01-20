@@ -91,9 +91,15 @@ import java.time.format.DateTimeFormatter
 /**
  * Strona tworzenia notatki.
  *
+ * Ta strona umożliwia użytkownikowi tworzenie nowej notatki, dodawanie tytułu, treści, zdjęć, nagrań audio oraz tagów.
+ * Użytkownik może również ustawić notatkę jako prywatną lub publiczną.
+ *
  * @param navigator Nawigator do nawigacji między stronami.
  * @param viewModel [NotesViewModel] Obiekt ViewModel do obsługi notatek.
- * @param tags Lista tagów.
+ * @param tags Lista tagów dostępnych do przypisania do notatki.
+ * @param requestCameraPermission Funkcja do żądania uprawnień do aparatu.
+ * @param cameraPreview Kompozycja do wyświetlania podglądu aparatu i obsługi robienia zdjęć.
+ * @param requestMicrophonePermission Funkcja do żądania uprawnień do mikrofonu.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

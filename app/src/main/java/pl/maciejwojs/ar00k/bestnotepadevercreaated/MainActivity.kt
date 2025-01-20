@@ -1,11 +1,10 @@
 /**
  * @file MainActivity.kt
- * @brief Plik odpowiadający za stworzenie instancji view modeli i nawigację do odpowiednich stron
+ * @brief Plik odpowiedzialny za tworzenie instancji modeli widoków i nawigację do odpowiednich stron.
  *
- *
- *
+ * Ten plik zawiera główną aktywność aplikacji BestNotepadEverCreated. Inicjalizuje
+ * modele widoków, ustawia interfejs użytkownika Jetpack Compose i obsługuje nawigację między różnymi stronami.
  */
-
 package pl.maciejwojs.ar00k.bestnotepadevercreaated
 
 import android.Manifest
@@ -80,26 +79,30 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 /**
- * Główna aktywność aplikacji BestNotepadEverCreated.
- *
- * Ta aktywność rozszerza [FragmentActivity] i służy jako główny punkt wejścia do aplikacji.
- * Używa Jetpack Compose do interfejsu użytkownika i wyświetla komunikaty Toast podczas zmian cyklu życia.
- */
-// Possibly a big change, Zmieniłem z ComponentActivity na Framgent Activity bo wymagało tego biometricPromptManager
+* @class MainActivity
+* @brief Główna aktywność aplikacji BestNotepadEverCreated.
+*
+* Ta aktywność rozszerza [FragmentActivity] i służy jako główny punkt wejścia do aplikacji.
+* Używa Jetpack Compose do interfejsu użytkownika i wyświetla komunikaty Toast podczas zmian cyklu życia.
+*//**
+* @class MainActivity
+* @brief Główna aktywność aplikacji BestNotepadEverCreated.
+*
+* Ta aktywność rozszerza [FragmentActivity] i służy jako główny punkt wejścia do aplikacji.
+* Używa Jetpack Compose do interfejsu użytkownika i wyświetla komunikaty Toast podczas zmian cyklu życia.
+*/
 class MainActivity : FragmentActivity() {
     private lateinit var biometricPromptManager: BiometricPromptManager
-
-    /**
-     * Wywoływana, gdy aktywność jest uruchamiana.
-     *
-     * Tutaj powinno się odbywać większość inicjalizacji: wywołanie [setContentView] w celu nadmuchania UI aktywności,
-     * użycie [findViewById] do programatycznej interakcji z widżetami w UI, wywołanie [managedQuery] w celu pobrania
-     * dostawców treści, itp.
-     *
-     * @param savedInstanceState Jeśli aktywność jest ponownie inicjalizowana po wcześniejszym zamknięciu, to ten Bundle
-     * zawiera dane, które dostarczyła ostatnio w [onSaveInstanceState].
-     * @note Uwaga: W przeciwnym razie jest null.
-     */
+/**
+* @brief Wywoływana, gdy aktywność jest uruchamiana.
+*
+* To tutaj powinna odbywać się większość inicjalizacji: wywołanie [setContentView] w celu nadmuchania interfejsu użytkownika aktywności,
+* użycie [findViewById] do programowego interakcji z widżetami w interfejsie użytkownika, wywołanie [managedQuery] w celu pobrania
+* dostawców treści, itp.
+*
+* @param savedInstanceState Jeśli aktywność jest ponownie inicjalizowana po wcześniejszym zamknięciu, ten Bundle
+* zawiera dane, które ostatnio dostarczyła w [onSaveInstanceState]. W przeciwnym razie jest null.
+*/
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,26 +117,26 @@ class MainActivity : FragmentActivity() {
 
         // Launch coroutine to set up default relations and tags in the database if not already present
         lifecycleScope.launch {
-//            dao.insertImageFile(
-//                ImageFile(
-// //                    imageID = 1,
-//                    name = "Dummy",
-//                    bitmapBytesArray().toByteArray(
-//                        Bitmap.createBitmap(
-//                            1,
-//                            1,
-//                            Bitmap.Config.ARGB_8888,
-//                        ),
-//                    ),
-//                ),
-//            )
-//            if (dao.isAddingRelations() == 0) {
-//                dao.insertRelation()
-//            }
-//            if (dao.getTagsCount() == 0L) {
-//                dao.insertTag(tag = Tag("Zakupy"))
-//                dao.insertTag(tag = Tag("Szkoła"))
-//            }
+            // Uncomment the following lines to insert default data into the database
+            // dao.insertImageFile(
+            //     ImageFile(
+            //         name = "Dummy",
+            //         bitmapBytesArray().toByteArray(
+            //             Bitmap.createBitmap(
+            //                 1,
+            //                 1,
+            //                 Bitmap.Config.ARGB_8888,
+            //             ),
+            //         ),
+            //     ),
+            // )
+            // if (dao.isAddingRelations() == 0) {
+            //     dao.insertRelation()
+            // }
+            // if (dao.getTagsCount() == 0L) {
+            //     dao.insertTag(tag = Tag("Zakupy"))
+            //     dao.insertTag(tag = Tag("Szkoła"))
+            // }
         }
 
         // Initialize ViewModels with a custom factory
@@ -170,6 +173,12 @@ class MainActivity : FragmentActivity() {
                     }
                 }
 
+           /**
+* @brief Funkcja composable do wyświetlania ekranu kamery.
+*
+* @param exitCamera Funkcja wywoływana przy wychodzeniu z kamery.
+* @param onPhotoTaken Funkcja wywoływana po zrobieniu zdjęcia, z URI przechwyconego obrazu.
+*/
             @Composable
             fun cameraScreen(
                 exitCamera: () -> Unit,
@@ -386,23 +395,6 @@ class MainActivity : FragmentActivity() {
                     HamburgerPage(
                         navController,
                         tagsViewModel,
-//                        onCreate = { tagName ->
-//                        tagsViewModel.viewModelScope.launch {
-//                            dao.insertTag(
-//                                Tag(tagName),
-//                            )
-//                        }
-//                    }, onDelete = { tag ->
-//                        tagsViewModel.viewModelScope.launch {
-//                            dao.deleteTag(tag)
-//                        }
-//                    }, onEdit = { tag, name ->
-//                        tagsViewModel.viewModelScope.launch {
-//                            dao.updateTag(id = tag.tagID, name = name)
-//                        }
-//                        onEvent = { tagsViewModel.onEvent(it) },
-// //                        viewModel = TODO(),
-// //                        onTag = TODO()
                     )
                 }
                 composable("pl.maciejwojs.ar00k.bestnotepadevercreaated.pages.CreateNotePage") {
@@ -410,29 +402,12 @@ class MainActivity : FragmentActivity() {
                     CreateNotePage(
                         navigator = navController,
                         viewModel = notesViewModel,
-//                        onCreate = { title, content, map ->
-//                            val note = Note(title, content, isPrivate = )
-//                            notesViewModel.viewModelScope.launch {
-//                                val insertedNoteID = dao.insertNote(note)
-//                                if (map.isNotEmpty()) {
-//                                    map.forEach { entry ->
-//                                        if (entry.value) {
-//                                            dao.insertRelationBetweenNoteAndTag(
-//                                                insertedNoteID,
-//                                                entry.key.tagID,
-//                                            )
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        },
                         tags = tags,
                         requestCameraPermission = { if (!hasRequiredCameraPermissions()) requestCameraPermission() else Unit },
                         cameraPreview = { onPhotoTaken, exit ->
                             cameraScreen(
                                 exitCamera = {
                                     exit()
-//                                    onPhotoTaken(Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)) // Dummy bitmap to exit camera
                                 },
                                 onPhotoTaken = { uri ->
                                     onPhotoTaken(uri)
@@ -479,13 +454,6 @@ class MainActivity : FragmentActivity() {
                         // Ensure that the tags are loaded before showing the EditNotePage
                         EditNotePage(
                             navigator = navController,
-//                            onEdit = { title, content ->
-// //                                notesViewModel.viewModelScope.launch {
-// //                                    dao.updateNote(note.noteID, title, content)
-// //                                }
-// //                                notesViewModel.onEvent(NotesEvent.UpdateNote(note.copy(title = title, content = content)))
-//                                 },
-//                            viewModel = notesViewModel,
                             onEvent = { notesViewModel.onEvent(it) },
                             note = note,
                             tags = tagsViewModel.state.collectAsState().value.tags,
@@ -511,7 +479,6 @@ class MainActivity : FragmentActivity() {
                                 cameraScreen(
                                     exitCamera = {
                                         exit()
-//                                    onPhotoTaken(Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)) // Dummy bitmap to exit camera
                                     },
                                     onPhotoTaken = { uri ->
                                         onPhotoTaken(uri)
@@ -522,15 +489,15 @@ class MainActivity : FragmentActivity() {
                         )
                     }
                 }
-//                composable("CameraPage") {
-//                    CameraPage {
-//                        cameraScreen()
-//                    }
-//                }
             }
         }
     }
 
+/**
+* @brief Żąda uprawnienia do korzystania z kamery.
+*
+* Loguje żądanie i sprawdza, czy wymagane uprawnienia do korzystania z kamery zostały przyznane. Jeśli nie, żąda uprawnień.
+*/
     private fun requestCameraPermission() {
         Log.d("MainActivity", "Camera permission requested")
         if (!hasRequiredCameraPermissions()) {
@@ -540,6 +507,11 @@ class MainActivity : FragmentActivity() {
         }
     }
 
+/**
+* @brief Sprawdza, czy wymagane uprawnienia do korzystania z kamery zostały przyznane.
+*
+* @return True, jeśli uprawnienia do korzystania z kamery zostały przyznane, w przeciwnym razie false.
+*/
     private fun hasRequiredCameraPermissions(): Boolean {
         return ContextCompat.checkSelfPermission(
             this,
@@ -547,6 +519,11 @@ class MainActivity : FragmentActivity() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
+    /**
+     * @brief Requests microphone permission.
+     *
+     * Logs the request and checks if the required microphone permissions are granted. If not, requests the permissions.
+     */
     private fun requestMicrophonePermission() {
         Log.d("MainActivity", "Microphone permission requested")
         if (!hasRequiredMicrophonePermissions()) {
@@ -556,12 +533,23 @@ class MainActivity : FragmentActivity() {
         }
     }
 
+  /**
+* @brief Sprawdza, czy wymagane uprawnienia do korzystania z mikrofonu zostały przyznane.
+*
+* @return True, jeśli uprawnienia do korzystania z mikrofonu zostały przyznane, w przeciwnym razie false.
+*/
     private fun hasRequiredMicrophonePermissions(): Boolean {
         return ContextCompat.checkSelfPermission(
             this,
             MICROPHONE_PERMISSION,
         ) == PackageManager.PERMISSION_GRANTED
     }
+
+    /**
+     * @brief Zwraca URI pliku.
+     *
+     * @return URI pliku.
+     */
 
     companion object {
         private const val MICROPHONE_PERMISSION = Manifest.permission.RECORD_AUDIO

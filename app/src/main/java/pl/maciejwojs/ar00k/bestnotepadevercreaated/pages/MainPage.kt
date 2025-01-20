@@ -53,6 +53,15 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNotePrivate
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.db.Note
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
+/**
+ * Główna strona aplikacji.
+ *
+ * @param navigator Nawigator do nawigacji między stronami.
+ * @param viewModel ViewModel aplikacji.
+ * @param navigateToEditNotePage Funkcja nawigująca do strony edycji notatki.
+ * @param biometricPromptManager Manager biometrycznego promptu.
+ * @param context Kontekst aplikacji.
+ */
 @Composable
 fun MainPage(
     navigator: NavController,

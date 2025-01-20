@@ -4,7 +4,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
 import java.io.ByteArrayOutputStream
-
+/**
+ * Klasa zapewniająca metody do konwersji Bitmapy na ByteArray i odwrotnie.
+ */
 // @ProvidedTypeConverter
 class BitmapBytesArray {
     @TypeConverter

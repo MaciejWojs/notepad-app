@@ -52,6 +52,13 @@ import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateIconButton
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.content.GenerateNoteTrash
 import pl.maciejwojs.ar00k.bestnotepadevercreaated.ui.theme.BestNotepadEverCreatedTheme
 
+/**
+ * Strona kosza.
+ *
+ * @param navigator Kontroler nawigacji.
+ * @param viewModel ViewModel aplikacji.
+ */
+
 @Composable
 fun TrashPage(
     navigator: NavController,

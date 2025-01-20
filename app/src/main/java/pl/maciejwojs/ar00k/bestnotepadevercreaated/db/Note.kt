@@ -15,15 +15,17 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 /**
- * Encja reprezentująca notatkę w bazie danych.
+ * Klasa Note reprezentuje notatkę w bazie danych.
  *
  * @property title Tytuł notatki.
  * @property content Treść notatki.
- * @property isPrivate Flaga określająca czy notatka jest prywatna.
- * @property isDeleted Flaga określająca czy notatka jest usunięta.
+ * @property isPrivate Określa, czy notatka jest prywatna.
+ * @property isDeleted Określa, czy notatka została usunięta.
+ * @property imageFile Opcjonalny plik graficzny w notatce.
+ * @property audioFile Opcjonalny plik dźwiękowy w notatce.
  * @property creationTime Czas utworzenia notatki.
  * @property modificationTime Czas ostatniej modyfikacji notatki.
- * @property noteID Unikalny identyfikator notatki, generowany automatycznie.
+ * @property noteID Unikalny identyfikator notatki.
  */
 @Parcelize
 @Entity(tableName = "notes")
