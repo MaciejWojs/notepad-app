@@ -35,28 +35,22 @@ jobs:
       - name: Display current directory
         run: | 
           pwd
-          ls -l
+          ls -l app/
 
       - name: Signing app configuration
         run: |
           pwd
           sed -i '/buildTypes/i\
-          signingConfigs {\
-            release {\
-              def tmpFilePath = System.getProperty("user.home") + "/work/_temp/keystore/"\
-              def allFilesFromDir = new File(tmpFilePath).listFiles()\
-              if (allFilesFromDir != null) {\
-                def keystoreFile = allFilesFromDir.first()\
-                keystoreFile.renameTo("keystore/your_keystore.jks")\
-              }\
-            storeFile = file("keystore/AndroidKey.jks")\
-            storePassword System.getenv("SIGNING_STORE_PASSWORD")\
-            keyAlias System.getenv("SIGNING_KEY_ALIAS")\
-            keyPassword System.getenv("SIGNING_KEY_PASSWORD")\
-            }\
-          }' app/build.gradle > app/build.gradle.tmp
-          rm app/build.gradle
-          mv app/build.gradle.tmp app/build.gradle
+              signingConfigs {
+              create("release") {
+              storeFile = project.file(System.getenv("KEY_STORE_FILE"))
+              storePassword = System.getenv("RELEASE_KEYSTORE_PASSWORD")
+              keyAlias = System.getenv("RELEASE_KEYSTORE_ALIAS")
+              keyPassword = System.getenv("RELEASE_KEY_PASSWORD")
+          }
+          }' app/build.gradle.kts > app/build.gradle.kts.tmp
+          rm app/build.gradle.kts
+          mv app/build.gradle.kts.tmp app/build.gradle.kts
 
       - name: gradlew
         run: |
@@ -64,6 +58,7 @@ jobs:
           ./gradlew build
           find . -name "*.apk"
         env:
+          KEY_STORE_FILE: ${{ secrets.KEY_FILE }}
           SIGNING_KEY_ALIAS: ${{ secrets.ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASS }}
           SIGNING_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASS }}

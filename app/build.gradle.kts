@@ -22,14 +22,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    signingConfigs {
-        create("release") {
-            storeFile = project.file("../keystore.jks")
-            storePassword = System.getenv("RELEASE_KEYSTORE_PASSWORD")
-            keyAlias = System.getenv("RELEASE_KEYSTORE_ALIAS")
-            keyPassword = System.getenv("RELEASE_KEY_PASSWORD")
-        }
-    }
+//    signingConfigs {
+//        create("release") {
+//            storeFile = project.file("../keystore.jks")
+//            storePassword = System.getenv("RELEASE_KEYSTORE_PASSWORD")
+//            keyAlias = System.getenv("RELEASE_KEYSTORE_ALIAS")
+//            keyPassword = System.getenv("RELEASE_KEY_PASSWORD")
+//        }
+//    }
 
     buildTypes {
         release {
