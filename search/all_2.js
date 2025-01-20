@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['biometricpromptmanager_0',['BiometricPromptManager',['../BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52',1,'BiometricPromptManager.kt']]],
-  ['biometricpromptmanager_1',['biometricPromptManager',['../classMainActivity.html#a07effbafe3adbc019b07c518800c9ea7',1,'MainActivity']]],
-  ['biometricpromptmanager_2ekt_2',['BiometricPromptManager.kt',['../BiometricPromptManager_8kt.html',1,'']]],
-  ['bitmapbytesarray_3',['BitmapBytesArray',['../classBitmapBytesArray.html',1,'']]],
-  ['bitmapbytesarray_2ekt_4',['BitmapBytesArray.kt',['../BitmapBytesArray_8kt.html',1,'']]]
+  ['camerapage_0',['CameraPage',['../cameraPage_8kt.html#a33a12d2df5d6956db50a9c4e28079e97',1,'cameraPage.kt']]],
+  ['camerapage_2ekt_1',['cameraPage.kt',['../cameraPage_8kt.html',1,'']]],
+  ['camerapreview_2',['CameraPreview',['../CameraPreview_8kt.html#a0bce7a2283bd6bafb8cf1f281071aadd',1,'CameraPreview.kt']]],
+  ['camerapreview_2ekt_3',['CameraPreview.kt',['../CameraPreview_8kt.html',1,'']]],
+  ['color_2ekt_4',['Color.kt',['../Color_8kt.html',1,'']]],
+  ['createnotepage_5',['CreateNotePage',['../CreateNotePage_8kt.html#aa68c2aaf985bff8b6fceeb3738c2d9a3',1,'CreateNotePage.kt']]],
+  ['createnotepage_2ekt_6',['CreateNotePage.kt',['../CreateNotePage_8kt.html',1,'']]]
 ];
