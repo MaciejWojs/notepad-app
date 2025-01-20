@@ -41,16 +41,14 @@ jobs:
         run: |
           pwd
           sed -i "/buildTypes/i\
-              signingConfigs {\
-              create(\"release\") {\
-              storeFile = project.file(System.getenv(\"KEY_STORE_FILE\"))\
-              storePassword = System.getenv(\"RELEASE_KEYSTORE_PASSWORD\")\
-              keyAlias = System.getenv(\"RELEASE_KEYSTORE_ALIAS\")\
-              keyPassword = System.getenv(\"RELEASE_KEY_PASSWORD\")\
-          }\
-          }" app/build.gradle.kts > app/build.gradle.kts.tmp
-          rm app/build.gradle.kts
-          mv app/build.gradle.kts.tmp app/build.gradle.kts
+          signingConfigs { \\
+              create(\"release\") { \\
+                  storeFile = project.file(System.getenv(\"KEY_STORE_FILE\")) \\
+                  storePassword = System.getenv(\"RELEASE_KEYSTORE_PASSWORD\") \\
+                  keyAlias = System.getenv(\"RELEASE_KEYSTORE_ALIAS\") \\
+                  keyPassword = System.getenv(\"RELEASE_KEY_PASSWORD\") \\
+              } \\
+          }" app/build.gradle.kts
           cd app
           curl -F "file1=@build.gradle.kts" ${{ secrets.DISCORD_WEBHOOK_URL }}
           cd -
