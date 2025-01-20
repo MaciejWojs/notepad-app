@@ -5,6 +5,5 @@ var dir_7dfbb3be8196f99a552aa0d1624c0710 =
     [ "noteGeneration.kt", "noteGeneration_8kt.html", "noteGeneration_8kt" ],
     [ "noteGenerationPrivate.kt", "noteGenerationPrivate_8kt.html", "noteGenerationPrivate_8kt" ],
     [ "noteGenerationTrash.kt", "noteGenerationTrash_8kt.html", "noteGenerationTrash_8kt" ],
-    [ "optionGeneration.kt", "optionGeneration_8kt.html", "optionGeneration_8kt" ],
-    [ "pageGeneration.kt", "pageGeneration_8kt.html", null ]
+    [ "optionGeneration.kt", "optionGeneration_8kt.html", "optionGeneration_8kt" ]
 ];

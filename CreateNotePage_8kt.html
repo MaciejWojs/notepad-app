@@ -29,7 +29,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.6.5</span>
+   <div id="projectname">Best Notepad Ever Created<span id="projectnumber">&#160;v0.6.4</span>
    </div>
   </td>
  </tr>
@@ -156,11 +156,15 @@ Funkcje</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Strona tworzenia notatki. </p>
+<p>Ta strona umożliwia użytkownikowi tworzenie nowej notatki, dodawanie tytułu, treści, zdjęć, nagrań audio oraz tagów. Użytkownik może również ustawić notatkę jako prywatną lub publiczną.</p>
 <dl class="params"><dt>Parametry</dt><dd>
   <table class="params">
     <tr><td class="paramname">navigator</td><td>Nawigator do nawigacji między stronami. </td></tr>
     <tr><td class="paramname">viewModel</td><td>[NotesViewModel] Obiekt ViewModel do obsługi notatek. </td></tr>
-    <tr><td class="paramname">tags</td><td>Lista tagów. </td></tr>
+    <tr><td class="paramname">tags</td><td>Lista tagów dostępnych do przypisania do notatki. </td></tr>
+    <tr><td class="paramname">requestCameraPermission</td><td>Funkcja do żądania uprawnień do aparatu. </td></tr>
+    <tr><td class="paramname">cameraPreview</td><td>Kompozycja do wyświetlania podglądu aparatu i obsługi robienia zdjęć. </td></tr>
+    <tr><td class="paramname">requestMicrophonePermission</td><td>Funkcja do żądania uprawnień do mikrofonu. </td></tr>
   </table>
   </dd>
 </dl>
