@@ -58,7 +58,7 @@ jobs:
       - name: gradlew
         run: |
           chmod 777 ./gradlew 
-          ./gradlew build
+          ./gradlew app:assembleRelease
           find . -name "*.apk"
         env:
           KEY_STORE_FILE: 'keystore/AndroidKey.jks'
