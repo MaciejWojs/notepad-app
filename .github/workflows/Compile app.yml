@@ -21,6 +21,7 @@ jobs:
       - name: Decode Keystore
         run: |
           echo ${{ secrets.KEY_FILE }} | base64 -d > AndroidKey.jks
+          chmod 777 AndroidKey.jks
 
       - name: Set up JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v4
@@ -41,7 +42,7 @@ jobs:
           sed -i "/buildTypes/i\
           signingConfigs { \\
               create(\"release\") { \\
-                  storeFile = project.file(System.getenv(\"KEY_STORE_FILE\")) \\
+                  storeFile = project.file("AndroidKey.jks") \\
                   storePassword = System.getenv(\"SIGNING_STORE_PASSWORD\") \\
                   keyAlias = System.getenv(\"SIGNING_KEY_ALIAS\") \\
                   keyPassword = System.getenv(\"SIGNING_KEY_PASSWORD\") \\
@@ -58,7 +59,6 @@ jobs:
           ./gradlew app:assemble
           find . -name "*.apk"
         env:
-          KEY_STORE_FILE: 'AndroidKey.jks'
           SIGNING_KEY_ALIAS: ${{ secrets.ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASS }}
           SIGNING_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASS }}
