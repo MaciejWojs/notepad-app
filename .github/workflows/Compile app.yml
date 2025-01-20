@@ -20,7 +20,7 @@ jobs:
 
       - name: Decode Keystore
         run: |
-          echo "${{ secrets.KEY_FILE }}" | base64 -d > AndroidKey.jks
+          echo ${{ secrets.KEY_FILE }} | base64 -d > AndroidKey.jks
 
       - name: Set up JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v4
@@ -55,8 +55,7 @@ jobs:
       - name: gradlew
         run: |
           chmod 777 ./gradlew 
-          ./gradlew app:assembleRelease
-          ./gradlew app:assembleDebug
+          ./gradlew app:assemble
           find . -name "*.apk"
         env:
           KEY_STORE_FILE: 'AndroidKey.jks'
