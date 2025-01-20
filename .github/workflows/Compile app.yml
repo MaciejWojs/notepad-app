@@ -63,6 +63,10 @@ jobs:
           SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASS }}
           SIGNING_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASS }}
 
+      - name: Move apk files
+        run: |
+          find . -name "*.apk" -exec mv {} -t $(pwd) +
+
       - name: release the apk
         if: env.IS_TAG == 'true'
         uses: ncipollo/release-action@v1
