@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['biometricpromptmanager_0',['BiometricPromptManager',['../BiometricPromptManager_8kt.html#a1ce9860ad5388f9aef982faed7a9bc52',1,'BiometricPromptManager.kt']]],
-  ['biometricpromptmanager_2ekt_1',['BiometricPromptManager.kt',['../BiometricPromptManager_8kt.html',1,'']]],
-  ['bitmapbytesarray_2',['BitmapBytesArray',['../classBitmapBytesArray.html',1,'']]],
-  ['bitmapbytesarray_2ekt_3',['BitmapBytesArray.kt',['../BitmapBytesArray_8kt.html',1,'']]]
+  ['androidaudioplayer_2ekt_0',['AndroidAudioPlayer.kt',['../AndroidAudioPlayer_8kt.html',1,'']]],
+  ['androidaudiorecorder_2ekt_1',['AndroidAudioRecorder.kt',['../AndroidAudioRecorder_8kt.html',1,'']]],
+  ['audioplayer_2',['AudioPlayer',['../interfaceAudioPlayer.html',1,'']]],
+  ['audioplayer_2ekt_3',['AudioPlayer.kt',['../AudioPlayer_8kt.html',1,'']]],
+  ['audiorecorder_4',['AudioRecorder',['../interfaceAudioRecorder.html',1,'']]],
+  ['audiorecorder_2ekt_5',['AudioRecorder.kt',['../AudioRecorder_8kt.html',1,'']]]
 ];

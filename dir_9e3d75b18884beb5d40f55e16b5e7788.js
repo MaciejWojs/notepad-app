@@ -9,7 +9,7 @@ var dir_9e3d75b18884beb5d40f55e16b5e7788 =
     [ "ui", "dir_cf9dfecca2df437e917a8b494050f09c.html", "dir_cf9dfecca2df437e917a8b494050f09c" ],
     [ "BiometricPromptManager.kt", "BiometricPromptManager_8kt.html", "BiometricPromptManager_8kt" ],
     [ "CameraPreview.kt", "CameraPreview_8kt.html", "CameraPreview_8kt" ],
-    [ "MainActivity.kt", "MainActivity_8kt.html", null ],
+    [ "MainActivity.kt", "MainActivity_8kt.html", "MainActivity_8kt" ],
     [ "NotesDao.kt", "NotesDao_8kt.html", "NotesDao_8kt" ],
     [ "NotesDatabase.kt", "NotesDatabase_8kt.html", "NotesDatabase_8kt" ],
     [ "NotesEvent.kt", "NotesEvent_8kt.html", "NotesEvent_8kt" ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tagsevent_0',['TagsEvent',['../interfaceTagsEvent.html',1,'']]]
+  ['settingsevent_0',['SettingsEvent',['../interfaceSettingsEvent.html',1,'']]]
 ];

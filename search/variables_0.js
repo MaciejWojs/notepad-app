@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['loadsettings_0',['LoadSettings',['../interfaceSettingsEvent.html#aac416b7a2e30b1b4528ef83f9c42db04',1,'SettingsEvent']]]
+  ['biometricpromptmanager_0',['biometricPromptManager',['../classMainActivity.html#a07effbafe3adbc019b07c518800c9ea7',1,'MainActivity']]]
 ];
