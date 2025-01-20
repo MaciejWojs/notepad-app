@@ -58,7 +58,7 @@ jobs:
           ./gradlew build
           find . -name "*.apk"
         env:
-          KEY_STORE_FILE: ${{ secrets.KEY_FILE }}
+          KEY_STORE_FILE: 'keystore/AndroidKey.jks'
           SIGNING_KEY_ALIAS: ${{ secrets.ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASS }}
           SIGNING_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASS }}
