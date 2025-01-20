@@ -80,5 +80,7 @@ jobs:
       - name: Webhook DC notification
         if: env.IS_TAG == 'true'
         run: |
-          download_link=https://github.com/maciejwojs/notepad-app/releases/latest/download/app-debug.apk
-          curl -s -H "Content-Type: application/json" -d "{\"content\": \"Link do pobrania najnowszej aktualizacji: ${download_link} @everyone\"}" ${{ secrets.DISCORD_WEBHOOK_URL }} &> /dev/null
+          base_url=https://github.com/maciejwojs/notepad-app/releases/latest/download
+          download_link_debug="$base_url/app-debug.apk"
+          download_link_release="$base_url/app-release.apk"
+          curl -s -H "Content-Type: application/json" -d "{\"content\": \"Link do pobrania najnowszej aktualizacji: (DEBUG) ${download_link_debug}  (RELEASE) ${download_link_release} @everyone\"}" ${{ secrets.DISCORD_WEBHOOK_URL }} &> /dev/null
