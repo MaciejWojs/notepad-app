@@ -34,6 +34,7 @@ jobs:
 
       - name: Signing app configuration
         run: |
+          pwd
           sed -i '/buildTypes/i\
           signingConfigs {\
             release {\
