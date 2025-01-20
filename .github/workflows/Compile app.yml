@@ -65,7 +65,9 @@ jobs:
 
       - name: Move apk files
         run: |
-          find . -name "*.apk" -exec mv -t $(pwd) {} +
+          find . -iname "*.apk" 
+          find . -iname "*.apk" -exec mv -t $(pwd) {} +
+          ls *.apk
 
       - name: release the apk
         if: env.IS_TAG == 'true'
