@@ -22,7 +22,7 @@ jobs:
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         with:
-          fileName: 'keystore/AndroidKey.jks'
+          fileName: 'AndroidKey.jks'
           encodedString: ${{ secrets.KEY_FILE }}
 
       - name: Set up JDK ${{ env.JAVA_VERSION }}
@@ -33,7 +33,8 @@ jobs:
           cache: 'gradle'
 
       - name: Display current directory
-        run: | 
+        run: |
+          ls -l AndroidKey.jks
           pwd
           ls -l app/
 
@@ -44,9 +45,9 @@ jobs:
           signingConfigs { \\
               create(\"release\") { \\
                   storeFile = project.file(System.getenv(\"KEY_STORE_FILE\")) \\
-                  storePassword = System.getenv(\"RELEASE_KEYSTORE_PASSWORD\") \\
-                  keyAlias = System.getenv(\"RELEASE_KEYSTORE_ALIAS\") \\
-                  keyPassword = System.getenv(\"RELEASE_KEY_PASSWORD\") \\
+                  storePassword = System.getenv(\"SIGNING_STORE_PASSWORD\") \\
+                  keyAlias = System.getenv(\"SIGNING_KEY_ALIAS\") \\
+                  keyPassword = System.getenv(\"SIGNING_KEY_PASSWORD\") \\
               } \\
           }" app/build.gradle.kts
           sed -i '/buildTypes {/{N;s/\n\s*release {/ release {\nsigningConfig = signingConfigs.getByName("release")/}' app/build.gradle.kts
@@ -60,7 +61,7 @@ jobs:
           ./gradlew app:assembleRelease
           find . -name "*.apk"
         env:
-          KEY_STORE_FILE: 'keystore/AndroidKey.jks'
+          KEY_STORE_FILE: 'AndroidKey.jks'
           SIGNING_KEY_ALIAS: ${{ secrets.ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASS }}
           SIGNING_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASS }}
