@@ -32,6 +32,11 @@ jobs:
           distribution: 'zulu'
           cache: 'gradle'
 
+      - name: Display current directory
+        run: | 
+          pwd
+          ls -l
+
       - name: Signing app configuration
         run: |
           pwd
